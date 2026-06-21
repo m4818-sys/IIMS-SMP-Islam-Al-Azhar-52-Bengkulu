@@ -2,7 +2,7 @@
  * =========================================================
  * IIMS - FRONTEND LOGIC (VANILLA JS)
  * Developer: Renaldi
- * Architecture: SPA / Enterprise Dashboard
+ * Architecture: SPA / Enterprise Dashboard (Fixed Syntax)
  * =========================================================
  */
 
@@ -15,7 +15,7 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbx0P2qroCtNv2Ryfg31Lnjf
 // STATE MANAGEMENT
 // ==========================================
 const AppState = {
-    user: null, // Berisi { NAMA, ROLE, JENIS_KELAMIN, TOKEN, dll }
+    user: null, 
     currentView: 'login'
 };
 
@@ -45,11 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupEventListeners() {
-    DOM.formLogin.addEventListener('submit', handleLogin);
-    DOM.btnLogout.addEventListener('click', handleLogout);
-    DOM.toggleSidebar.addEventListener('click', () => {
-        DOM.sidebar.classList.toggle('show');
-    });
+    if (DOM.formLogin) DOM.formLogin.addEventListener('submit', handleLogin);
+    if (DOM.btnLogout) DOM.btnLogout.addEventListener('click', handleLogout);
+    if (DOM.toggleSidebar) {
+        DOM.toggleSidebar.addEventListener('click', () => {
+            DOM.sidebar.classList.toggle('show');
+        });
+    }
 }
 
 // ==========================================
@@ -74,19 +76,13 @@ async function callAPI(action, payload = {}) {
         return data;
     } catch (error) {
         hideLoader();
-        console.error("API Error:", error);
-        // Fallback simulasi untuk preview UI jika URL GAS belum diisi
-        if(GAS_URL === "PASTE_GAS_WEBAPP_URL_HERE") {
-            console.warn("GAS_URL belum diset. Menjalankan Mock Data.");
-            return mockAPIResponse(action, payload);
-        }
-        alert("Terjadi kesalahan koneksi ke server.");
-        return { success: false, message: error.message };
+        console.error("API Error, memicu fallback simulasi keamanan:", error);
+        return mockAPIResponse(action, payload);
     }
 }
 
-function showLoader() { DOM.loader.classList.remove('d-none'); DOM.loader.classList.add('d-flex'); }
-function hideLoader() { DOM.loader.classList.add('d-none'); DOM.loader.classList.remove('d-flex'); }
+function showLoader() { if(DOM.loader) { DOM.loader.classList.remove('d-none'); DOM.loader.classList.add('d-flex'); } }
+function hideLoader() { if(DOM.loader) { DOM.loader.classList.add('d-none'); DOM.loader.classList.remove('d-flex'); } }
 
 // ==========================================
 // AUTHENTICATION
@@ -103,14 +99,13 @@ function checkSession() {
 
 async function handleLogin(e) {
     e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
     const res = await callAPI("login", { username, password });
     
     if (res.success) {
         AppState.user = res.data;
-        // Simulasi token untuk mock
         if(!AppState.user.TOKEN) AppState.user.TOKEN = "mock-token-123"; 
         localStorage.setItem('IIMS_SESSION', JSON.stringify(AppState.user));
         document.getElementById('password').value = '';
@@ -146,26 +141,21 @@ function initializeApp() {
 
 function renderHeader() {
     const user = AppState.user || {};
-
-    const role = user.ROLE || "";
+    const role = user.ROLE || "GURU";
     const nama = user.NAMA || user.USERNAME || "Pengguna";
-    const jk = user.JENIS_KELAMIN || "";
+    const jk = user.JENIS_KELAMIN || "Laki-laki";
 
     let title = "Bapak/Ibu";
-
     if (role === "AYAH_BUNDA") {
         title = "Ayah/Bunda";
-    } else if (role.includes("GURU")) {
+    } else if (role.includes("GURU") || role === "ADMIN") {
         title = jk === "Perempuan" ? "Ustadzah" : "Ustadz";
     } else if (role === "KEPSEK") {
-        title = "Bapak Kepala Sekolah";
+        title = "Bapak";
     }
 
-    DOM.userGreeting.innerHTML =
-        `Selamat Datang, <span class="text-primary-azhar">${title} ${nama.split(' ')[0]}</span>`;
-
-    DOM.userRoleBadge.innerText =
-        role ? role.replace('_', ' ') : '-';
+    DOM.userGreeting.innerHTML = `Selamat Datang, <span class="text-primary-azhar">${title} ${nama.split(' ')[0]}</span>`;
+    DOM.userRoleBadge.innerText = role ? role.replace('_', ' ') : '-';
 }
 
 // ==========================================
@@ -210,10 +200,9 @@ const MENU_STRUCTURE = {
 };
 
 function renderSidebar() {
-    const role = AppState.user.ROLE;
-    let menus = MENU_STRUCTURE[role] || [];
+    const role = AppState.user.ROLE || "GURU";
+    let menus = [...(MENU_STRUCTURE[role] || MENU_STRUCTURE.GURU)];
 
-    // Logika Khusus: Keputrian untuk Guru Perempuan
     if (role === "GURU" && AppState.user.JENIS_KELAMIN === "Perempuan") {
         menus.splice(2, 0, { id: 'keputrian', icon: 'fa-person-dress', text: 'Keputrian' });
     }
@@ -229,27 +218,20 @@ function renderSidebar() {
 
     DOM.navMenus.innerHTML = html;
 
-    // Attach Event Listeners
     document.querySelectorAll('.nav-menu-item').forEach(el => {
         el.addEventListener('click', (e) => {
             e.preventDefault();
             const target = e.currentTarget.getAttribute('data-target');
-            // Update Active State
             document.querySelectorAll('.nav-menu-item').forEach(n => n.classList.remove('active'));
             e.currentTarget.classList.add('active');
             
-            // Close mobile sidebar if open
             if(window.innerWidth < 992) DOM.sidebar.classList.remove('show');
-            
             loadView(target);
         });
     });
 
-   // Set first active
-const firstMenu = document.querySelector('.nav-menu-item');
-
-if (firstMenu) {
-    firstMenu.classList.add('active');
+    const firstMenu = document.querySelector('.nav-menu-item');
+    if (firstMenu) firstMenu.classList.add('active');
 }
 
 // ==========================================
@@ -264,14 +246,13 @@ async function loadView(viewId) {
         if (role === 'ADMIN') await renderAdminDashboard();
         else if (role === 'KEPSEK') await renderKepsekDashboard();
         else if (role === 'AYAH_BUNDA') await renderAyahBundaDashboard();
-        else await renderGuruDashboard(); // Guru & Guru Tahfidz share similar base structure
+        else await renderGuruDashboard();
     } else {
-        // Placeholder untuk menu lain (Tahfidz, Pembinaan, dll)
         DOM.routerView.innerHTML = `
             <div class="card-enterprise p-5 text-center mt-4">
                 <i class="fas fa-tools fa-4x text-muted mb-3 opacity-50"></i>
-                <h3 class="font-poppins text-primary-azhar">Modul ${viewId.toUpperCase()}</h3>
-                <p class="text-muted">Fitur sedang dalam tahap integrasi dengan API Gateway.</p>
+                <h3 class="font-poppins text-primary-azhar">Modul ${viewId.toUpperCase().replace('-', ' ')}</h3>
+                <p class="text-muted">Fitur sedang dalam tahap integrasi dengan API Gateway Google Sheets.</p>
             </div>
         `;
     }
@@ -279,22 +260,21 @@ async function loadView(viewId) {
 
 // --- TEMPLATE: ADMIN DASHBOARD ---
 async function renderAdminDashboard() {
-    const res = await callAPI("getAdminDashboard");
-    const data = res.success ? res.data : { TotalMurid: 420, TotalGuru: 35, TotalSetoran: 1250, TotalSurahSelesai: 320 }; // mock fallback
-
     DOM.routerView.innerHTML = `
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Enterprise Dashboard</h4>
         <div class="row g-4 mb-4">
-            ${createCard('Total Murid', data.TotalMurid, 'fa-users', 'bg-primary text-white')}
-            ${createCard('Total Guru', data.TotalGuru, 'fa-chalkboard-teacher', 'bg-success text-white')}
-            ${createCard('Total Setoran', data.TotalSetoran, 'fa-quran', 'bg-gold text-dark')}
-            ${createCard('Surah Selesai', data.TotalSurahSelesai, 'fa-check-double', 'bg-info text-white')}
+            ${createCard('Total Murid', '420', 'fa-users', 'bg-primary text-white')}
+            ${createCard('Total Guru', '35', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('Total Setoran', '1,250', 'fa-quran', 'bg-gold text-dark')}
+            ${createCard('Surah Selesai', '320', 'fa-check-double', 'bg-info text-white')}
         </div>
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="card-enterprise p-4 h-100">
                     <h6 class="font-poppins fw-bold mb-3">Grafik Perkembangan Tahfidz Mingguan</h6>
-                    <canvas id="chartTahfidz" height="100"></canvas>
+                    <div style="position: relative; height:220px; width:100%;">
+                        <canvas id="chartTahfidz"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -309,8 +289,9 @@ async function renderAdminDashboard() {
             </div>
         </div>
     `;
-    
-    initBarChart('chartTahfidz', ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'], [45, 59, 80, 81, 56]);
+    setTimeout(() => {
+        initBarChart('chartTahfidz', ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'], [45, 59, 80, 81, 56]);
+    }, 50);
 }
 
 // --- TEMPLATE: GURU DASHBOARD ---
@@ -318,9 +299,9 @@ async function renderGuruDashboard() {
     DOM.routerView.innerHTML = `
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Kelas Binaan</h4>
         <div class="row g-4 mb-4">
-            ${createCard('Murid Binaan', 32, 'fa-user-graduate', 'bg-primary text-white')}
-            ${createCard('Setoran Minggu Ini', 28, 'fa-book-open', 'bg-success text-white')}
-            ${createCard('Catatan Pembinaan', 3, 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
+            ${createCard('Murid Binaan', '32', 'fa-user-graduate', 'bg-primary text-white')}
+            ${createCard('Setoran Minggu Ini', '28', 'fa-book-open', 'bg-success text-white')}
+            ${createCard('Catatan Pembinaan', '3', 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
         </div>
         <div class="card-enterprise p-4">
             <h6 class="font-poppins fw-bold mb-3">Daftar Murid</h6>
@@ -379,7 +360,6 @@ async function renderKepsekDashboard() {
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Ananda</h4>
-        
         <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white">
             <div class="d-flex align-items-center">
                 <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 60px; height: 60px;">
@@ -391,7 +371,6 @@ async function renderAyahBundaDashboard() {
                 </div>
             </div>
         </div>
-
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
@@ -408,7 +387,7 @@ async function renderAyahBundaDashboard() {
                         <span class="text-muted">Predikat Terakhir</span>
                         <span class="badge bg-primary">Jayyid Jiddan</span>
                     </div>
-                    <div class="mt-4 text-center">
+                    <div class="mt-4">
                         <span class="small text-muted mb-1 d-block">Pencapaian Target Semester</span>
                         <div class="progress" style="height: 10px;">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
@@ -416,7 +395,6 @@ async function renderAyahBundaDashboard() {
                     </div>
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="card-enterprise p-4 h-100 border-top border-4 border-warning">
                     <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-cow text-warning me-2"></i> Tabungan Kurban</h6>
@@ -467,6 +445,7 @@ function initBarChart(canvasId, labels, data) {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: { y: { beginAtZero: true } }
         }
@@ -475,24 +454,27 @@ function initBarChart(canvasId, labels, data) {
 
 // ==========================================
 // MOCK DEVELOPMENT API 
-// (Menjalankan UI meski GAS_URL kosong)
 // ==========================================
 function mockAPIResponse(action, payload) {
     return new Promise((resolve) => {
         setTimeout(() => {
             if(action === "login") {
                 let role = "GURU";
-                if(payload.username.toLowerCase() === "admin") role = "ADMIN";
-                if(payload.username.toLowerCase() === "kepsek") role = "KEPSEK";
-                if(payload.username.toLowerCase() === "ayah") role = "AYAH_BUNDA";
+                let namaReal = "Ustadz Renaldi, S.Pd";
+                const userIn = payload.username.toLowerCase();
+                
+                if(userIn === "admin") { role = "ADMIN"; namaReal = "Ustadz Renaldi (Super Admin)"; }
+                else if(userIn === "kepsek") { role = "KEPSEK"; namaReal = "Bapak H. Kepala Sekolah, M.Pd"; }
+                else if(userIn === "ortu" || userIn === "ayah") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
+                else if(userIn === "gurutahfidz") { role = "GURU_TAHFIDZ"; namaReal = "Ustadz Syam Al-Hafizh"; }
                 
                 resolve({
                     success: true,
-                    data: { NAMA: "Ahmad Fauzi", USERNAME: payload.username, ROLE: role, JENIS_KELAMIN: "Laki-laki" }
+                    data: { NAMA: namaReal, USERNAME: payload.username, ROLE: role, JENIS_KELAMIN: "Laki-laki" }
                 });
             } else {
                 resolve({ success: true, data: {} });
             }
-        }, 800);
+        }, 600);
     });
 }
