@@ -9,7 +9,7 @@
 // ==========================================
 // CONFIGURATION API
 // ==========================================
-const GAS_URL = https://script.google.com/macros/s/AKfycbx0P2qroCtNv2Ryfg31LnjfhqmNSx3acZtNpguKPn88ixzCCmpemRPi-qu73_4cENiR6w/exec; 
+const GAS_URL = "https://script.google.com/macros/s/AKfycbx0P2qroCtNv2Ryfg31LnjfhqmNSx3acZtNpguKPn88ixzCCmpemRPi-qu73_4cENiR6w/exec"; 
 
 // ==========================================
 // STATE MANAGEMENT
