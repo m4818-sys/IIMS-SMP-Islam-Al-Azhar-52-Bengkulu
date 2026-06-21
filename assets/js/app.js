@@ -147,7 +147,9 @@ function renderHeader() {
 
     let title = "Bapak/Ibu";
     if (role === "AYAH_BUNDA") {
-        title = "Ayah/Bunda";
+        DOM.userGreeting.innerHTML = `Selamat Datang, <span class="text-primary-azhar">Ayah/Bunda dari Ananda M. Fatih</span>`;
+        DOM.userRoleBadge.innerText = 'WALI MURID';
+        return;
     } else if (role === "OSIS") {
         title = "Kakak / Pengurus";
     } else if (role.includes("GURU") || role === "ADMIN") {
@@ -274,7 +276,7 @@ async function loadView(viewId) {
     }
 }
 
-// --- MUTIARA ISLAMI STATIS (UKURAN FONT BESAR) ---
+// --- MUTIARA ISLAMI STATIS ---
 function createMutiaraStatisHTML() {
     return `
         <div class="p-3 px-4 mb-4 font-inter text-muted rounded shadow-sm d-flex align-items-center" style="background-color: #ffffff; font-size: 14px; border-left: 4px solid #0A3663; line-height: 1.6;">
@@ -284,7 +286,7 @@ function createMutiaraStatisHTML() {
     `;
 }
 
-// --- WIDGET MONITORING ADAB & KEPUTRIAN ---
+// --- WIDGET MONITORING ADAB & KEPUTRIAN (UNTUK GURU/ADMIN) ---
 function createAdabDanKeputrianWidgetHTML() {
     return `
         <div class="card-enterprise p-4 h-100">
@@ -450,42 +452,77 @@ async function renderKepsekDashboard() {
     `;
 }
 
-// --- TEMPLATE: AYAH BUNDA DASHBOARD ---
+// --- TEMPLATE: REVISI JUARA AYAH BUNDA DASHBOARD ---
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Pusat Informasi Perkembangan Ananda</h4>
+        
+        <!-- Banner Identitas Ananda Terbaca Jelas -->
         <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white shadow-sm">
             <div class="d-flex align-items-center">
-                <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 60px; height: 60px;">
-                    <i class="fas fa-user-graduate fa-2x"></i>
+                <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 55px; height: 55px;">
+                    <i class="fas fa-user-graduate fa-lg"></i>
                 </div>
                 <div>
-                    <h4 class="font-poppins fw-bold mb-1">Ananda Muhammad Fatih</h4>
-                    <p class="mb-0 text-gold font-inter fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412</p>
+                    <h4 class="font-poppins fw-bold mb-1" style="font-size: 18px;">Profil Akun Santri: Muhammad Fatih</h4>
+                    <p class="mb-0 text-gold font-inter small fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412 • Wali Kelas: Ustadz Renaldi</p>
                 </div>
             </div>
         </div>
+
+        <!-- 4 Kartu Monitor Atas (Mengisi Kekosongan Layar) -->
+        <div class="row g-3 mb-4">
+            ${createCard('TOTAL HAFALAN', '4.2 Juz', 'fa-book-quran', 'bg-primary text-white')}
+            ${createCard('KURBAN REKREASI', 'Rp2.100.000', 'fa-cow', 'bg-success text-white')}
+            ${createCard('ABSENSI / SAKIT', '0 Hari', 'fa-calendar-check', 'bg-info text-white')}
+            ${createCard('CATATAN PELANGGARAN', 'Bersih ✨', 'fa-heart', 'bg-warning text-dark')}
+        </div>
+
         <div class="row g-4 mb-4">
-            <div class="col-md-6">
-                <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
-                    <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-book-quran me-2"></i>Capaian & Progres Hafalan</h6>
-                    <div class="p-3 bg-light rounded mb-3">
-                        <small class="text-muted d-block">Setoran Terakhir:</small>
-                        <span class="fw-bold text-dark">Surah Al-Muthaffifin (Ayat 1-12)</span>
+            <!-- Sisi Kiri: Detail Progres Riwayat Hafalan -->
+            <div class="col-lg-8">
+                <div class="card-enterprise p-4 h-100">
+                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-history me-2"></i>Riwayat Setoran Hafalan Terakhir</h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover font-inter align-middle small">
+                            <thead class="table-light text-center">
+                                <tr><th>Tanggal</th><th class="text-start">Surah & Ayat</th><th>Nilai Adab Hafalan</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="text-center">22/06/2026</td><td class="fw-bold">Al-Muthaffifin: 1 - 12</td><td class="text-center">A (Mumtaz)</td><td class="text-center"><span class="badge bg-success">Lancar</span></td></tr>
+                                <tr><td class="text-center">15/06/2026</td><td class="fw-bold">Al-Infitar: 1 - 19</td><td class="text-center">B+ (Jayyid Jiddan)</td><td class="text-center"><span class="badge bg-primary">Selesai</span></td></tr>
+                                <tr><td class="text-center">08/06/2026</td><td class="fw-bold">At-Takwir: 1 - 29</td><td class="text-center">A (Mumtaz)</td><td class="text-center"><span class="badge bg-primary">Selesai</span></td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card-enterprise p-4 h-100 border-top border-4 border-info">
-                    <h6 class="font-poppins fw-bold mb-3 text-info"><i class="fas fa-heart-circle-check me-2"></i>Catatan Adab</h6>
-                    <div class="p-4 text-center bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-smile-beam fa-3x text-success mb-3"></i>
-                        <h6 class="font-poppins fw-bold text-success mb-1">Alhamdulillah, Ananda Bersih!</h6>
+
+            <!-- Sisi Kanan (Area Kursor Kosong): Mengisi Slot Kosong dengan Progres Tabungan Kurban -->
+            <div class="col-lg-4">
+                <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
+                    <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-wallet me-2"></i>Rincian Tabungan Kurban Ananda</h6>
+                    <div class="p-3 bg-light rounded mb-3 font-inter">
+                        <div class="d-flex justify-content-between mb-1 small text-muted">
+                            <span>Dana Terkumpul:</span>
+                            <span class="fw-bold text-success">Rp2.100.000</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 small text-muted">
+                            <span>Target Minimum kurban:</span>
+                            <span>Rp3.500.000</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="text-end mt-1" style="font-size: 11px;"><span class="text-success fw-bold">60%</span> Terpenuhi</div>
                     </div>
+                    
+                    <h6 class="font-poppins fw-bold mb-2 text-dark small"><i class="fas fa-info-circle me-1 text-muted"></i>Catatan Pembinaan Karakter</h6>
+                    <p class="font-inter text-muted mb-0" style="font-size: 12px; line-height: 1.5;">Alhamdulillah, pekan ini Ananda tertib mengikuti shalat berjamaah tepat waktu dan aktif menjaga kebersihan asrama.</p>
                 </div>
             </div>
         </div>
+
         ${createFooterHTML()}
     `;
 }
@@ -540,7 +577,7 @@ function createCard(title, value, icon, iconBgClass) {
                 </div>
                 <div>
                     <h6 class="text-muted font-inter mb-1 text-uppercase" style="font-size: 9px; letter-spacing: 0.5px;">${title}</h6>
-                    <h4 class="font-poppins fw-bold mb-0 text-dark">${value}</h4>
+                    <h4 class="font-poppins fw-bold mb-0 text-dark" style="font-size: 14px;">${value}</h4>
                 </div>
             </div>
         </div>
@@ -578,7 +615,7 @@ function mockAPIResponse(action, payload) {
                 
                 if(userIn === "admin") { role = "ADMIN"; namaReal = "Renaldi (Super Admin)"; }
                 else if(userIn === "kepsek") { role = "KEPSEK"; namaReal = "Bapak H. Kepala Sekolah, M.Pd"; }
-                else if(userIn === "ortu" || userIn === "ayah") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
+                else if(userIn === "ortu" || userIn === "ayah" || userIn === "bunda") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
                 else if(userIn === "gurutahfidz") { role = "GURU_TAHFIDZ"; namaReal = "Ustadz Syam Al-Hafizh"; }
                 else if(userIn === "osis") { role = "OSIS"; namaReal = "Kak Zaidan (Ketua OSIS)"; }
                 
