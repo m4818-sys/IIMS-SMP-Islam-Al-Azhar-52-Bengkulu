@@ -454,4 +454,141 @@ async function renderKepsekDashboard() {
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Pusat Informasi Perkembangan Ananda</h4>
+        <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white shadow-sm">
+            <div class="d-flex align-items-center">
+                <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 60px; height: 60px;">
+                    <i class="fas fa-user-graduate fa-2x"></i>
+                </div>
+                <div>
+                    <h4 class="font-poppins fw-bold mb-1">Ananda Muhammad Fatih</h4>
+                    <p class="mb-0 text-gold font-inter fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412</p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
+                    <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-book-quran me-2"></i>Capaian & Progres Hafalan</h6>
+                    <div class="p-3 bg-light rounded mb-3">
+                        <small class="text-muted d-block">Setoran Terakhir:</small>
+                        <span class="fw-bold text-dark">Surah Al-Muthaffifin (Ayat 1-12)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card-enterprise p-4 h-100 border-top border-4 border-info">
+                    <h6 class="font-poppins fw-bold mb-3 text-info"><i class="fas fa-heart-circle-check me-2"></i>Catatan Adab</h6>
+                    <div class="p-4 text-center bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
+                        <i class="fas fa-smile-beam fa-3x text-success mb-3"></i>
+                        <h6 class="font-poppins fw-bold text-success mb-1">Alhamdulillah, Ananda Bersih!</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ${createFooterHTML()}
+    `;
+}
+
+// --- TEMPLATE: PUSAT DOKUMEN ---
+async function renderDokumenView() {
+    const role = AppState.user.ROLE || "GURU";
+    const canPrint = (role === 'ADMIN' || role === 'KEPSEK' || role === 'GURU_TAHFIDZ');
+
+    let actionButtonsHTML = canPrint ? `
+        <button class="btn btn-sm btn-outline-primary mb-1 me-1" onclick="alert('Membuka Preview...')"><i class="fas fa-eye"></i> Tinjau</button>
+        <button class="btn btn-sm btn-success mb-1" onclick="alert('Mencetak...')"><i class="fas fa-print"></i> Cetak</button>
+    ` : `
+        <button class="btn btn-sm btn-outline-primary w-100" onclick="alert('Membuka PDF...')"><i class="fas fa-file-pdf"></i> Tinjau Raport</button>
+    `;
+
+    let actionSertifikatHTML = canPrint ? `
+        <button class="btn btn-sm btn-outline-success mb-1 me-1" onclick="alert('Membuka Preview...')"><i class="fas fa-eye"></i> Tinjau</button>
+        <button class="btn btn-sm btn-gold mb-1" onclick="alert('Mencetak...')"><i class="fas fa-print"></i> Cetak</button>
+    ` : `
+        <button class="btn btn-sm btn-outline-success w-100" onclick="alert('Membuka Sertifikat...')"><i class="fas fa-award"></i> Tinjau Sertifikat</button>
+    `;
+
+    DOM.routerView.innerHTML = `
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Raport & Sertifikat Santri</h4>
+        <div class="card-enterprise p-4">
+            <div class="table-responsive">
+                <table class="table table-hover font-inter align-middle small text-center">
+                    <thead class="table-light">
+                        <tr><th>NIS</th><th class="text-start">Nama Lengkap Santri</th><th>Kelas</th><th>E-Raport</th><th>Sertifikat Juz</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1023412</td><td class="fw-bold text-start">Muhammad Fatih</td><td>VIII - Abu Bakar</td><td>${actionButtonsHTML}</td><td>${actionSertifikatHTML}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        ${createFooterHTML()}
+    `;
+}
+
+// ==========================================
+// CORE HELPERS & UTILITIES
+// ==========================================
+function createCard(title, value, icon, iconBgClass) {
+    return `
+        <div class="col-6 col-sm-4 col-xl-2">
+            <div class="card-enterprise p-3 h-100 d-flex flex-column align-items-center text-center justify-content-center">
+                <div class="rounded-circle d-flex justify-content-center align-items-center mb-2 ${iconBgClass}" style="width: 45px; height: 45px;">
+                    <i class="fas ${icon} fa-md"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted font-inter mb-1 text-uppercase" style="font-size: 9px; letter-spacing: 0.5px;">${title}</h6>
+                    <h4 class="font-poppins fw-bold mb-0 text-dark">${value}</h4>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function initBarChart(canvasId, labels, data) {
+    const ctx = document.getElementById(canvasId);
+    if(!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{ label: 'Capaian (Juz)', data: data, backgroundColor: '#0A3663', borderRadius: 4 }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+}
+
+// ==========================================
+// MOCK DEVELOPMENT API 
+// ==========================================
+function mockAPIResponse(action, payload) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            if(action === "login") {
+                let role = "GURU";
+                let namaReal = "Ustadz Renaldi, S.Pd";
+                const userIn = payload.username.toLowerCase();
+                
+                if(userIn === "admin") { role = "ADMIN"; namaReal = "Renaldi (Super Admin)"; }
+                else if(userIn === "kepsek") { role = "KEPSEK"; namaReal = "Bapak H. Kepala Sekolah, M.Pd"; }
+                else if(userIn === "ortu" || userIn === "ayah") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
+                else if(userIn === "gurutahfidz") { role = "GURU_TAHFIDZ"; namaReal = "Ustadz Syam Al-Hafizh"; }
+                else if(userIn === "osis") { role = "OSIS"; namaReal = "Kak Zaidan (Ketua OSIS)"; }
+                
+                resolve({
+                    success: true,
+                    data: { NAMA: namaReal, USERNAME: payload.username, ROLE: role, JENIS_KELAMIN: "Laki-laki" }
+                });
+            } else {
+                resolve({ success: true, data: {} });
+            }
+        }, 200);
+    });
+}
