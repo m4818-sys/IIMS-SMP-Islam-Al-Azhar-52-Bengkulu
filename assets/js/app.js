@@ -145,15 +145,27 @@ function initializeApp() {
 }
 
 function renderHeader() {
-    const user = AppState.user;
-    let title = "Bapak/Ibu";
-    
-    if (user.ROLE === "AYAH_BUNDA") title = "Ayah/Bunda";
-    else if (user.ROLE.includes("GURU")) title = user.JENIS_KELAMIN === "Perempuan" ? "Ustadzah" : "Ustadz";
-    else if (user.ROLE === "KEPSEK") title = "Bapak Kepala Sekolah";
+    const user = AppState.user || {};
 
-    DOM.userGreeting.innerHTML = `Selamat Datang, <span class="text-primary-azhar">${title} ${user.NAMA.split(' ')[0]}</span>`;
-    DOM.userRoleBadge.innerText = user.ROLE.replace('_', ' ');
+    const role = user.ROLE || "";
+    const nama = user.NAMA || user.USERNAME || "Pengguna";
+    const jk = user.JENIS_KELAMIN || "";
+
+    let title = "Bapak/Ibu";
+
+    if (role === "AYAH_BUNDA") {
+        title = "Ayah/Bunda";
+    } else if (role.includes("GURU")) {
+        title = jk === "Perempuan" ? "Ustadzah" : "Ustadz";
+    } else if (role === "KEPSEK") {
+        title = "Bapak Kepala Sekolah";
+    }
+
+    DOM.userGreeting.innerHTML =
+        `Selamat Datang, <span class="text-primary-azhar">${title} ${nama.split(' ')[0]}</span>`;
+
+    DOM.userRoleBadge.innerText =
+        role ? role.replace('_', ' ') : '-';
 }
 
 // ==========================================
