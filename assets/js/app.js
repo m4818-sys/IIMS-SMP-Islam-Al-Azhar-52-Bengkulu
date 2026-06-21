@@ -1,3 +1,249 @@
+/**
+ * =========================================================
+ * IIMS - FRONTEND LOGIC (VANILLA JS)
+ * Developer: Renaldi
+ * Architecture: SPA / Enterprise Dashboard (Edisi Spesial Akses OSIS)
+ * =========================================================
+ */
+
+// ==========================================
+// CONFIGURATION API
+// ==========================================
+const GAS_URL = "PASTE_GAS_WEBAPP_URL_HERE"; 
+
+// ==========================================
+// STATE MANAGEMENT
+// ==========================================
+const AppState = {
+    user: null, 
+    currentView: 'login'
+};
+
+// ==========================================
+// DOM ELEMENTS
+// ==========================================
+const DOM = {
+    viewLogin: document.getElementById('view-login'),
+    viewApp: document.getElementById('view-app'),
+    routerView: document.getElementById('router-view'),
+    formLogin: document.getElementById('form-login'),
+    btnLogout: document.getElementById('btn-logout'),
+    sidebar: document.getElementById('sidebar'),
+    navMenus: document.getElementById('nav-menus'),
+    toggleSidebar: document.getElementById('toggle-sidebar'),
+    userGreeting: document.getElementById('user-greeting'),
+    userRoleBadge: document.getElementById('user-role-badge'),
+    loader: document.getElementById('loading-overlay')
+};
+
+// ==========================================
+// INITIALIZATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    checkSession();
+    setupEventListeners();
+});
+
+function setupEventListeners() {
+    if (DOM.formLogin) DOM.formLogin.addEventListener('submit', handleLogin);
+    if (DOM.btnLogout) DOM.btnLogout.addEventListener('click', handleLogout);
+    if (DOM.toggleSidebar) {
+        DOM.toggleSidebar.addEventListener('click', () => {
+            DOM.sidebar.classList.toggle('show');
+        });
+    }
+}
+
+// ==========================================
+// API HELPER
+// ==========================================
+async function callAPI(action, payload = {}) {
+    showLoader();
+    try {
+        const bodyData = {
+            action: action,
+            payload: payload,
+            token: AppState.user ? AppState.user.TOKEN : null
+        };
+
+        const response = await fetch(GAS_URL, {
+            method: 'POST',
+            body: JSON.stringify(bodyData)
+        });
+        
+        const data = await response.json();
+        hideLoader();
+        return data;
+    } catch (error) {
+        hideLoader();
+        console.error("API Error:", error);
+        return mockAPIResponse(action, payload);
+    }
+}
+
+function showLoader() { if(DOM.loader) { DOM.loader.classList.remove('d-none'); DOM.loader.classList.add('d-flex'); } }
+function hideLoader() { if(DOM.loader) { DOM.loader.classList.add('d-none'); DOM.loader.classList.remove('d-flex'); } }
+
+// ==========================================
+// AUTHENTICATION
+// ==========================================
+function checkSession() {
+    const savedSession = localStorage.getItem('IIMS_SESSION');
+    if (savedSession) {
+        AppState.user = JSON.parse(savedSession);
+        initializeApp();
+    } else {
+        showLoginView();
+    }
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    const res = await mockAPIResponse("login", { username, password });
+    
+    if (res.success) {
+        AppState.user = res.data;
+        if(!AppState.user.TOKEN) AppState.user.TOKEN = "mock-token-123"; 
+        localStorage.setItem('IIMS_SESSION', JSON.stringify(AppState.user));
+        document.getElementById('password').value = '';
+        initializeApp();
+    } else {
+        alert("Login Gagal: " + res.message);
+    }
+}
+
+function handleLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('IIMS_SESSION');
+    AppState.user = null;
+    showLoginView();
+}
+
+// ==========================================
+// UI ROUTING & RENDERING
+// ==========================================
+function showLoginView() {
+    DOM.viewLogin.classList.remove('d-none');
+    DOM.viewApp.classList.add('d-none');
+}
+
+function initializeApp() {
+    DOM.viewLogin.classList.add('d-none');
+    DOM.viewApp.classList.remove('d-none');
+    
+    renderHeader();
+    renderSidebar();
+    loadView('dashboard');
+}
+
+function renderHeader() {
+    const user = AppState.user || {};
+    const role = user.ROLE || "GURU";
+    const nama = user.NAMA || user.USERNAME || "Pengguna";
+    const jk = user.JENIS_KELAMIN || "Laki-laki";
+
+    let title = "Bapak/Ibu";
+    if (role === "AYAH_BUNDA") {
+        title = "Ayah/Bunda";
+    } else if (role === "OSIS") {
+        title = "Kakak / Pengurus";
+    } else if (role.includes("GURU") || role === "ADMIN") {
+        title = jk === "Perempuan" ? "Ustadzah" : "Ustadz";
+    } else if (role === "KEPSEK") {
+        title = "Bapak";
+    }
+
+    DOM.userGreeting.innerHTML = `Selamat Datang, <span class="text-primary-azhar">${title} ${nama.split(' ')[0]}</span>`;
+    DOM.userRoleBadge.innerText = role ? role.replace('_', ' ') : '-';
+}
+
+// ==========================================
+// DYNAMIC SIDEBAR MENUS
+// ==========================================
+const MENU_STRUCTURE = {
+    ADMIN: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama' },
+        { id: 'data-guru', icon: 'fa-chalkboard-teacher', text: 'Data Guru' },
+        { id: 'data-murid', icon: 'fa-user-graduate', text: 'Data Murid' },
+        { id: 'penempatan', icon: 'fa-door-open', text: 'Penempatan Kelas' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz' },
+        { id: 'keputrian', icon: 'fa-person-dress', text: 'Keputrian' },
+        { id: 'pembinaan', icon: 'fa-heart', text: 'Adab & Pembinaan' },
+        { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
+        { id: 'pengumuman', icon: 'fa-bullhorn', text: 'Pengumuman' },
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Cetak Raport & Sertifikat' }
+    ],
+    KEPSEK: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Global' },
+        { id: 'pembinaan', icon: 'fa-heart', text: 'Adab & Pembinaan' },
+        { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Validasi & Cetak Berkas' }
+    ],
+    GURU: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Kelas' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Murid' },
+        { id: 'pembinaan', icon: 'fa-heart', text: 'Catatan Adab' },
+        { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
+        { id: 'pengumuman', icon: 'fa-bullhorn', text: 'Pengumuman' },
+        { id: 'dokumen', icon: 'fa-file-invoice', text: 'Lihat Dokumen Kelas' }
+    ],
+    GURU_TAHFIDZ: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Tahfidz' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Input Setoran' },
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Cetak Raport & Sertifikat' }
+    ],
+    AYAH_BUNDA: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Ananda' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Perkembangan Tahfidz' },
+        { id: 'pembinaan', icon: 'fa-heart', text: 'Perkembangan Adab' },
+        { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban Ananda' },
+        { id: 'dokumen', icon: 'fa-file-invoice', text: 'Raport & Sertifikat Ananda' }
+    ],
+    OSIS: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Petugas OSIS' },
+        { id: 'pembinaan', icon: 'fa-pen-to-square', text: 'Input Catatan Pelanggaran' }
+    ]
+};
+
+function renderSidebar() {
+    const role = AppState.user.ROLE || "GURU";
+    let menus = [...(MENU_STRUCTURE[role] || MENU_STRUCTURE.GURU)];
+
+    if ((role === "GURU" || role === "OSIS") && AppState.user.JENIS_KELAMIN === "Perempuan") {
+        menus.push({ id: 'keputrian', icon: 'fa-person-dress', text: 'Input Absensi Keputrian' });
+    }
+
+    let html = '';
+    menus.forEach(m => {
+        html += `
+            <a href="#" class="nav-link nav-menu-item" data-target="${m.id}">
+                <i class="fas ${m.icon} me-2"></i> ${m.text}
+            </a>
+        `;
+    });
+
+    DOM.navMenus.innerHTML = html;
+
+    document.querySelectorAll('.nav-menu-item').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = e.currentTarget.getAttribute('data-target');
+            document.querySelectorAll('.nav-menu-item').forEach(n => n.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            
+            if(window.innerWidth < 992) DOM.sidebar.classList.remove('show');
+            loadView(target);
+        });
+    });
+
+    const firstMenu = document.querySelector('.nav-menu-item');
+    if (firstMenu) firstMenu.classList.add('active');
+}
+
 // ==========================================
 // VIEW HANDLER (DYNAMIC INNER ROUTER)
 // ==========================================
@@ -28,12 +274,53 @@ async function loadView(viewId) {
     }
 }
 
-// --- MUTIARA ISLAMI STATIS (UKURAN FONT DIPERBESAR) ---
+// --- MUTIARA ISLAMI STATIS (UKURAN FONT BESAR) ---
 function createMutiaraStatisHTML() {
     return `
         <div class="p-3 px-4 mb-4 font-inter text-muted rounded shadow-sm d-flex align-items-center" style="background-color: #ffffff; font-size: 14px; border-left: 4px solid #0A3663; line-height: 1.6;">
             <i class="fas fa-quote-left text-primary-azhar me-3 fa-lg opacity-70"></i>
             <span class="fw-medium">"Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya." (HR. Bukhari). Jagalah adab dan kejujuranmu dalam menuntut ilmu.</span>
+        </div>
+    `;
+}
+
+// --- WIDGET MONITORING ADAB & KEPUTRIAN ---
+function createAdabDanKeputrianWidgetHTML() {
+    return `
+        <div class="card-enterprise p-4 h-100">
+            <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Laporan Adab & Pembinaan</h6>
+            <div class="font-inter small mb-4">
+                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
+                    <span class="d-block fw-bold text-dark">Zaky (9A) - Terlambat Shalat Berjamaah</span>
+                    <small class="text-muted">Hari ini • Petugas OSIS</small>
+                </div>
+                <div class="p-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
+                    <span class="d-block fw-bold text-dark">Raihan (7C) - Gadget Tidak Dikumpulkan</span>
+                    <small class="text-muted">Kemarin • Wali Kelas</small>
+                </div>
+            </div>
+
+            <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-person-dress me-2"></i>Alasan & Izin Keputrian Terbaru</h6>
+            <div class="font-inter small">
+                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #0A3663 !important;">
+                    <span class="d-block fw-bold text-dark">Siti Aminah (8B) - Izin Sakit di UKS</span>
+                    <small class="text-muted">Pekan ini • Berhalangan</small>
+                </div>
+                <div class="p-2 bg-light rounded" style="border-left: 3px solid #0A3663 !important;">
+                    <span class="d-block fw-bold text-dark">Fatmawati (9C) - Alasan Nyeri Haid</span>
+                    <small class="text-muted">Pekan ini • Validasi Ustadzah</small>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// --- TEMPLATE: FOOTER STATIC ---
+function createFooterHTML() {
+    return `
+        <div class="text-center py-4 mt-5 border-top font-inter small text-muted" style="clear: both; position: relative;">
+            Developed & Maintained by <span class="fw-bold text-primary-azhar">Renaldi</span> <br>
+            <span class="opacity-70">© 2026 Integrated Islamic Monitoring System (IIMS) • SMP Islam Al-Azhar 52 Bengkulu. All Rights Reserved.</span>
         </div>
     `;
 }
@@ -67,10 +354,10 @@ async function renderAdminDashboard() {
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Sistem Pemantauan Utama Admin</h4>
         <div class="row g-3 mb-4">
-            ${createCard('TOTAL MURID', '324', 'fa-users', 'bg-primary text-white')}
-            ${createCard('TOTAL GURU', '28', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('TOTAL MURID', '420', 'fa-users', 'bg-primary text-white')}
+            ${createCard('TOTAL GURU', '35', 'fa-chalkboard-teacher', 'bg-success text-white')}
             ${createCard('TOTAL SETORAN', '1.250', 'fa-quran', 'bg-info text-white')}
-            ${createCard('SURAH SELESAI', '840', 'fa-check-double', 'bg-success text-white')}
+            ${createCard('SURAH SELESAI', '320', 'fa-check-double', 'bg-success text-white')}
             ${createCard('BERHALANGAN', '12', 'fa-calendar-minus', 'bg-danger text-white')}
             ${createCard('PEMBINAAN ADAB', '5', 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
         </div>
@@ -135,7 +422,7 @@ async function renderKepsekDashboard() {
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Monitoring Kepala Sekolah</h4>
         <div class="row g-3 mb-4">
-            ${createCard('TOTAL GURU AKTIF', '28', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('TOTAL GURU AKTIF', '35', 'fa-chalkboard-teacher', 'bg-success text-white')}
             ${createCard('TARGET GLOBAL TAHFIDZ', '85%', 'fa-star', 'bg-primary text-white')}
             ${createCard('BERKAS VALIDASI', '12', 'fa-file-signature', 'bg-danger text-white')}
         </div>
@@ -167,76 +454,4 @@ async function renderKepsekDashboard() {
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Pusat Informasi Perkembangan Ananda</h4>
-        <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white shadow-sm">
-            <div class="d-flex align-items-center">
-                <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 60px; height: 60px;">
-                    <i class="fas fa-user-graduate fa-2x"></i>
-                </div>
-                <div>
-                    <h4 class="font-poppins fw-bold mb-1">Ananda Muhammad Fatih</h4>
-                    <p class="mb-0 text-gold font-inter fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412</p>
-                </div>
-            </div>
-        </div>
-        <div class="row g-4 mb-4">
-            <div class="col-md-6">
-                <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
-                    <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-book-quran me-2"></i>Capaian & Progres Hafalan</h6>
-                    <div class="p-3 bg-light rounded mb-3">
-                        <small class="text-muted d-block">Setoran Terakhir:</small>
-                        <span class="fw-bold text-dark">Surah Al-Muthaffifin (Ayat 1-12)</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card-enterprise p-4 h-100 border-top border-4 border-info">
-                    <h6 class="font-poppins fw-bold mb-3 text-info"><i class="fas fa-heart-circle-check me-2"></i>Catatan Adab</h6>
-                    <div class="p-4 text-center bg-light rounded h-100 d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-smile-beam fa-3x text-success mb-3"></i>
-                        <h6 class="font-poppins fw-bold text-success mb-1">Alhamdulillah, Ananda Bersih!</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        ${createFooterHTML()}
-    `;
-}
-
-// --- TEMPLATE: PUSAT DOKUMEN ---
-async function renderDokumenView() {
-    const role = AppState.user.ROLE || "GURU";
-    const canPrint = (role === 'ADMIN' || role === 'KEPSEK' || role === 'GURU_TAHFIDZ');
-
-    let actionButtonsHTML = canPrint ? `
-        <button class="btn btn-sm btn-outline-primary mb-1 me-1" onclick="alert('Membuka Preview...')"><i class="fas fa-eye"></i> Tinjau</button>
-        <button class="btn btn-sm btn-success mb-1" onclick="alert('Mencetak...')"><i class="fas fa-print"></i> Cetak</button>
-    ` : `
-        <button class="btn btn-sm btn-outline-primary w-100" onclick="alert('Membuka PDF...')"><i class="fas fa-file-pdf"></i> Tinjau Raport</button>
-    `;
-
-    let actionSertifikatHTML = canPrint ? `
-        <button class="btn btn-sm btn-outline-success mb-1 me-1" onclick="alert('Membuka Preview...')"><i class="fas fa-eye"></i> Tinjau</button>
-        <button class="btn btn-sm btn-gold mb-1" onclick="alert('Mencetak...')"><i class="fas fa-print"></i> Cetak</button>
-    ` : `
-        <button class="btn btn-sm btn-outline-success w-100" onclick="alert('Membuka Sertifikat...')"><i class="fas fa-award"></i> Tinjau Sertifikat</button>
-    `;
-
-    DOM.routerView.innerHTML = `
-        ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Raport & Sertifikat Santri</h4>
-        <div class="card-enterprise p-4">
-            <div class="table-responsive">
-                <table class="table table-hover font-inter align-middle small text-center">
-                    <thead class="table-light">
-                        <tr><th>NIS</th><th class="text-start">Nama Lengkap Santri</th><th>Kelas</th><th>E-Raport</th><th>Sertifikat Juz</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1023412</td><td class="fw-bold text-start">Muhammad Fatih</td><td>VIII - Abu Bakar</td><td>${actionButtonsHTML}</td><td>${actionSertifikatHTML}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        ${createFooterHTML()}
-    `;
-}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-
