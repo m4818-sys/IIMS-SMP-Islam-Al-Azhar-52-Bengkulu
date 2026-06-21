@@ -6,6 +6,11 @@
  * ========================================================================
  */
 
+// ==========================================
+// CONFIGURATION API (TEMPAT LINK WEB APP GAS)
+// ==========================================
+const GAS_URL = "PASTE_GAS_WEBAPP_URL_HERE"; 
+
 // 1. STATE MANAGEMENT GLOBAL APLIKASI
 const AppState = {
     currentRole: 'ADMIN', // Default role saat memuat halaman pertama kali
@@ -13,7 +18,7 @@ const AppState = {
     semester: 'Semester Ganjil'
 };
 
-// 2. STRUKTUR MENU NAVIGASI MULTI-ROLE (Teks 'Master' telah dihapus sesuai instruksi)
+// 2. STRUKTUR MENU NAVIGASI MULTI-ROLE (Tanpa kata 'Master')
 const MENU_STRUCTURE = {
     ADMIN: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama' },
@@ -66,15 +71,17 @@ const MENU_STRUCTURE = {
     ]
 };
 
-// 3. ELEMEN DOM UTAMA
-const DOM = {
-    sidebarMenuContainer: document.getElementById('sidebar-menu-container'),
-    routerView: document.getElementById('router-view'),
-    userGreetingName: document.getElementById('user-greeting-name'),
-    userRoleBadge: document.getElementById('user-role-badge'),
-    globalTahunAjaran: document.getElementById('global-tahun-ajaran'),
-    globalSemester: document.getElementById('global-semester'),
-    roleSelectorButtons: document.querySelectorAll('.role-select-btn')
+// 3. ELEMEN DOM UTAMA (DENGAN FETCH BERBAGAI VARIASI ID AGAR AMAN)
+const getDOM = () => {
+    return {
+        sidebarMenuContainer: document.getElementById('sidebar-menu-container') || document.getElementById('nav-menus'),
+        routerView: document.getElementById('router-view'),
+        userGreetingName: document.getElementById('user-greeting-name') || document.getElementById('user-greeting'),
+        userRoleBadge: document.getElementById('user-role-badge'),
+        globalTahunAjaran: document.getElementById('global-tahun-ajaran'),
+        globalSemester: document.getElementById('global-semester'),
+        roleSelectorButtons: document.querySelectorAll('.role-select-btn')
+    };
 };
 
 // 4. STRUKTUR TEMPLATE GLOBAL
@@ -102,11 +109,11 @@ function createCard(title, value, icon, colorClass) {
             <div class="card shadow-sm border-0 rounded-3 h-100 p-3 bg-white">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <span class="text-muted fw-bold font-inter small d-block mb-1 text-uppercase">${title}</span>
-                        <h3 class="font-poppins fw-bold mb-0 text-dark">${value}</h3>
+                        <span class="text-muted fw-bold font-inter small d-block mb-1 text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">${title}</span>
+                        <h4 class="font-poppins fw-bold mb-0 text-dark" style="font-size: 16px;">${value}</h4>
                     </div>
                     <div class="p-3 rounded-3 ${colorClass} bg-opacity-10">
-                        <i class="fas ${icon} fa-xl ${colorClass.split(' ')[0]}"></i>
+                        <i class="fas ${icon} fa-lg ${colorClass.split(' ')[0]}"></i>
                     </div>
                 </div>
             </div>
@@ -121,64 +128,84 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initRoleSwitchers() {
-    DOM.roleSelectorButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetRole = button.getAttribute('data-role');
-            applyRoleSession(targetRole);
+    const DOM = getDOM();
+    if (DOM.roleSelectorButtons) {
+        DOM.roleSelectorButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetRole = button.getAttribute('data-role');
+                applyRoleSession(targetRole);
+            });
         });
-    });
+    }
 }
 
 function applyRoleSession(role) {
     AppState.currentRole = role;
+    const DOM = getDOM();
     
-    // Update Header Identitas Atas
     const profileNames = {
-        'ADMIN': 'System Administrator',
+        'ADMIN': 'Ustadz Admin (Super Admin)',
         'KEPSEK': 'Ustadzah Kepala Sekolah, M.Pd.',
-        'GURU': 'Ustadz Wali Kelas, S.Pd.',
+        'GURU': 'Ustadz Ustadz (Wali Kelas)',
         'GURU_TAHFIDZ': 'Ustadz Pengampu Muhaffiz',
-        'AYAH_BUNDA': 'Wali Murid (Ayah/Bunda Muhammad Fatih)',
+        'AYAH_BUNDA': 'Ayah/Bunda dari Ananda M. Fatih',
         'OSIS': 'Ahmad Fauzan (Ketua OSIS)'
     };
     
-    DOM.userGreetingName.textContent = profileNames[role] || 'User IIMS';
-    DOM.userRoleBadge.textContent = role.replace('_', ' ');
-    DOM.globalTahunAjaran.textContent = AppState.tahunAjaran;
-    DOM.globalSemester.textContent = AppState.semester;
+    // --- VALIDASI PENJAGA ERROR NULL (Toleransi ID HTML) ---
+    if (DOM.userGreetingName) {
+        const nameText = profileNames[role] || 'User IIMS';
+        if (DOM.userGreetingName.id === 'user-greeting') {
+            DOM.userGreetingName.innerHTML = `Selamat Datang, <span class="text-primary-azhar">${nameText}</span>`;
+        } else {
+            DOM.userGreetingName.textContent = nameText;
+        }
+    }
+    
+    if (DOM.userRoleBadge) DOM.userRoleBadge.textContent = role.replace('_', ' ');
+    if (DOM.globalTahunAjaran) DOM.globalTahunAjaran.textContent = AppState.tahunAjaran;
+    if (DOM.globalSemester) DOM.globalSemester.textContent = AppState.semester;
 
     renderSidebarMenu(role);
     navigate('dashboard');
 }
 
 function renderSidebarMenu(role) {
+    const DOM = getDOM();
+    if (!DOM.sidebarMenuContainer) return;
+    
     const menus = MENU_STRUCTURE[role] || [];
     DOM.sidebarMenuContainer.innerHTML = '';
 
     menus.forEach(menu => {
         const item = document.createElement('a');
         item.href = `#/${menu.id}`;
-        item.className = 'nav-link-azhar d-flex align-items-center p-3 text-white text-decoration-none transition-all';
+        item.className = 'nav-link nav-menu-item d-flex align-items-center p-2 text-decoration-none text-white transition-all';
         item.innerHTML = `
-            <div class="icon-box text-center me-3" style="width: 24px;">
-                <i class="fas ${menu.icon} fa-fw opacity-80"></i>
-            </div>
-            <span class="font-inter small fw-medium">${menu.text}</span>
+            <i class="fas ${menu.icon} fa-fw me-2 opacity-80"></i>
+            <span class="font-inter small">${menu.text}</span>
         `;
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            document.querySelectorAll('.nav-link-azhar').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-menu-item').forEach(el => el.classList.remove('active'));
             item.classList.add('active');
             navigate(menu.id);
         });
         DOM.sidebarMenuContainer.appendChild(item);
     });
+
+    const firstMenu = DOM.sidebarMenuContainer.querySelector('.nav-menu-item');
+    if (firstMenu) firstMenu.classList.add('active');
 }
 
-// 6. ROUTER ENGINE & KORPUS DASHBOARD MULTI-ROLE
+// 6. ROUTER ENGINE
 async function navigate(pageId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    const DOM = getDOM();
+    if (!DOM.routerView) return;
+
+    DOM.routerView.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-gold"></div></div>';
 
     if (pageId === 'dashboard') {
         switch (AppState.currentRole) {
@@ -196,10 +223,11 @@ async function navigate(pageId) {
 }
 
 // ========================================================================
-// 7. RENDERING ENGINE UNTUK DASHBOARD MULTI-ROLE (DIKEMBALIKAN UTUH & MEGAH)
+// 7. RENDERING ENGINE UNTUK DASHBOARD MULTI-ROLE
 // ========================================================================
 
 async function renderAdminDashboard() {
+    const DOM = getDOM();
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Pengaturan Kontrol Master Utama</h4>
@@ -235,12 +263,12 @@ async function renderAdminDashboard() {
                     <h6 class="fw-bold text-primary-azhar mb-3"><i class="fas fa-shield-alt me-2"></i>Log Keamanan & Akses Sistem</h6>
                     <div class="small timeline-container">
                         <div class="border-start border-2 ps-3 pb-3 position-relative">
-                            <span class="badge bg-primary mb-1">03:21 AM</span>
-                            <p class="mb-0 text-dark fw-medium">Admin mengubah filter TA ke 2026/2027</p>
+                            <span class="badge bg-primary mb-1">Terbaru</span>
+                            <p class="mb-0 text-dark fw-medium">Admin berhasil memuat filter data 2026/2027</p>
                         </div>
                         <div class="border-start border-2 ps-3 pb-2 position-relative">
-                            <span class="badge bg-secondary mb-1">Kemarin</span>
-                            <p class="mb-0 text-muted">Backup terjadwal otomatis sukses disinkronkan Cloud</p>
+                            <span class="badge bg-secondary mb-1">Sistem</span>
+                            <p class="mb-0 text-muted">Backup database aman & sinkron Cloud Storage</p>
                         </div>
                     </div>
                 </div>
@@ -251,6 +279,7 @@ async function renderAdminDashboard() {
 }
 
 async function renderKepsekDashboard() {
+    const DOM = getDOM();
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Laporan Utama Kepala Sekolah</h4>
@@ -274,6 +303,7 @@ async function renderKepsekDashboard() {
 }
 
 async function renderGuruDashboard() {
+    const DOM = getDOM();
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Ruang Kelas & Binaan Wali Kelas</h4>
@@ -292,25 +322,30 @@ async function renderGuruDashboard() {
                     <p class="text-muted small mb-0">Data kelas tersaring otomatis berdasarkan penugasan NIPY Anda pada tahun ajaran ${AppState.tahunAjaran}. Seluruh laporan setoran harian otomatis terakumulasi ke rapot digital kelas.</p>
                 </div>
                 <div class="card-enterprise p-4">
-                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-history me-2"></i>Aktivitas Setoran Terakhir Kelas</h6>
+                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-history me-2"></i>Daftar Setoran Aktif Murid Kelas</h6>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle small text-center">
                             <thead class="table-light">
-                                <tr><th class="text-start">Nama Murid</th><th>Surah & Ayat</th><th>Jenis</th><th>Status</th></tr>
+                                <tr><th class="text-start">Nama Murid</th><th>Surah Aktif</th><th>Ayat</th><th>Status</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td class="text-start fw-bold">Muhammad Fatih</td><td>Al-Mulk: 1-10</td><td>Saba'</td><td><span class="badge bg-success">Lancar</span></td></tr>
-                                <tr><td class="text-start fw-bold">Ahmad Fauzan</td><td>An-Naba: 1-20</td><td>Ziyadah</td><td><span class="badge bg-warning text-dark">Mengulang</span></td></tr>
+                                <tr><td class="text-start fw-bold">Abdullah</td><td>An-Naba</td><td>1-15</td><td><span class="badge bg-success">Lancar</span></td></tr>
+                                <tr><td class="text-start fw-bold">Aisyah Humaira</td><td>Abasa</td><td>1-42</td><td><span class="badge bg-primary">Selesai</span></td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="card-enterprise p-4 border-top border-4 border-danger">
-                    <h6 class="font-poppins fw-bold mb-2 text-danger"><i class="fas fa-user-clock me-2"></i>Belum Setoran Pekan Ini</h6>
-                    <div class="p-2 bg-light rounded small text-muted mb-2"><i class="fas fa-user text-secondary me-2"></i>Ahmad Fauzan (8A)</div>
-                    <div class="p-2 bg-light rounded small text-muted"><i class="fas fa-user text-secondary me-2"></i>Zaskia Putri (8A)</div>
+                <div class="card-enterprise p-4 border-top border-4 border-danger mb-4">
+                    <h6 class="font-poppins fw-bold mb-2 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Laporan Adab & Pembinaan</h6>
+                    <div class="p-2 bg-light rounded small text-muted mb-2"><strong class="text-dark">Zaky (9A)</strong> - Terlambat Shalat Berjamaah</div>
+                    <div class="p-2 bg-light rounded small text-muted"><strong class="text-dark">Raihan (7C)</strong> - Gadget Tidak Dikumpulkan</div>
+                </div>
+                <div class="card-enterprise p-4 border-top border-4 border-primary">
+                    <h6 class="font-poppins fw-bold mb-2 text-primary"><i class="fas fa-venus me-2"></i>Alasan & Izin Keputrian Terbaru</h6>
+                    <div class="p-2 bg-light rounded small text-muted mb-2"><strong class="text-dark">Siti Aminah (8B)</strong> - Izin Sakit di UKS</div>
+                    <div class="p-2 bg-light rounded small text-muted"><strong class="text-dark">Fatmawati (9C)</strong> - Alasan Nyeri Haid</div>
                 </div>
             </div>
         </div>
@@ -319,6 +354,7 @@ async function renderGuruDashboard() {
 }
 
 async function renderTahfidzDashboard() {
+    const DOM = getDOM();
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Panel Utama Koordinator Muhaffiz</h4>
@@ -334,6 +370,7 @@ async function renderTahfidzDashboard() {
 }
 
 async function renderAyahBundaDashboard() {
+    const DOM = getDOM();
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white shadow-sm font-inter">
@@ -377,6 +414,7 @@ async function renderAyahBundaDashboard() {
 }
 
 async function renderOsisDashboard() {
+    const DOM = getDOM();
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Akses Input Petugas Keamanan OSIS</h4>
@@ -393,11 +431,12 @@ async function renderOsisDashboard() {
 // 8. ROUTING MODUL SUB-HALAMAN UTAMA (ADMIN / USER)
 // ========================================================================
 async function renderModulePage(pageId) {
+    const DOM = getDOM();
     let title = pageId.replace('-', ' ').toUpperCase();
     
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <div class="card-enterprise p-4 font-inter animate__animated animate__fadeIn">
+        <div class="card-enterprise p-4 font-inter">
             <h4 class="font-poppins fw-bold text-primary-azhar mb-2">${title}</h4>
             <p class="text-muted small mb-4">Modul fungsional komprehensif sistem manajemen terpadu Al-Azhar 52 Bengkulu.</p>
             <div class="p-5 bg-light rounded text-center text-muted">
