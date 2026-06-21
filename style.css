@@ -1,0 +1,156 @@
+/* =========================================================
+   IIMS - CUSTOM CSS
+   Developer: Renaldi | Design: Enterprise Islamic
+========================================================= */
+
+:root {
+    /* Color Palette */
+    --primary-azhar: #0A3663;
+    --gold: #D4AF37;
+    --bg-main: #F5F7FA;
+    --text-dark: #2C3E50;
+    --text-muted: #7F8C8D;
+    
+    /* Design System */
+    --shadow-soft: 0 4px 20px rgba(10, 54, 99, 0.08);
+    --shadow-hover: 0 10px 25px rgba(10, 54, 99, 0.15);
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    
+    /* Transitions */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Typography */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+}
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+
+/* Utilities */
+.text-primary-azhar { color: var(--primary-azhar) !important; }
+.bg-primary-azhar { background-color: var(--primary-azhar) !important; }
+.text-gold { color: var(--gold) !important; }
+.bg-gold { background-color: var(--gold) !important; }
+.bg-main { background-color: var(--bg-main) !important; }
+
+/* Islamic Geometric Background Pattern (Soft Data URI) */
+.islamic-pattern {
+    background-color: var(--bg-main);
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230a3663' fill-opacity='0.03'%3E%3Cpath d='M30 30L15 15H0v30h15L30 30zm30 0L45 45H60V15H45L30 30zM15 60L30 45v15H15zM45 0L30 15V0h15zM0 0h15v15H0V0zm60 60H45V45h15v15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Base Components */
+.btn-primary-azhar {
+    background-color: var(--primary-azhar);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+.btn-primary-azhar:hover {
+    background-color: #082b4f;
+    color: var(--gold);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Enterprise Cards */
+.card-enterprise {
+    background: white;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+}
+.card-enterprise:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Glassmorphism (Login & Panels) */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-hover);
+}
+
+/* --- LOGIN PAGE --- */
+.login-container {
+    animation: zoomFadeIn 0.8s ease-out forwards;
+}
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 3rem 2.5rem;
+}
+@keyframes zoomFadeIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    transition: var(--transition);
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 12px 16px;
+}
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
+}
+.sidebar .nav-link i {
+    width: 24px;
+    text-align: center;
+}
+
+/* --- ANNOUNCEMENT MARQUEE --- */
+.marquee-container {
+    white-space: nowrap;
+}
+.marquee-content {
+    display: inline-block;
+    animation: marquee 25s linear infinite;
+}
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* --- LOADING OVERLAY --- */
+#loading-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: fixed;
+        left: -260px;
+    }
+    .sidebar.show {
+        left: 0;
+    }
+}
