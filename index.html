@@ -3,108 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IIMS - SMP Islam Al Azhar 52 Bengkulu</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+    <title>IIMS - SMP Islam Al-Azhar 52 Bengkulu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="islamic-pattern">
+<body class="bg-light">
 
-    <div id="loading-overlay" class="d-none justify-content-center align-items-center">
-        <div class="spinner-border text-gold" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-
-    <div id="view-login" class="login-container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="login-card glass-panel text-center">
-            <div class="login-logo mb-4">
-                <img src="assets/img/logo.png" alt="Logo Al Azhar" id="main-logo" onerror="this.outerHTML='<i class=\'fas fa-mosque fa-4x text-primary-azhar\'></i>'">
-            </div>
-            <h2 class="font-poppins fw-bold text-primary-azhar mb-1">IIMS</h2>
-            <h5 class="font-poppins text-muted mb-2">INTEGRATED ISLAMIC<br>MONITORING SYSTEM</h5>
-            <p class="font-inter small text-muted mb-4">SMP ISLAM AL AZHAR 52 BENGKULU</p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary-azhar shadow-sm sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="fas fa-school me-2 text-gold"></i>
+                <div>
+                    <h1 class="h6 mb-0 fw-bold tracking-wide font-poppins text-white">IIMS AL-AZHAR 52</h1>
+                    <small class="font-inter text-gold opacity-90" style="font-size: 11px;">Integrated Islamic Monitoring System</small>
+                </div>
+            </a>
             
-            <form id="form-login">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="username" placeholder="Username / NIS" required>
-                    <label for="username">Username / NIS</label>
+            <div class="ms-auto d-flex align-items-center">
+                <div class="dropdown me-3">
+                    <button class="btn btn-outline-light btn-sm dropdown-toggle font-inter px-3" type="button" id="roleDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-shield me-2"></i>Ganti Peran Akses
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="roleDropdown">
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="ADMIN"><i class="fas fa-sliders-h me-2 text-primary"></i>Admin Sistem</a></li>
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="KEPSEK"><i class="fas fa-user-tie me-2 text-success"></i>Kepala Sekolah</a></li>
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="GURU"><i class="fas fa-chalkboard-teacher me-2 text-info"></i>Wali Kelas / Guru</a></li>
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="GURU_TAHFIDZ"><i class="fas fa-book-quran Tri me-2 text-purple"></i>Guru Tahfidz</a></li>
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="AYAH_BUNDA"><i class="fas fa-users-viewfinder me-2 text-warning"></i>Orang Tua / Wali</a></li>
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="OSIS"><i class="fas fa-id-card-clip me-2 text-secondary"></i>Petugas OSIS</a></li>
+                    </ul>
                 </div>
-                <div class="form-floating mb-4">
-                    <input type="password" class="form-control" id="password" placeholder="Password" required>
-                    <label for="password">Password</label>
-                </div>
-                <button type="submit" class="btn btn-primary-azhar w-100 py-3 font-poppins fw-semibold">MASUK</button>
-            </form>
-            
-            <div class="login-footer mt-5 text-muted small">
-                <p class="mb-0">Developed & Maintained by <strong>Renaldi</strong></p>
-                <p>&copy; 2026 All Rights Reserved</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="view-app" class="d-none">
-        <div class="d-flex min-vh-100">
-            
-            <aside class="sidebar bg-primary-azhar text-white flex-shrink-0" id="sidebar">
-                <div class="sidebar-header text-center py-4 border-bottom border-light border-opacity-10">
-                    <i class="fas fa-mosque fa-2x text-gold mb-2"></i>
-                    <h5 class="font-poppins fw-bold mb-0">IIMS</h5>
-                    <small class="font-inter text-gold opacity-75 d-block mt-1">INTEGRATED ISLAMIC<br>MONITORING SYSTEM</small>
-                </div>
-                <div class="sidebar-menu p-3" id="nav-menus">
-                    </div>
-                <div class="sidebar-footer p-3 mt-auto border-top border-light border-opacity-10">
-                    <a href="#" id="btn-logout" class="nav-link text-white opacity-75 hover-gold">
-                        <i class="fas fa-sign-out-alt me-2"></i> Keluar
-                    </a>
-                </div>
-            </aside>
-
-            <main class="main-content flex-grow-1 bg-main">
                 
-                <header class="topbar bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-link d-lg-none text-primary-azhar me-3" id="toggle-sidebar">
-                            <i class="fas fa-bars fa-lg"></i>
-                        </button>
-                        <div>
-                            <h5 class="font-poppins fw-semibold text-dark mb-0" id="user-greeting">Selamat Datang, -</h5>
-                            <span class="badge bg-gold text-dark font-inter" id="user-role-badge">ROLE</span>
-                        </div>
-                    </div>
-                    <div class="text-end d-none d-md-block">
-                        <p class="font-inter fw-medium text-muted mb-0 small" id="academic-year">TA 2026/2027</p>
-                        <p class="font-inter text-muted mb-0 small">Semester Ganjil</p>
-                    </div>
-                </header>
-
-                <div class="announcement-bar bg-gold text-dark px-4 py-2 font-inter small fw-medium d-flex align-items-center shadow-sm z-2 position-sticky top-0">
-                    <i class="fas fa-bullhorn me-3"></i>
-                    <div class="marquee-container flex-grow-1 overflow-hidden">
-                        <div class="marquee-content" id="announcement-content">
-                            📢 Munaqasyah Tahfidz Kelas IX dilaksanakan tanggal 15 Februari 2027. Mohon persiapkan ananda tercinta.
-                        </div>
-                    </div>
+                <div class="bg-white bg-opacity-10 px-3 py-1 rounded-2 text-white font-inter small border border-white border-opacity-10">
+                    <span id="global-tahun-ajaran" class="fw-bold text-gold">TA 2026/2027</span> — 
+                    <span id="global-semester" class="opacity-90">Semester Ganjil</span>
                 </div>
-
-                <div class="container-fluid p-4" id="router-view">
-                    </div>
-
-            </main>
+            </div>
         </div>
+    </nav>
+
+    <div class="d-flex" id="wrapper" style="min-height: calc(100vh - 56px);">
+        
+        <div class="bg-sidebar shadow-sm text-white" id="sidebar-wrapper" style="width: 260px; min-width: 260px;">
+            <div class="p-4 border-bottom border-white border-opacity-10 text-center bg-dark bg-opacity-20">
+                <div class="avatar-circle mx-auto mb-2 d-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle" style="width: 55px; height: 55px;">
+                    <i class="fas fa-user-circle fa-2x text-gold"></i>
+                </div>
+                <div id="user-greeting-name" class="font-poppins fw-bold text-truncate small mb-1">Memuat Nama...</div>
+                <span id="user-role-badge" class="badge bg-gold text-dark font-inter fw-bold shadow-sm" style="font-size: 10px; letter-spacing: 0.5px;">ROLE</span>
+            </div>
+            
+            <div class="py-3" id="sidebar-menu-container">
+                </div>
+        </div>
+        
+        <div class="flex-grow-1 p-4" id="router-view">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary-azhar" role="status">
+                    <span class="visually-hidden">Memuat Sistem...</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 </html>
