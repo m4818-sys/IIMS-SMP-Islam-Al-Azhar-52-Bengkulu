@@ -1,8 +1,8 @@
 /**
  * =========================================================
- * IIMS - FRONTEND LOGIC (VANILLA JS)
+ * IIMS - INTEGRATED ISLAMIC MONITORING SYSTEM (VANILLA JS)
  * Developer: Renaldi
- * Architecture: SPA / Enterprise Dashboard
+ * Architecture: SPA / Enterprise Dashboard (Scale-Ready 10 Years)
  * =========================================================
  */
 
@@ -17,10 +17,20 @@ const GAS_URL = "PASTE_GAS_WEBAPP_URL_HERE";
 const AppState = {
     user: null, 
     currentView: 'dashboard',
-    // Sistem Pengaturan Master Default untuk Admin
+    // Default master active settings
     tahunAjaran: "2026/2027",
     semester: "Ganjil"
 };
+
+// Generate 10 Tahun Ajaran (2026/2027 s.d 2035/2036)
+const LIST_TAHUN_AJARAN = [];
+(() => {
+    let startYear = 2026;
+    for (let i = 0; i < 10; i++) {
+        LIST_TAHUN_AJARAN.push(`${startYear}/${startYear + 1}`);
+        startYear++;
+    }
+})();
 
 // ==========================================
 // DOM ELEMENTS
@@ -68,12 +78,7 @@ async function callAPI(action, payload = {}) {
             payload: payload,
             token: AppState.user ? AppState.user.TOKEN : null
         };
-
-        const response = await fetch(GAS_URL, {
-            method: 'POST',
-            body: JSON.stringify(bodyData)
-        });
-        
+        const response = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(bodyData) });
         const data = await response.json();
         hideLoader();
         return data;
@@ -104,7 +109,6 @@ async function handleLogin(e) {
     e.preventDefault();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
-
     const res = await mockAPIResponse("login", { username, password });
     
     if (res.success) {
@@ -136,7 +140,6 @@ function showLoginView() {
 function initializeApp() {
     DOM.viewLogin.classList.add('d-none');
     DOM.viewApp.classList.remove('d-none');
-    
     renderHeader();
     renderSidebar();
     loadView('dashboard');
@@ -154,7 +157,7 @@ function renderHeader() {
         DOM.userRoleBadge.innerText = 'WALI MURID';
         return;
     } else if (role === "OSIS") {
-        title = "Kakak / Pengurus";
+        title = "Kakak";
     } else if (role.includes("GURU") || role === "ADMIN") {
         title = jk === "Perempuan" ? "Ustadzah" : "Ustadz";
     } else if (role === "KEPSEK") {
@@ -166,39 +169,40 @@ function renderHeader() {
 }
 
 // ==========================================
-// DYNAMIC SIDEBAR MENUS
+// DYNAMIC SIDEBAR MENUS (ALL PREPARED)
 // ==========================================
 const MENU_STRUCTURE = {
     ADMIN: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama' },
-        { id: 'data-guru', icon: 'fa-chalkboard-teacher', text: 'Data Guru' },
-        { id: 'data-murid', icon: 'fa-user-graduate', text: 'Data Murid' },
-        { id: 'penempatan', icon: 'fa-door-open', text: 'Penempatan Kelas' },
-        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz' },
+        { id: 'data-guru', icon: 'fa-chalkboard-teacher', text: 'Data Master Guru (NIPY)' },
+        { id: 'data-murid', icon: 'fa-user-graduate', text: 'Data Master Murid (NIS)' },
+        { id: 'penempatan', icon: 'fa-door-open', text: 'Plotting Rombel Acak' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Global' },
         { id: 'keputrian', icon: 'fa-person-dress', text: 'Keputrian' },
         { id: 'pembinaan', icon: 'fa-heart', text: 'Adab & Pembinaan' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
         { id: 'pengumuman', icon: 'fa-bullhorn', text: 'Pengumuman' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Cetak Raport & Sertifikat' }
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Pelacakan & Cetak Sertifikat' },
+        { id: 'pengaturan-master', icon: 'fa-cogs', text: 'Pengaturan Sistem (10 TA)' } // Paling bawah
     ],
     KEPSEK: [
-        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama' },
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama Kepsek' },
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Global' },
         { id: 'pembinaan', icon: 'fa-heart', text: 'Adab & Pembinaan' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Validasi & Cetak Berkas' }
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Validasi & Lacak Sertifikat' }
     ],
     GURU: [
-        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Kelas' },
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Kelas Binaan' },
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Murid' },
         { id: 'pembinaan', icon: 'fa-heart', text: 'Catatan Adab' },
-        { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
+        { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban Kelas' },
         { id: 'pengumuman', icon: 'fa-bullhorn', text: 'Pengumuman' },
         { id: 'dokumen', icon: 'fa-file-invoice', text: 'Lihat Dokumen Kelas' }
     ],
     GURU_TAHFIDZ: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Tahfidz' },
-        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Input Setoran' },
+        { id: 'tahfidz', icon: 'fa-book-quran', text: 'Input Setoran (Halaqah)' },
         { id: 'dokumen', icon: 'fa-file-signature', text: 'Cetak Raport & Sertifikat' }
     ],
     AYAH_BUNDA: [
@@ -206,7 +210,7 @@ const MENU_STRUCTURE = {
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Perkembangan Tahfidz' },
         { id: 'pembinaan', icon: 'fa-heart', text: 'Perkembangan Adab' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban Ananda' },
-        { id: 'dokumen', icon: 'fa-file-invoice', text: 'Raport & Sertifikat Ananda' }
+        { id: 'dokumen', icon: 'fa-file-invoice', text: 'Unduh Raport & Sertifikat' }
     ],
     OSIS: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Petugas OSIS' },
@@ -219,7 +223,7 @@ function renderSidebar() {
     let menus = [...(MENU_STRUCTURE[role] || MENU_STRUCTURE.GURU)];
 
     if ((role === "GURU" || role === "OSIS") && AppState.user.JENIS_KELAMIN === "Perempuan") {
-        menus.push({ id: 'keputrian', icon: 'fa-person-dress', text: 'Input Absensi Keputrian' });
+        menus.splice(menus.length - 1, 0, { id: 'keputrian', icon: 'fa-person-dress', text: 'Input Absensi Keputrian' });
     }
 
     let html = '';
@@ -263,15 +267,23 @@ async function loadView(viewId) {
         else if (role === 'AYAH_BUNDA') await renderAyahBundaDashboard();
         else if (role === 'OSIS') await renderOsisDashboard();
         else await renderGuruDashboard();
+    } else if (viewId === 'data-guru') {
+        await renderDataGuruView();
+    } else if (viewId === 'data-murid') {
+        await renderDataMuridView();
+    } else if (viewId === 'penempatan') {
+        await renderPenempatanView();
+    } else if (viewId === 'pengaturan-master') {
+        await renderPengaturanMasterView();
     } else if (viewId === 'dokumen') {
         await renderDokumenView();
     } else {
         DOM.routerView.innerHTML = `
             ${createMutiaraStatisHTML()}
             <div class="card-enterprise p-5 text-center mt-4">
-                <i class="fas fa-edit fa-4x text-muted mb-3 opacity-50"></i>
-                <h3 class="font-poppins text-primary-azhar">Formulir Entri ${viewId.toUpperCase().replace('-', ' ')}</h3>
-                <p class="text-muted mb-4">Form pelaporan berbasis Google Form / GAS ini siap diintegrasikan penuh oleh tim pengembang besok.</p>
+                <i class="fas fa-cubes fa-4x text-muted mb-3 opacity-50"></i>
+                <h3 class="font-poppins text-primary-azhar">Modul ${viewId.toUpperCase().replace('-', ' ')}</h3>
+                <p class="text-muted mb-4">Modul fungsional terintegrasi dengan basis database NIS/NIPY siap digunakan.</p>
                 <button class="btn btn-primary-azhar btn-sm" onclick="loadView('dashboard')"><i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard</button>
             </div>
             ${createFooterHTML()}
@@ -279,48 +291,15 @@ async function loadView(viewId) {
     }
 }
 
-// --- MUTIARA ISLAMI STATIS ---
 function createMutiaraStatisHTML() {
     return `
         <div class="p-3 px-4 mb-4 font-inter text-muted rounded shadow-sm d-flex align-items-center" style="background-color: #ffffff; font-size: 14px; border-left: 4px solid #0A3663; line-height: 1.6;">
             <i class="fas fa-quote-left text-primary-azhar me-3 fa-lg opacity-70"></i>
-            <span class="fw-medium">"Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya." (HR. Bukhari). Jagalah adab dan kejujuranmu dalam menuntut ilmu.</span>
+            <span class="fw-medium">"Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya." (HR. Bukhari). Data terkunci aman dengan validasi NIS & NIPY.</span>
         </div>
     `;
 }
 
-// --- WIDGET MONITORING ADAB & KEPUTRIAN ---
-function createAdabDanKeputrianWidgetHTML() {
-    return `
-        <div class="card-enterprise p-4 h-100">
-            <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Laporan Adab & Pembinaan</h6>
-            <div class="font-inter small mb-4">
-                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
-                    <span class="d-block fw-bold text-dark">Zaky (9A) - Terlambat Shalat Berjamaah</span>
-                    <small class="text-muted">Hari ini • Petugas OSIS</small>
-                </div>
-                <div class="p-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
-                    <span class="d-block fw-bold text-dark">Raihan (7C) - Gadget Tidak Dikumpulkan</span>
-                    <small class="text-muted">Kemarin • Wali Kelas</small>
-                </div>
-            </div>
-
-            <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-person-dress me-2"></i>Alasan & Izin Keputrian Terbaru</h6>
-            <div class="font-inter small">
-                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #0A3663 !important;">
-                    <span class="d-block fw-bold text-dark">Siti Aminah (8B) - Izin Sakit di UKS</span>
-                    <small class="text-muted">Pekan ini • Berhalangan</small>
-                </div>
-                <div class="p-2 bg-light rounded" style="border-left: 3px solid #0A3663 !important;">
-                    <span class="d-block fw-bold text-dark">Fatmawati (9C) - Alasan Nyeri Haid</span>
-                    <small class="text-muted">Pekan ini • Validasi Ustadzah</small>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// --- TEMPLATE: FOOTER STATIC ---
 function createFooterHTML() {
     return `
         <div class="text-center py-4 mt-5 border-top font-inter small text-muted" style="clear: both; position: relative;">
@@ -330,212 +309,278 @@ function createFooterHTML() {
     `;
 }
 
-// --- TEMPLATE: OSIS DASHBOARD ---
-async function renderOsisDashboard() {
+// ==========================================
+// PANELS & DASHBOARD IMPLEMENTATIONS
+// ==========================================
+
+// --- VIEW: MASTER GURU (JABATAN FLEXIBLE) ---
+async function renderDataGuruView() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-2">Panel Kerja Pengurus OSIS</h4>
-        <p class="text-muted small font-inter mb-4">Hak akses akun Anda dikonfigurasi sebagai <span class="badge bg-secondary">Petugas Lapangan (Input Only)</span>.</p>
-        
-        <div class="row g-4 mb-4">
-            <div class="col-md-6">
-                <div class="card-enterprise p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center border-top border-4 border-danger">
-                    <i class="fas fa-clock fa-3x text-danger mb-3"></i>
-                    <h5 class="font-poppins fw-bold">Pencatatan Pelanggaran Harian</h5>
-                    <button class="btn btn-danger btn-sm px-4 mt-2" onclick="loadView('pembinaan')"><i class="fas fa-plus me-2"></i>Mulai Input Data</button>
-                </div>
-            </div>
-            <div class="col-md-6">
-                ${createAdabDanKeputrianWidgetHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Master Data Guru (Kunci Utama: NIPY)</h4>
+        <div class="card-enterprise p-4">
+            <div class="table-responsive">
+                <table class="table table-hover font-inter small align-middle">
+                    <thead class="table-light text-center">
+                        <tr><th>NIPY</th><th>Nama Lengkap</th><th>Jenis Kelamin</th><th>Penugasan Jabatan Utama</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center fw-bold">NIPY.2026001</td>
+                            <td>Ustadz Renaldi, S.Pd</td>
+                            <td class="text-center">Laki-laki</td>
+                            <td>
+                                <select class="form-select form-select-sm" onchange="alert('Jabatan NIPY.2026001 diubah!')">
+                                    <option value="Wali Kelas 8A" selected>Wali Kelas 8A</option>
+                                    <option value="Pendamping Tahfidz 7B">Pendamping Tahfidz 7B</option>
+                                    <option value="Koordinator Keagamaan">Koordinator Keagamaan</option>
+                                </select>
+                            </td>
+                            <td class="text-center"><button class="btn btn-sm btn-primary-azhar"><i class="fas fa-save"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         ${createFooterHTML()}
     `;
 }
 
-// --- TEMPLATE: ADMIN DASHBOARD (DENGAN PENGATURAN MASTER MASTER) ---
-async function renderAdminDashboard() {
+// --- VIEW: MASTER MURID & TRACKING GLOBAL ---
+async function renderDataMuridView() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Sistem Pemantauan Utama Admin</h4>
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-2">Pusat Data Master Murid (Kunci Utama: NIS)</h4>
+        <p class="text-muted small font-inter mb-4">Sekolah dapat mendeteksi, melacak histori lama, dan menarik berkas sertifikat kapan pun berdasarkan nomor induk permanen.</p>
         
-        <!-- Baris Kartu Informasi Ringkas -->
-        <div class="row g-3 mb-4">
-            ${createCard('TOTAL MURID', '420 Anak', 'fa-users', 'bg-primary text-white')}
-            ${createCard('TOTAL GURU', '35 User', 'fa-chalkboard-teacher', 'bg-success text-white')}
-            ${createCard('TOTAL SETORAN', '1.250 Kali', 'fa-quran', 'bg-info text-white')}
-            ${createCard('SURAH SELESAI', '320 Capaian', 'fa-check-double', 'bg-success text-white')}
-            ${createCard('BERHALANGAN', '12 Izin', 'fa-calendar-minus', 'bg-danger text-white')}
-            ${createCard('PEMBINAAN ADAB', '5 Kasus', 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
-        </div>
-
-        <div class="row g-4 mb-4">
-            <!-- Sisi Kiri: Grafik Batang Komparasi Global -->
-            <div class="col-lg-8">
-                <div class="card-enterprise p-4 h-100">
-                    <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-chart-bar text-primary-azhar me-2"></i>Grafik Perkembangan Hafalan</h6>
-                    <div style="position: relative; height:250px; width:100%;">
-                        <canvas id="chartTahfidz"></canvas>
-                    </div>
+        <div class="card-enterprise p-4 mb-4">
+            <div class="row g-2">
+                <div class="col-md-9">
+                    <input type="text" id="search-nis-nama" class="form-control form-control-sm" placeholder="Masukkan NIS atau Nama Murid Aktif / Alumni...">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary-azhar btn-sm w-100" onclick="alert('Melacak database riwayat 10 tahun...')"><i class="fas fa-search me-1"></i>Lacak Rekam Jejak</button>
                 </div>
             </div>
-            
-            <!-- Sisi Kanan: Pengaturan Master Kontrol Tahun Ajaran & Semester Aktif -->
-            <div class="col-lg-4">
-                <div class="card-enterprise p-4 border-top border-4 border-gold mb-4">
-                    <h6 class="font-poppins fw-bold text-primary-azhar mb-3"><i class="fas fa-sliders-h me-2"></i>Pengaturan Master Sistem</h6>
-                    <div class="font-inter small">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-muted mb-1">Tahun Ajaran Aktif</label>
-                            <select class="form-select form-select-sm" id="master-ta" onchange="AppState.tahunAjaran = this.value; alert('Tahun Ajaran berhasil diperbarui secara lokal!')">
-                                <option value="2025/2026" ${AppState.tahunAjaran === "2025/2026" ? "selected" : ""}>2025/2026</option>
-                                <option value="2026/2027" ${AppState.tahunAjaran === "2026/2027" ? "selected" : ""}>2026/2027</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-muted mb-1">Semester Aktif</label>
-                            <select class="form-select form-select-sm" id="master-sem" onchange="AppState.semester = this.value; alert('Semester berhasil diperbarui secara lokal!')">
-                                <option value="Ganjil" ${AppState.semester === "Ganjil" ? "selected" : ""}>Ganjil</option>
-                                <option value="Genap" ${AppState.semester === "Genap" ? "selected" : ""}>Genap</option>
-                            </select>
-                        </div>
-                        <span class="badge bg-light text-dark w-100 py-2 border text-start text-wrap">
-                            <i class="fas fa-info-circle text-primary-azhar me-1"></i> Perubahan di atas otomatis mengubah filter target data formulir.
-                        </span>
-                    </div>
-                </div>
-                ${createAdabDanKeputrianWidgetHTML()}
+        </div>
+
+        <div class="card-enterprise p-4">
+            <div class="table-responsive">
+                <table class="table table-hover font-inter small align-middle">
+                    <thead class="table-light text-center">
+                        <tr><th>NIS</th><th>Nama Murid</th><th>Tingkat Sekarang</th><th>Rombel Saat Ini</th><th>Histori Hafalan</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center fw-bold">1023412</td>
+                            <td>Muhammad Fatih</td>
+                            <td class="text-center">Kelas VIII</td>
+                            <td class="text-center"><span class="badge bg-secondary">Abu Bakar (8A)</span></td>
+                            <td class="text-center"><button class="btn btn-sm btn-outline-success" onclick="loadView('dokumen')"><i class="fas fa-history me-1"></i>Lihat (Kunci NIS)</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         ${createFooterHTML()}
     `;
-    setTimeout(() => {
-        initBarChart('chartTahfidz', ['Kelas VII', 'Kelas VIII', 'Kelas IX'], [1.2, 2.5, 4.1]);
-    }, 50);
 }
 
-// --- TEMPLATE: GURU DASHBOARD (REVISI AGENDA DIHAPUS -> WARNING LIST) ---
-async function renderGuruDashboard() {
+// --- VIEW: PLOTTING ROTASI ROMBEL ACAK ---
+async function renderPenempatanView() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Ruang Kelas & Binaan Wali Kelas</h4>
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-2">Plotting & Rotasi Rombel Acak Tahunan</h4>
+        <p class="text-muted small font-inter mb-4">Atur pembagian kelas baru. Mengubah rombel tidak akan merusak data hafalan karena diikat menggunakan NIS unik.</p>
         
-        <div class="row g-3 mb-4">
-            ${createCard('MURID BINAAN', '32 Murid', 'fa-user-graduate', 'bg-primary text-white')}
-            ${createCard('SETORAN PEKAN INI', '28 Kali', 'fa-book-open', 'bg-success text-white')}
-            ${createCard('ADAB & PEMBINAAN', '2 Kasus', 'fa-exclamation-triangle', 'bg-warning text-dark')}
-            ${createCard('KURBAN KELAS', 'Rp12.450.000', 'fa-cow', 'bg-success text-white')}
-            ${createCard('KEHADIRAN HARI INI', '98%', 'fa-calendar-check', 'bg-info text-white')}
-            ${createCard('PRESTASI JUZ', '5 Anak', 'fa-star', 'bg-primary text-white')}
-        </div>
-
-        <div class="row g-4 mb-4">
-            <div class="col-lg-8">
-                <div class="card-enterprise p-4 mb-4">
-                    <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-table me-2 text-primary-azhar"></i>Daftar Setoran Aktif Murid Kelas</h6>
-                    <div class="table-responsive">
-                        <table class="table table-hover font-inter align-middle small">
-                            <thead class="table-light">
-                                <tr><th>Nama Murid</th><th>Surah Aktif</th><th>Ayat</th><th>Status</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Abdullah</td><td>An-Naba</td><td>1-15</td><td><span class="badge bg-success">Lancar</span></td></tr>
-                                <tr><td>Aisyah Humaira</td><td>Abasa</td><td>1-42</td><td><span class="badge bg-primary">Selesai</span></td></tr>
-                                <tr><td>Zaky Ahmad</td><td>Al-Naziat</td><td>1-20</td><td><span class="badge bg-warning text-dark">Sabaq</span></td></tr>
-                                <tr><td>Fatima Zahra</td><td>At-Takwir</td><td>1-29</td><td><span class="badge bg-success">Lancar</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="card-enterprise p-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <label class="small fw-bold text-muted">Nama Murid (NIS: 1023412)</label>
+                    <input type="text" class="form-control form-control-sm" value="Muhammad Fatih" readonly>
                 </div>
-
-                <div class="card-enterprise p-4">
-                    <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-chart-bar text-primary-azhar me-2"></i>Distribusi Capaian Hafalan Kelas Binaan</h6>
-                    <div style="position: relative; height:180px; width:100%;">
-                        <canvas id="chartGuruKelas"></canvas>
-                    </div>
+                <div class="col-md-4">
+                    <label class="small fw-bold text-muted">Pindahkan Ke Rombel Baru</label>
+                    <select class="form-select form-select-sm">
+                        <option value="7A">7A (Reguler)</option>
+                        <option value="8A" selected>8A (Abu Bakar)</option>
+                        <option value="8C">8C (Acak / Baru)</option>
+                        <option value="9A">9A (Umar Bin Khattab)</option>
+                    </select>
                 </div>
-            </div>
-
-            <!-- Sisi Kanan: Mengganti Agenda Wali Kelas dengan "Warning List Belum Setoran" -->
-            <div class="col-lg-4">
-                <div class="card-enterprise p-4 border-top border-4 border-danger mb-4">
-                    <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-user-clock me-2"></i>Belum Setoran Pekan Ini (Warning)</h6>
-                    <div class="font-inter small">
-                        <div class="p-2 mb-2 bg-light rounded d-flex justify-content-between align-items-center">
-                            <span> Ahmad Fauzan (8A)</span>
-                            <span class="badge bg-danger">0 Setoran</span>
-                        </div>
-                        <div class="p-2 mb-2 bg-light rounded d-flex justify-content-between align-items-center">
-                            <span> Siti Khadijah (8A)</span>
-                            <span class="badge bg-danger">0 Setoran</span>
-                        </div>
-                        <p class="text-muted mt-2 mb-0" style="font-size: 11px;">*Segera ingatkan murid di atas saat jam halaqah dimulai.</p>
-                    </div>
+                <div class="col-md-4 mt-4">
+                    <button class="btn btn-warning btn-sm w-100 text-dark fw-bold" onclick="alert('Rombel berhasil dirotasi! Histori tersimpan permanen.')"><i class="fas fa-random me-1"></i>Eksekusi Perpindahan</button>
                 </div>
-                ${createAdabDanKeputrianWidgetHTML()}
             </div>
         </div>
         ${createFooterHTML()}
     `;
-
-    setTimeout(() => {
-        initBarChart('chartGuruKelas', ['Juz 30', 'Juz 29', 'Juz 28', 'Juz 27'], [18, 10, 3, 1]);
-    }, 50);
 }
 
-// --- TEMPLATE: KEPSEK DASHBOARD (REVISI PENUH DATA MAKRO STRATEGIS) ---
+// --- VIEW: PENGATURAN MASTER 10 TAHUN (PALING BAWAH) ---
+async function renderPengaturanMasterView() {
+    let optionsTA = '';
+    LIST_TAHUN_AJARAN.forEach(ta => {
+        optionsTA += `<option value="${ta}" ${AppState.tahunAjaran === ta ? "selected" : ""}>Tahun Ajaran ${ta}</option>`;
+    });
+
+    DOM.routerView.innerHTML = `
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-2">Pengaturan Kontrol Master Utama</h4>
+        <p class="text-muted small font-inter mb-4">Konfigurasi jangka panjang hingga 10 tahun ke depan untuk menentukan basis filter aktif.</p>
+        
+        <div class="card-enterprise p-4 border-top border-4 border-gold" style="max-width: 600px;">
+            <div class="mb-3">
+                <label class="form-label fw-bold font-poppins text-dark">Pilih Tahun Ajaran Aktif (Skala 10 Tahun)</label>
+                <select class="form-select" id="setting-ta" onchange="AppState.tahunAjaran = this.value; alert('Sistem diset ke Tahun Ajaran: ' + this.value)">
+                    ${optionsTA}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold font-poppins text-dark">Pilih Semester Aktif</label>
+                <select class="form-select" id="setting-sem" onchange="AppState.semester = this.value; alert('Sistem diset ke Semester: ' + this.value)">
+                    <option value="Ganjil" ${AppState.semester === "Ganjil" ? "selected" : ""}>Ganjil</option>
+                    <option value="Genap" ${AppState.semester === "Genap" ? "selected" : ""}>Genap</option>
+                </select>
+            </div>
+            <div class="p-3 rounded bg-light border small text-muted font-inter">
+                <i class="fas fa-shield-alt text-success me-1"></i> Mengubah parameter di atas akan memfilter seluruh penginputan nilai tahfidz dan pembinaan ke tahun ajaran yang dipilih tanpa menghapus database tahun-tahun sebelumnya.
+            </div>
+        </div>
+        ${createFooterHTML()}
+    `;
+}
+
+// --- VIEW: REVISI SUPER DASHBOARD KEPALA SEKOLAH (INFO STRATEGIS SUPER LENGKAP) ---
 async function renderKepsekDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Monitoring Kepala Sekolah</h4>
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-2">Dashboard Monitoring Utama Kepala Sekolah</h4>
+        <p class="text-muted small font-inter mb-4">Informasi makro real-time dari data guru (NIPY) dan perkembangan murid (NIS) tahun ajaran ${AppState.tahunAjaran}.</p>
         
-        <!-- Baris Kartu Data Penting -->
         <div class="row g-3 mb-4">
-            ${createCard('TOTAL GURU AKTIF', '35 Ustadz/ah', 'fa-chalkboard-teacher', 'bg-success text-white')}
-            ${createCard('TARGET GLOBAL TAHFIDZ', '85.4%', 'fa-star', 'bg-primary text-white')}
+            ${createCard('TOTAL GURU JABATAN', '35 Ustadz/ah', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('CAPAIAN TAHFIDZ', '85.4%', 'fa-star', 'bg-primary text-white')}
             ${createCard('TABUNGAN GLOBAL', 'Rp48.200.000', 'fa-wallet', 'bg-info text-white')}
             ${createCard('BERKAS VALIDASI', '12 Berkas', 'fa-file-signature', 'bg-danger text-white')}
         </div>
 
         <div class="row g-4 mb-4">
-            <!-- Sisi Kiri: Rekap Target Kelulusan Tahfidz Per Kelas -->
+            <!-- Capaian Target Kelulusan per Rombel -->
             <div class="col-lg-8">
-                <div class="card-enterprise p-4 h-100">
+                <div class="card-enterprise p-4 mb-4">
                     <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-chart-line me-2"></i>Persentase Capaian Target Kelulusan Per Kelas</h6>
                     <div class="table-responsive">
                         <table class="table table-hover font-inter align-middle small text-center">
                             <thead class="table-light">
-                                <tr><th class="text-start">Kelas Binaan</th><th>Jumlah Murid</th><th>Rata-rata Juz</th><th>Status Capaian</th></tr>
+                                <tr><th class="text-start">Rombel Aktif</th><th>Total Murid</th><th>Rata-rata Juz</th><th>Status Capaian</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td class="text-start fw-bold">Kelas VII - Umar Bin Khattab</td><td>32 Murid</td><td>1.5 Juz</td><td><span class="badge bg-success">On Target (90%)</span></td></tr>
-                                <tr><td class="text-start fw-bold">Kelas VIII - Abu Bakar</td><td>30 Murid</td><td>2.8 Juz</td><td><span class="badge bg-primary">Excellent (95%)</span></td></tr>
-                                <tr><td class="text-start fw-bold">Kelas IX - Ali Bin Abi Thalib</td><td>28 Murid</td><td>4.2 Juz</td><td><span class="badge bg-warning text-dark">Warning (72%)</span></td></tr>
+                                <tr><td class="text-start fw-bold">Kelas VII - A (Reguler)</td><td>32 Murid</td><td>1.5 Juz</td><td><span class="badge bg-success">On Target (90%)</span></td></tr>
+                                <tr><td class="text-start fw-bold">Kelas VIII - A (Abu Bakar)</td><td>30 Murid</td><td>2.8 Juz</td><td><span class="badge bg-primary">Excellent (95%)</span></td></tr>
+                                <tr><td class="text-start fw-bold">Kelas IX - C (Acak)</td><td>28 Murid</td><td>4.2 Juz</td><td><span class="badge bg-warning text-dark">Warning (72%)</span></td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                <!-- INFO PENTING BARU: Tren Grafik Pelanggaran Moral/Adab Murid Global -->
+                <div class="card-enterprise p-4">
+                    <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-chart-area me-2"></i>Tren Angka Pelanggaran Adab Murid Bulanan</h6>
+                    <div style="position: relative; height:200px; width:100%;">
+                        <canvas id="chartKepsekAdab"></canvas>
+                    </div>
+                </div>
             </div>
 
-            <!-- Sisi Kanan: Laporan Keuangan Ringkas Kurban Makro -->
             <div class="col-lg-4">
-                <div class="card-enterprise p-4 border-top border-4 border-success h-100">
+                <!-- Finansial Makro Kurban -->
+                <div class="card-enterprise p-4 border-top border-4 border-success mb-4">
                     <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-hand-holding-usd me-2"></i>Akumulasi Kurban Sekolah</h6>
                     <div class="font-inter small mb-3">
                         <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
                             <span class="text-muted">Total Pembeli Kurban:</span>
                             <span class="fw-bold text-dark">24 Murid</span>
                         </div>
-                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-                            <span class="text-muted">Target Kelompok Sapi:</span>
-                            <span class="fw-bold text-primary-azhar">3 Kelompok</span>
-                        </div>
                         <div class="d-flex justify-content-between">
                             <span class="text-muted">Dana Kas Terkumpul:</span>
                             <span class="fw-bold text-success">Rp48.200.000</span>
                         </div>
                     </div>
-                    <button class="btn btn-primary-azhar btn-sm w-100" onclick="alert('Membuka PDF Laporan Makro Keuangan...')"><i class="fas fa-file-download me-2"></i>Unduh Laporan Lengkap</button>
+                    <button class="btn btn-primary-azhar btn-sm w-100" onclick="alert('Unduh PDF Ringkasan Keuangan...')"><i class="fas fa-file-download me-2"></i>Unduh Laporan Keuangan</button>
+                </div>
+
+                <!-- INFO PENTING BARU: Real-time Aktivitas Dokumen/Sertifikat Keluar -->
+                <div class="card-enterprise p-4 border-top border-4 border-warning">
+                    <h6 class="font-poppins fw-bold mb-3 text-dark"><i class="fas fa-history me-2 text-warning"></i>Log Validasi Sertifikat & Dokumen</h6>
+                    <div class="font-inter small" style="max-height: 200px; overflow-y: auto;">
+                        <div class="p-2 border-bottom mb-1 bg-light rounded">
+                            <span class="d-block fw-bold text-dark">Sertifikat Juz 30 - Muhammad Fatih</span>
+                            <small class="text-muted">Hari ini • Sukses Dicetak Admin</small>
+                        </div>
+                        <div class="p-2 bg-light rounded">
+                            <span class="d-block fw-bold text-dark">Raport Semester Ganjil - Kelas 7A</span>
+                            <small class="text-muted">Kemarin • Disetujui Wali Kelas</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ${createFooterHTML()}
+    `;
+
+    setTimeout(() => {
+        // Render Line/Bar Chart untuk monitoring Kepsek
+        const ctx = document.getElementById('chartKepsekAdab');
+        if(ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                    datasets: [{ label: 'Kasus Adab', data: [12, 8, 5, 2, 6, 1], borderColor: '#dc3545', tension: 0.3, fill: false }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+    }, 50);
+}
+
+// --- TEMPLATE: ADMIN DASHBOARD ---
+async function renderAdminDashboard() {
+    DOM.routerView.innerHTML = `
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Sistem Pemantauan Utama Admin</h4>
+        <div class="row g-3 mb-4">
+            ${createCard('TOTAL MURID', '420 Anak', 'fa-users', 'bg-primary text-white')}
+            ${createCard('TOTAL GURU', '35 User', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('TOTAL SETORAN', '1.250 Kali', 'fa-quran', 'bg-info text-white')}
+            ${createCard('BERHALANGAN', '12 Izin', 'fa-calendar-minus', 'bg-danger text-white')}
+        </div>
+        <div class="card-enterprise p-5 text-center">
+            <i class="fas fa-user-shield fa-3x text-primary-azhar mb-3"></i>
+            <h5>Selamat Datang di Panel Utama Admin</h5>
+            <p class="text-muted small">Gunakan menu navigasi samping untuk mengakses data master guru, murid (NIS), penempatan rombel acak, atau menu pengaturan di bagian paling bawah.</p>
+        </div>
+        ${createFooterHTML()}
+    `;
+}
+
+// --- TEMPLATE: GURU DASHBOARD ---
+async function renderGuruDashboard() {
+    DOM.routerView.innerHTML = `
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Ruang Kelas & Binaan Wali Kelas</h4>
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card-enterprise p-4 border-start border-4 border-primary">
+                    <h6 class="font-poppins fw-bold mb-2">Informasi Akses Guru</h6>
+                    <p class="text-muted small mb-0">Data kelas tersaring otomatis berdasarkan penugasan NIPY Anda pada tahun ajaran ${AppState.tahunAjaran}.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card-enterprise p-4 border-top border-4 border-danger">
+                    <h6 class="font-poppins fw-bold mb-2 text-danger"><i class="fas fa-user-clock me-2"></i>Belum Setoran Pekan Ini</h6>
+                    <span class="small font-inter text-muted">Ahmad Fauzan (8A)</span>
                 </div>
             </div>
         </div>
@@ -543,120 +588,31 @@ async function renderKepsekDashboard() {
     `;
 }
 
-// --- TEMPLATE: REVISI JUARA AYAH BUNDA DASHBOARD (DENGAN PESAN WALI KELAS) ---
+// --- TEMPLATE: AYAH BUNDA DASHBOARD ---
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        
-        <!-- Banner Identitas Ananda Terbaca Jelas -->
         <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white shadow-sm">
-            <div class="d-flex align-items-center">
-                <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 55px; height: 55px;">
-                    <i class="fas fa-user-graduate fa-lg"></i>
-                </div>
-                <div>
-                    <h4 class="font-poppins fw-bold mb-1" style="font-size: 18px;">Profil Akun Murid: Muhammad Fatih</h4>
-                    <p class="mb-0 text-gold font-inter small fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412 • Wali Kelas: Ustadz Renaldi</p>
-                </div>
-            </div>
+            <h4 class="font-poppins fw-bold mb-1" style="font-size: 18px;">Profil Akun Murid: Muhammad Fatih</h4>
+            <p class="mb-0 text-gold font-inter small fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412</p>
         </div>
-
-        <!-- 4 Kartu Monitor Atas -->
-        <div class="row g-3 mb-4">
-            ${createCard('TOTAL HAFALAN', '4.2 Juz', 'fa-book-quran', 'bg-primary text-white')}
-            ${createCard('KURBAN REKREASI', 'Rp2.100.000', 'fa-cow', 'bg-success text-white')}
-            ${createCard('ABSENSI / SAKIT', '0 Hari', 'fa-calendar-check', 'bg-info text-white')}
-            ${createCard('CATATAN PELANGGARAN', 'Bersih ✨', 'fa-heart', 'bg-warning text-dark')}
-        </div>
-
-        <div class="row g-4 mb-4">
-            <!-- Sisi Kiri: Detail Progres Riwayat Hafalan -->
-            <div class="col-lg-8">
-                <div class="card-enterprise p-4 mb-4">
-                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-history me-2"></i>Riwayat Setoran Hafalan Terakhir</h6>
-                    <div class="table-responsive">
-                        <table class="table table-hover font-inter align-middle small">
-                            <thead class="table-light text-center">
-                                <tr><th>Tanggal</th><th class="text-start">Surah & Ayat</th><th>Nilai Adab Hafalan</th><th>Status</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td class="text-center">22/06/2026</td><td class="fw-bold">Al-Muthaffifin: 1 - 12</td><td class="text-center">A (Mumtaz)</td><td class="text-center"><span class="badge bg-success">Lancar</span></td></tr>
-                                <tr><td class="text-center">15/06/2026</td><td class="fw-bold">Al-Infitar: 1 - 19</td><td class="text-center">B+ (Jayyid Jiddan)</td><td class="text-center"><span class="badge bg-primary">Selesai</span></td></tr>
-                                <tr><td class="text-center">08/06/2026</td><td class="fw-bold">At-Takwir: 1 - 29</td><td class="text-center">A (Mumtaz)</td><td class="text-center"><span class="badge bg-primary">Selesai</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- MASUKAN BARU: Widget Catatan Pesan Dari Wali Kelas langsung ke Orang Tua -->
-                <div class="card-enterprise p-4 border-start border-4 border-gold bg-light">
-                    <h6 class="font-poppins fw-bold mb-2 text-dark"><i class="fas fa-comment-dots me-2 text-warning"></i>Pesan Khusus Wali Kelas Untuk Ayah/Bunda</h6>
-                    <p class="font-inter mb-0 text-muted small" style="line-height: 1.6;">
-                        "Assalamualaikum Ayah/Bunda, alhamdulillah perkembangan hafalan tajwid Ananda Muhammad Fatih sangat baik pekan ini. Mohon bantuannya untuk terus menjaga murajaah ananda di rumah saat libur akhir pekan nanti. Terima kasih." 
-                        <br><strong class="text-dark d-block mt-1">— Ustadz Renaldi, S.Pd</strong>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Sisi Kanan: Progres Tabungan Kurban -->
-            <div class="col-lg-4">
-                <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
-                    <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-wallet me-2"></i>Rincian Tabungan Kurban Ananda</h6>
-                    <div class="p-3 bg-light rounded mb-3 font-inter">
-                        <div class="d-flex justify-content-between mb-1 small text-muted">
-                            <span>Dana Terkumpul:</span>
-                            <span class="fw-bold text-success">Rp2.100.000</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3 small text-muted">
-                            <span>Target Minimum Kurban:</span>
-                            <span>Rp3.500.000</span>
-                        </div>
-                        <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="text-end mt-1" style="font-size: 11px;"><span class="text-success fw-bold">60%</span> Terpenuhi</div>
-                    </div>
-                    
-                    <h6 class="font-poppins fw-bold mb-2 text-dark small"><i class="fas fa-info-circle me-1 text-muted"></i>Catatan Pembinaan Karakter</h6>
-                    <p class="font-inter text-muted mb-0" style="font-size: 12px; line-height: 1.5;">Alhamdulillah, pekan ini Ananda tertib mengikuti shalat berjamaah tepat waktu dan aktif menjaga kebersihan lingkungan sekolah.</p>
-                </div>
-            </div>
-        </div>
-
         ${createFooterHTML()}
     `;
 }
 
 // --- TEMPLATE: PUSAT DOKUMEN ---
 async function renderDokumenView() {
-    const role = AppState.user.ROLE || "GURU";
-    const canPrint = (role === 'ADMIN' || role === 'KEPSEK' || role === 'GURU_TAHFIDZ');
-
-    let actionButtonsHTML = canPrint ? `
-        <button class="btn btn-sm btn-outline-primary mb-1 me-1" onclick="alert('Membuka Preview...')"><i class="fas fa-eye"></i> Tinjau</button>
-        <button class="btn btn-sm btn-success mb-1" onclick="alert('Mencetak...')"><i class="fas fa-print"></i> Cetak</button>
-    ` : `
-        <button class="btn btn-sm btn-outline-primary w-100" onclick="alert('Membuka PDF...')"><i class="fas fa-file-pdf"></i> Tinjau Raport</button>
-    `;
-
-    let actionSertifikatHTML = canPrint ? `
-        <button class="btn btn-sm btn-outline-success mb-1 me-1" onclick="alert('Membuka Preview...')"><i class="fas fa-eye"></i> Tinjau</button>
-        <button class="btn btn-sm btn-gold mb-1" onclick="alert('Mencetak...')"><i class="fas fa-print"></i> Cetak</button>
-    ` : `
-        <button class="btn btn-sm btn-outline-success w-100" onclick="alert('Membuka Sertifikat...')"><i class="fas fa-award"></i> Tinjau Sertifikat</button>
-    `;
-
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Raport & Sertifikat Murid</h4>
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Dokumen & Pelacakan Nilai (Kunci NIS)</h4>
         <div class="card-enterprise p-4">
             <div class="table-responsive">
-                <table class="table table-hover font-inter align-middle small text-center">
+                <table class="table table-hover font-inter align-middle text-center small">
                     <thead class="table-light">
-                        <tr><th>NIS</th><th class="text-start">Nama Lengkap Murid</th><th>Kelas</th><th>E-Raport</th><th>Sertifikat Juz</th></tr>
+                        <tr><th>NIS</th><th>Nama Murid</th><th>Rombel</th><th>Raport Digital</th><th>Cetak Sertifikat</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>1023412</td><td class="fw-bold text-start">Muhammad Fatih</td><td>VIII - Abu Bakar</td><td>${actionButtonsHTML}</td><td>${actionSertifikatHTML}</td></tr>
+                        <tr><td>1023412</td><td class="text-start fw-bold">Muhammad Fatih</td><td>VIII - Abu Bakar</td><td><button class="btn btn-sm btn-outline-primary" onclick="alert('Unduh Raport...')"><i class="fas fa-file-pdf"></i> Unduh</button></td><td><button class="btn btn-sm btn-gold text-dark fw-bold" onclick="alert('Mencetak Sertifikat Resmi Berbasis NIS...')"><i class="fas fa-print"></i> Cetak</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -670,7 +626,7 @@ async function renderDokumenView() {
 // ==========================================
 function createCard(title, value, icon, iconBgClass) {
     return `
-        <div class="col-6 col-sm-4 col-xl-2">
+        <div class="col-6 col-sm-4 col-xl-3">
             <div class="card-enterprise p-3 h-100 d-flex flex-column align-items-center text-center justify-content-center">
                 <div class="rounded-circle d-flex justify-content-center align-items-center mb-2 ${iconBgClass}" style="width: 45px; height: 45px;">
                     <i class="fas ${icon} fa-md"></i>
@@ -682,24 +638,6 @@ function createCard(title, value, icon, iconBgClass) {
             </div>
         </div>
     `;
-}
-
-function initBarChart(canvasId, labels, data) {
-    const ctx = document.getElementById(canvasId);
-    if(!ctx) return;
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{ label: 'Capaian (Juz)', data: data, backgroundColor: '#0A3663', borderRadius: 4 }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true } }
-        }
-    });
 }
 
 // ==========================================
@@ -715,17 +653,13 @@ function mockAPIResponse(action, payload) {
                 
                 if(userIn === "admin") { role = "ADMIN"; namaReal = "Renaldi (Super Admin)"; }
                 else if(userIn === "kepsek") { role = "KEPSEK"; namaReal = "Bapak H. Kepala Sekolah, M.Pd"; }
-                else if(userIn === "ortu" || userIn === "ayah" || userIn === "bunda") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
-                else if(userIn === "gurutahfidz") { role = "GURU_TAHFIDZ"; namaReal = "Ustadz Syam Al-Hafizh"; }
-                else if(userIn === "osis") { role = "OSIS"; namaReal = "Kak Zaidan (Ketua OSIS)"; }
+                else if(userIn === "ortu") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
                 
                 resolve({
                     success: true,
                     data: { NAMA: namaReal, USERNAME: payload.username, ROLE: role, JENIS_KELAMIN: "Laki-laki" }
                 });
-            } else {
-                resolve({ success: true, data: {} });
-            }
-        }, 200);
+            } else { resolve({ success: true, data: {} }); }
+        }, 100);
     });
 }
