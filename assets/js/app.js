@@ -2,7 +2,7 @@
  * =========================================================
  * IIMS - FRONTEND LOGIC (VANILLA JS)
  * Developer: Renaldi
- * Architecture: SPA / Enterprise Dashboard (Fixed & Perfected)
+ * Architecture: SPA / Enterprise Dashboard (Edisi Spesial Akses OSIS)
  * =========================================================
  */
 
@@ -76,7 +76,7 @@ async function callAPI(action, payload = {}) {
         return data;
     } catch (error) {
         hideLoader();
-        console.error("API Error, memicu fallback simulasi keamanan:", error);
+        console.error("API Error:", error);
         return mockAPIResponse(action, payload);
     }
 }
@@ -148,6 +148,8 @@ function renderHeader() {
     let title = "Bapak/Ibu";
     if (role === "AYAH_BUNDA") {
         title = "Ayah/Bunda";
+    } else if (role === "OSIS") {
+        title = "Kakak / Pengurus";
     } else if (role.includes("GURU") || role === "ADMIN") {
         title = jk === "Perempuan" ? "Ustadzah" : "Ustadz";
     } else if (role === "KEPSEK") {
@@ -159,7 +161,7 @@ function renderHeader() {
 }
 
 // ==========================================
-// DYNAMIC SIDEBAR MENUS
+// DYNAMIC SIDEBAR MENUS (UPDATE ROLE OSIS)
 // ==========================================
 const MENU_STRUCTURE = {
     ADMIN: [
@@ -172,34 +174,39 @@ const MENU_STRUCTURE = {
         { id: 'pembinaan', icon: 'fa-heart', text: 'Adab & Pembinaan' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
         { id: 'pengumuman', icon: 'fa-bullhorn', text: 'Pengumuman' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Arsip Dokumen Sekolah' }
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Cetak Raport & Sertifikat' }
     ],
     KEPSEK: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Utama' },
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Global' },
         { id: 'pembinaan', icon: 'fa-heart', text: 'Adab & Pembinaan' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Validasi Raport & Sertifikat' }
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Validasi & Cetak Berkas' }
     ],
     GURU: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Kelas' },
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Tahfidz Murid' },
-        { id: 'pembinaan', icon: 'fa-heart', text: 'Catatan Adab & Pembinaan' },
+        { id: 'pembinaan', icon: 'fa-heart', text: 'Catatan Adab' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban' },
         { id: 'pengumuman', icon: 'fa-bullhorn', text: 'Pengumuman' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Input Nilai Raport' }
+        { id: 'dokumen', icon: 'fa-file-invoice', text: 'Lihat Dokumen Kelas' }
     ],
     GURU_TAHFIDZ: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Tahfidz' },
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Input Setoran' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Verifikasi Capaian Juz' }
+        { id: 'dokumen', icon: 'fa-file-signature', text: 'Cetak Raport & Sertifikat' }
     ],
     AYAH_BUNDA: [
         { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Ananda' },
         { id: 'tahfidz', icon: 'fa-book-quran', text: 'Perkembangan Tahfidz' },
         { id: 'pembinaan', icon: 'fa-heart', text: 'Perkembangan Adab' },
         { id: 'kurban', icon: 'fa-cow', text: 'Tabungan Kurban Ananda' },
-        { id: 'dokumen', icon: 'fa-file-signature', text: 'Lihat Raport & Sertifikat' }
+        { id: 'dokumen', icon: 'fa-file-invoice', text: 'Raport & Sertifikat Ananda' }
+    ],
+    // AKSES TERBATAS OSIS: HANYA INPUT KETERTIBAN & ADAB HARI INI
+    OSIS: [
+        { id: 'dashboard', icon: 'fa-chart-pie', text: 'Dashboard Petugas OSIS' },
+        { id: 'pembinaan', icon: 'fa-pen-to-square', text: 'Input Catatan Pelanggaran' }
     ]
 };
 
@@ -207,8 +214,9 @@ function renderSidebar() {
     const role = AppState.user.ROLE || "GURU";
     let menus = [...(MENU_STRUCTURE[role] || MENU_STRUCTURE.GURU)];
 
-    if (role === "GURU" && AppState.user.JENIS_KELAMIN === "Perempuan") {
-        menus.splice(2, 0, { id: 'keputrian', icon: 'fa-person-dress', text: 'Keputrian' });
+    // Khusus OSIS Putri atau Guru Perempuan, otomatis ditambahkan menu Keputrian
+    if ((role === "GURU" || role === "OSIS") && AppState.user.JENIS_KELAMIN === "Perempuan") {
+        menus.push({ id: 'keputrian', icon: 'fa-person-dress', text: 'Input Absensi Keputrian' });
     }
 
     let html = '';
@@ -250,17 +258,18 @@ async function loadView(viewId) {
         if (role === 'ADMIN') await renderAdminDashboard();
         else if (role === 'KEPSEK') await renderKepsekDashboard();
         else if (role === 'AYAH_BUNDA') await renderAyahBundaDashboard();
+        else if (role === 'OSIS') await renderOsisDashboard();
         else await renderGuruDashboard();
     } else if (viewId === 'dokumen') {
         await renderDokumenView();
     } else {
         DOM.routerView.innerHTML = `
-            ${createPengumumanLamaHTML()}
-            ${createMutiaraHTML()}
+            ${createPengumumanBerjalanHTML()}
+            ${createMutiaraStatisHTML()}
             <div class="card-enterprise p-5 text-center mt-4">
-                <i class="fas fa-tools fa-4x text-muted mb-3 opacity-50"></i>
-                <h3 class="font-poppins text-primary-azhar">Modul ${viewId.toUpperCase().replace('-', ' ')}</h3>
-                <p class="text-muted mb-4">Fitur antarmuka telah siap. Menunggu konfigurasi routing backend Google Apps Script (GAS) Anda besok.</p>
+                <i class="fas fa-edit fa-4x text-muted mb-3 opacity-50"></i>
+                <h3 class="font-poppins text-primary-azhar">Formulir Entri ${viewId.toUpperCase().replace('-', ' ')}</h3>
+                <p class="text-muted mb-4">Form pelaporan berbasis Google Form / GAS ini siap diintegrasikan penuh oleh tim pengembang besok.</p>
                 <button class="btn btn-primary-azhar btn-sm" onclick="loadView('dashboard')"><i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard</button>
             </div>
             ${createFooterHTML()}
@@ -268,26 +277,24 @@ async function loadView(viewId) {
     }
 }
 
-// --- BANNER PENGUMUMAN UTAMA KUNING EMAS ---
-function createPengumumanLamaHTML() {
+// --- PENGUMUMAN BERJALAN KUNING EMAS ---
+function createPengumumanBerjalanHTML() {
     return `
-        <div class="alert alert-warning border-0 shadow-sm d-flex align-items-center mb-2" style="background-color: #FFF3CD; border-left: 4px solid #FFC107 !important;">
-            <i class="fas fa-bullhorn text-warning me-3 fa-lg"></i>
-            <span class="font-inter small text-dark fw-bold">
-                Munaqasyah Tahfidz Kelas IX dilaksanakan tanggal 15 Februari 2027. Mohon persiapkan ananda tercinta.
-            </span>
+        <div class="alert alert-warning border-0 shadow-sm d-flex align-items-center mb-1" style="background-color: #FFF3CD; border-left: 4px solid #FFC107 !important; padding: 8px 14px;">
+            <i class="fas fa-bullhorn text-warning me-3 fa-md"></i>
+            <marquee class="font-inter small text-dark fw-bold" scrollamount="4">
+                [PENGUMUMAN UTAMA]: Munaqasyah Tahfidz Akbar Al-Azhar 52 Bengkulu TA 2026/2027 Gelombang I akan dilaksanakan serentak pertengahan semester ini. Mohon persiapkan berkas administrasi santri binaan.
+            </marquee>
         </div>
     `;
 }
 
-// --- TEKS MUTIARA ISLAMI (TAMPIL TEPAT DI BAWAH PENGUMUMAN) ---
-function createMutiaraHTML() {
+// --- MUTIARA ISLAMI STATIS (DI BAWAH PENGUMUMAN BERJALAN) ---
+function createMutiaraStatisHTML() {
     return `
-        <div class="alert alert-light border-0 shadow-sm d-flex align-items-center mb-4" style="background-color: #fafafa; border-left: 4px solid #0A3663 !important; padding: 6px 12px;">
-            <i class="fas fa-quote-left text-primary-azhar me-2 opacity-50" style="font-size: 11px;"></i>
-            <marquee class="font-inter small text-muted fst-italic" scrollamount="3" style="font-size: 12px;">
-                "Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya." (HR. Bukhari) • Jagalah adabmu dalam menuntut ilmu, niscaya Allah meninggikan derajatmu.
-            </marquee>
+        <div class="p-2 px-3 mb-4 font-inter text-muted rounded shadow-sm d-flex align-items-center" style="background-color: #ffffff; font-size: 11.5px; border-left: 3px solid #0A3663;">
+            <i class="fas fa-quote-left text-primary-azhar me-2 opacity-50"></i>
+            <span>"Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya." (HR. Bukhari). Jagalah adab dan kejujuranmu dalam menuntut ilmu.</span>
         </div>
     `;
 }
@@ -302,13 +309,69 @@ function createFooterHTML() {
     `;
 }
 
+// --- WIDGET MONITORING ADAB & KEPUTRIAN TERBARU ---
+function createAdabDanKeputrianWidgetHTML() {
+    return `
+        <div class="card-enterprise p-4 h-100">
+            <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Laporan Adab & Pembinaan</h6>
+            <div class="font-inter small mb-4">
+                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
+                    <span class="d-block fw-bold text-dark">Zaky (9A) - Terlambat Shalat Berjamaah</span>
+                    <small class="text-muted">Hari ini • Petugas OSIS</small>
+                </div>
+                <div class="p-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
+                    <span class="d-block fw-bold text-dark">Raihan (7C) - Gadget Tidak Dikumpulkan</span>
+                    <small class="text-muted">Kemarin • Wali Kelas</small>
+                </div>
+            </div>
+
+            <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-person-dress me-2"></i>Alasan & Izin Keputrian Terbaru</h6>
+            <div class="font-inter small">
+                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #0A3663 !important;">
+                    <span class="d-block fw-bold text-dark">Siti Aminah (8B) - Izin Sakit di UKS</span>
+                    <small class="text-muted">Pekan ini • Berhalangan</small>
+                </div>
+                <div class="p-2 bg-light rounded" style="border-left: 3px solid #0A3663 !important;">
+                    <span class="d-block fw-bold text-dark">Fatmawati (9C) - Alasan Nyeri Haid</span>
+                    <small class="text-muted">Pekan ini • Validasi Ustadzah</small>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// --- TEMPLATE: OSIS DASHBOARD (KHUSUS HANYA UNTUK INPUT DATA) ---
+async function renderOsisDashboard() {
+    DOM.routerView.innerHTML = `
+        ${createPengumumanBerjalanHTML()}
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-2">Panel Kerja Pengurus OSIS</h4>
+        <p class="text-muted small font-inter mb-4">Hak akses akun Anda dikonfigurasi sebagai <span class="badge bg-secondary">Petugas Lapangan (Input Only)</span>. Semua data yang Anda masukkan akan langsung diverifikasi oleh Bagian Kesantrian.</p>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card-enterprise p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center border-top border-4 border-danger">
+                    <i class="fas fa-clock fa-3x text-danger mb-3"></i>
+                    <h5 class="font-poppins fw-bold">Pencatatan Pelanggaran Harian</h5>
+                    <p class="text-muted font-inter small px-3">Gunakan menu ini untuk mendata santri yang terlambat, tidak membawa kelengkapan ibadah (mukena/peci), atau atribut sekolah.</p>
+                    <button class="btn btn-danger btn-sm px-4 mt-2" onclick="loadView('pembinaan')"><i class="fas fa-plus me-2"></i>Mulai Input Data</button>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                ${createAdabDanKeputrianWidgetHTML()}
+            </div>
+        </div>
+        ${createFooterHTML()}
+    `;
+}
+
 // --- TEMPLATE: ADMIN DASHBOARD ---
 async function renderAdminDashboard() {
     DOM.routerView.innerHTML = `
-        ${createPengumumanLamaHTML()}
-        ${createMutiaraHTML()}
+        ${createPengumumanBerjalanHTML()}
+        ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Sistem Pemantauan Utama Admin</h4>
-        
         <div class="row g-3 mb-4">
             ${createCard('TOTAL MURID', '324', 'fa-users', 'bg-primary text-white')}
             ${createCard('TOTAL GURU', '28', 'fa-chalkboard-teacher', 'bg-success text-white')}
@@ -317,7 +380,6 @@ async function renderAdminDashboard() {
             ${createCard('BERHALANGAN', '12', 'fa-calendar-minus', 'bg-danger text-white')}
             ${createCard('PEMBINAAN ADAB', '5', 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
         </div>
-        
         <div class="row g-4 mb-4">
             <div class="col-lg-8">
                 <div class="card-enterprise p-4 h-100">
@@ -328,7 +390,7 @@ async function renderAdminDashboard() {
                 </div>
             </div>
             <div class="col-lg-4">
-                ${createAdabWidgetHTML()}
+                ${createAdabDanKeputrianWidgetHTML()}
             </div>
         </div>
         ${createFooterHTML()}
@@ -341,8 +403,8 @@ async function renderAdminDashboard() {
 // --- TEMPLATE: GURU DASHBOARD ---
 async function renderGuruDashboard() {
     DOM.routerView.innerHTML = `
-        ${createPengumumanLamaHTML()}
-        ${createMutiaraHTML()}
+        ${createPengumumanBerjalanHTML()}
+        ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Ruang Kelas & Binaan Wali Kelas</h4>
         <div class="row g-3 mb-4">
             ${createCard('MURID BINAAN', '32', 'fa-user-graduate', 'bg-primary text-white')}
@@ -367,7 +429,7 @@ async function renderGuruDashboard() {
                 </div>
             </div>
             <div class="col-lg-4">
-                ${createAdabWidgetHTML()}
+                ${createAdabDanKeputrianWidgetHTML()}
             </div>
         </div>
         ${createFooterHTML()}
@@ -377,15 +439,14 @@ async function renderGuruDashboard() {
 // --- TEMPLATE: KEPSEK DASHBOARD ---
 async function renderKepsekDashboard() {
     DOM.routerView.innerHTML = `
-        ${createPengumumanLamaHTML()}
-        ${createMutiaraHTML()}
+        ${createPengumumanBerjalanHTML()}
+        ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Monitoring Manajemen Kepala Sekolah</h4>
         <div class="row g-3 mb-4">
             ${createCard('TOTAL GURU AKTIF', '28', 'fa-chalkboard-teacher', 'bg-success text-white')}
             ${createCard('TARGET GLOBAL TAHFIDZ', '85%', 'fa-star', 'bg-primary text-white')}
             ${createCard('BERKAS VALIDASI', '12', 'fa-file-signature', 'bg-danger text-white')}
         </div>
-        
         <div class="row g-4 mb-4">
             <div class="col-lg-8">
                 <div class="card-enterprise p-4 h-100">
@@ -404,7 +465,7 @@ async function renderKepsekDashboard() {
                 </div>
             </div>
             <div class="col-lg-4">
-                ${createAdabWidgetHTML()}
+                ${createAdabDanKeputrianWidgetHTML()}
             </div>
         </div>
         ${createFooterHTML()}
@@ -414,10 +475,9 @@ async function renderKepsekDashboard() {
 // --- TEMPLATE: AYAH BUNDA DASHBOARD ---
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
-        ${createPengumumanLamaHTML()}
-        ${createMutiaraHTML()}
+        ${createPengumumanBerjalanHTML()}
+        ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Pusat Informasi Perkembangan Ananda</h4>
-        
         <div class="card-enterprise p-4 mb-4 bg-primary-azhar text-white shadow-sm">
             <div class="d-flex align-items-center">
                 <div class="bg-white text-primary-azhar rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 60px; height: 60px;">
@@ -429,7 +489,6 @@ async function renderAyahBundaDashboard() {
                 </div>
             </div>
         </div>
-        
         <div class="row g-4 mb-4">
             <div class="col-md-6">
                 <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
@@ -439,7 +498,6 @@ async function renderAyahBundaDashboard() {
                         <span class="fw-bold text-dark">Surah Al-Muthaffifin (Ayat 1-12)</span>
                         <span class="badge bg-success float-end">Jayyid Jiddan</span>
                     </div>
-                    
                     <h6 class="font-poppins fw-bold small text-muted mb-2">Riwayat Surah/Juz yang Sudah Diselesaikan:</h6>
                     <div class="list-group list-group-flush font-inter small mb-1">
                         <div class="list-group-item px-0 d-flex justify-content-between"><span>• Surah An-Naba</span><span class="text-success fw-bold"><i class="fas fa-check-circle"></i> Selesai</span></div>
@@ -448,7 +506,6 @@ async function renderAyahBundaDashboard() {
                     </div>
                 </div>
             </div>
-            
             <div class="col-md-6">
                 <div class="card-enterprise p-4 h-100 border-top border-4 border-info">
                     <h6 class="font-poppins fw-bold mb-3 text-info"><i class="fas fa-heart-circle-check me-2"></i>Catatan Adab & Pembinaan Kepribadian</h6>
@@ -460,98 +517,44 @@ async function renderAyahBundaDashboard() {
                 </div>
             </div>
         </div>
-
-        <div class="row g-4">
-            <div class="col-12">
-                <div class="card-enterprise p-4 border-top border-4 border-warning">
-                    <h6 class="font-poppins fw-bold mb-3 text-warning"><i class="fas fa-cow me-2"></i>Akumulasi Tabungan Kurban Ananda</h6>
-                    <div class="row align-items-center">
-                        <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
-                            <h3 class="font-poppins fw-bold text-dark mb-0">Rp 1.500.000</h3>
-                            <small class="text-muted font-inter">Dari total target wajib: Rp 3.000.000</small>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="d-flex justify-content-between font-inter small mb-1 fw-bold text-dark">
-                                <span>Progres Tabungan: <strong>50%</strong></span>
-                                <span>Sisa Kewajiban: Rp 1.500.000</span>
-                            </div>
-                            <div class="progress" style="height: 12px; border-radius: 6px;">
-                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         ${createFooterHTML()}
     `;
 }
 
-// --- WIDGET LAPORAN ADAB BERSAMA ---
-function createAdabWidgetHTML() {
-    return `
-        <div class="card-enterprise p-4 h-100">
-            <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Laporan Adab & Pembinaan Terbaru</h6>
-            <div class="font-inter small">
-                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
-                    <span class="d-block fw-bold text-dark">Zaky (9A) - Terlambat Shalat Berjamaah</span>
-                    <small class="text-muted font-inter">Hari ini • Ditindaklanjuti oleh Kesantrian</small>
-                </div>
-                <div class="p-2 border-bottom mb-2 bg-light rounded" style="border-left: 3px solid #dc3545 !important;">
-                    <span class="d-block fw-bold text-dark">Raihan (7C) - Gadget Tidak Dikumpulkan</span>
-                    <small class="text-muted font-inter">Kemarin • Disita Sementara oleh Wali Kelas</small>
-                </div>
-                <div class="p-2 text-center text-muted py-3">
-                    <small><i class="fas fa-info-circle me-1"></i> Klik modul Pembinaan untuk menginput laporan baru.</small>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// --- TEMPLATE: PUSAT DOKUMEN (LIHAT SAJA) ---
+// --- TEMPLATE: PUSAT DOKUMEN ---
 async function renderDokumenView() {
+    const role = AppState.user.ROLE || "GURU";
+    const canPrint = (role === 'ADMIN' || role === 'KEPSEK' || role === 'GURU_TAHFIDZ');
+
+    let actionButtonsHTML = canPrint ? `
+        <button class="btn btn-sm btn-outline-primary mb-1 me-1" onclick="alert('Membuka Preview E-Raport...')"><i class="fas fa-eye"></i> Tinjau</button>
+        <button class="btn btn-sm btn-success mb-1" onclick="alert('Menginisiasi Perintah Cetak Hardcopy Raport ke Printer...')"><i class="fas fa-print"></i> Cetak</button>
+    ` : `
+        <button class="btn btn-sm btn-outline-primary w-100" onclick="alert('Membuka Lembar Digital PDF (Hanya Lihat)...')"><i class="fas fa-file-pdf"></i> Tinjau Raport</button>
+    `;
+
+    let actionSertifikatHTML = canPrint ? `
+        <button class="btn btn-sm btn-outline-success mb-1 me-1" onclick="alert('Membuka Preview Sertifikat...')"><i class="fas fa-eye"></i> Tinjau</button>
+        <button class="btn btn-sm btn-gold mb-1" onclick="alert('Menginisiasi Perintah Cetak Sertifikat Kompetensi...')"><i class="fas fa-print"></i> Cetak</button>
+    ` : `
+        <button class="btn btn-sm btn-outline-success w-100" onclick="alert('Membuka Piagam Penghargaan Digital (Hanya Lihat)...')"><i class="fas fa-award"></i> Tinjau Sertifikat</button>
+    `;
+
     DOM.routerView.innerHTML = `
-        ${createPengumumanLamaHTML()}
-        ${createMutiaraHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Pusat Validasi Dokumen & Nilai Perkembangan</h4>
-        
-        <div class="alert alert-info border-0 font-inter small mb-4 shadow-sm">
-            <i class="fas fa-info-circle me-2"></i><strong>Kebijakan Sekolah:</strong> Seluruh berkas digital di bawah ini dikunci dalam mode <strong>Pratinjau (Lihat Saja)</strong>. Cetak resmi lembaran fisik wajib melalui tata usaha, karena memerlukan tanda tangan basah Koordinator Keagamaan, Wali Kelas, serta Kepala Sekolah.
-        </div>
-
-        <div class="card-enterprise p-4 mb-4">
-            <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-filter me-2 text-primary-azhar"></i>Penyaringan Cepat Data</h6>
-            <div class="row g-3">
-                <div class="col-md-8">
-                    <input type="text" class="form-control font-inter" placeholder="Ketik nama murid binaan...">
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-primary-azhar w-100 font-poppins"><i class="fas fa-search me-2"></i>Cari</button>
-                </div>
-            </div>
-        </div>
-
+        ${createPengumumanBerjalanHTML()}
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Raport & Sertifikat Santri</h4>
         <div class="card-enterprise p-4">
-            <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-file-pdf me-2 text-primary-azhar"></i>Lembar Arsip Santri</h6>
             <div class="table-responsive">
-                <table class="table table-hover font-inter align-middle small">
+                <table class="table table-hover font-inter align-middle small text-center">
                     <thead class="table-light">
                         <tr>
-                            <th>NIS</th>
-                            <th>Nama Lengkap Santri</th>
-                            <th>Kelas</th>
-                            <th>E-Raport Semester</th>
-                            <th>Sertifikat Kompetensi Juz</th>
+                            <th>NIS</th><th class="text-start">Nama Lengkap Santri</th><th>Kelas</th><th>E-Raport</th><th>Sertifikat Juz</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1023412</td>
-                            <td class="fw-bold">Muhammad Fatih</td>
-                            <td>VIII - Abu Bakar</td>
-                            <td><button class="btn btn-sm btn-outline-primary" onclick="alert('Membuka Viewer: Menampilkan data raport digital Muhammad Fatih.')"><i class="fas fa-eye me-1"></i> Lihat Raport</button></td>
-                            <td><button class="btn btn-sm btn-outline-success" onclick="alert('Membuka Viewer: Menampilkan draf sertifikat kelulusan Juz 30.')"><i class="fas fa-eye me-1"></i> Lihat Sertifikat</button></td>
+                            <td>1023412</td><td class="fw-bold text-start">Muhammad Fatih</td><td>VIII - Abu Bakar</td><td>${actionButtonsHTML}</td><td>${actionSertifikatHTML}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -587,12 +590,7 @@ function initBarChart(canvasId, labels, data) {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Capaian (Juz)',
-                data: data,
-                backgroundColor: '#0A3663',
-                borderRadius: 4
-            }]
+            datasets: [{ label: 'Capaian (Juz)', data: data, backgroundColor: '#0A3663', borderRadius: 4 }]
         },
         options: {
             responsive: true,
@@ -618,6 +616,8 @@ function mockAPIResponse(action, payload) {
                 else if(userIn === "kepsek") { role = "KEPSEK"; namaReal = "Bapak H. Kepala Sekolah, M.Pd"; }
                 else if(userIn === "ortu" || userIn === "ayah") { role = "AYAH_BUNDA"; namaReal = "Ayahanda M. Fatih"; }
                 else if(userIn === "gurutahfidz") { role = "GURU_TAHFIDZ"; namaReal = "Ustadz Syam Al-Hafizh"; }
+                // SIMULASI LOGIN AKUN OSIS
+                else if(userIn === "osis") { role = "OSIS"; namaReal = "Kak Zaidan (Ketua OSIS)"; }
                 
                 resolve({
                     success: true,
@@ -626,6 +626,6 @@ function mockAPIResponse(action, payload) {
             } else {
                 resolve({ success: true, data: {} });
             }
-        }, 300);
+        }, 200);
     });
 }
