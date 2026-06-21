@@ -2,7 +2,7 @@
  * =========================================================
  * IIMS - FRONTEND LOGIC (VANILLA JS)
  * Developer: Renaldi
- * Architecture: SPA / Enterprise Dashboard (Edisi Spesial Akses OSIS)
+ * Architecture: SPA / Enterprise Dashboard
  * =========================================================
  */
 
@@ -16,7 +16,10 @@ const GAS_URL = "PASTE_GAS_WEBAPP_URL_HERE";
 // ==========================================
 const AppState = {
     user: null, 
-    currentView: 'dashboard'
+    currentView: 'dashboard',
+    // Sistem Pengaturan Master Default untuk Admin
+    tahunAjaran: "2026/2027",
+    semester: "Ganjil"
 };
 
 // ==========================================
@@ -286,7 +289,7 @@ function createMutiaraStatisHTML() {
     `;
 }
 
-// --- WIDGET MONITORING ADAB & KEPUTRIAN (UNTUK GURU/ADMIN/ORTU) ---
+// --- WIDGET MONITORING ADAB & KEPUTRIAN ---
 function createAdabDanKeputrianWidgetHTML() {
     return `
         <div class="card-enterprise p-4 h-100">
@@ -350,20 +353,24 @@ async function renderOsisDashboard() {
     `;
 }
 
-// --- TEMPLATE: ADMIN DASHBOARD ---
+// --- TEMPLATE: ADMIN DASHBOARD (DENGAN PENGATURAN MASTER MASTER) ---
 async function renderAdminDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Sistem Pemantauan Utama Admin</h4>
+        
+        <!-- Baris Kartu Informasi Ringkas -->
         <div class="row g-3 mb-4">
-            ${createCard('TOTAL MURID', '420', 'fa-users', 'bg-primary text-white')}
-            ${createCard('TOTAL GURU', '35', 'fa-chalkboard-teacher', 'bg-success text-white')}
-            ${createCard('TOTAL SETORAN', '1.250', 'fa-quran', 'bg-info text-white')}
-            ${createCard('SURAH SELESAI', '320', 'fa-check-double', 'bg-success text-white')}
-            ${createCard('BERHALANGAN', '12', 'fa-calendar-minus', 'bg-danger text-white')}
-            ${createCard('PEMBINAAN ADAB', '5', 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
+            ${createCard('TOTAL MURID', '420 Anak', 'fa-users', 'bg-primary text-white')}
+            ${createCard('TOTAL GURU', '35 User', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('TOTAL SETORAN', '1.250 Kali', 'fa-quran', 'bg-info text-white')}
+            ${createCard('SURAH SELESAI', '320 Capaian', 'fa-check-double', 'bg-success text-white')}
+            ${createCard('BERHALANGAN', '12 Izin', 'fa-calendar-minus', 'bg-danger text-white')}
+            ${createCard('PEMBINAAN ADAB', '5 Kasus', 'fa-heart-circle-exclamation', 'bg-warning text-dark')}
         </div>
+
         <div class="row g-4 mb-4">
+            <!-- Sisi Kiri: Grafik Batang Komparasi Global -->
             <div class="col-lg-8">
                 <div class="card-enterprise p-4 h-100">
                     <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-chart-bar text-primary-azhar me-2"></i>Grafik Perkembangan Hafalan</h6>
@@ -372,7 +379,31 @@ async function renderAdminDashboard() {
                     </div>
                 </div>
             </div>
+            
+            <!-- Sisi Kanan: Pengaturan Master Kontrol Tahun Ajaran & Semester Aktif -->
             <div class="col-lg-4">
+                <div class="card-enterprise p-4 border-top border-4 border-gold mb-4">
+                    <h6 class="font-poppins fw-bold text-primary-azhar mb-3"><i class="fas fa-sliders-h me-2"></i>Pengaturan Master Sistem</h6>
+                    <div class="font-inter small">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted mb-1">Tahun Ajaran Aktif</label>
+                            <select class="form-select form-select-sm" id="master-ta" onchange="AppState.tahunAjaran = this.value; alert('Tahun Ajaran berhasil diperbarui secara lokal!')">
+                                <option value="2025/2026" ${AppState.tahunAjaran === "2025/2026" ? "selected" : ""}>2025/2026</option>
+                                <option value="2026/2027" ${AppState.tahunAjaran === "2026/2027" ? "selected" : ""}>2026/2027</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted mb-1">Semester Aktif</label>
+                            <select class="form-select form-select-sm" id="master-sem" onchange="AppState.semester = this.value; alert('Semester berhasil diperbarui secara lokal!')">
+                                <option value="Ganjil" ${AppState.semester === "Ganjil" ? "selected" : ""}>Ganjil</option>
+                                <option value="Genap" ${AppState.semester === "Genap" ? "selected" : ""}>Genap</option>
+                            </select>
+                        </div>
+                        <span class="badge bg-light text-dark w-100 py-2 border text-start text-wrap">
+                            <i class="fas fa-info-circle text-primary-azhar me-1"></i> Perubahan di atas otomatis mengubah filter target data formulir.
+                        </span>
+                    </div>
+                </div>
                 ${createAdabDanKeputrianWidgetHTML()}
             </div>
         </div>
@@ -383,15 +414,14 @@ async function renderAdminDashboard() {
     }, 50);
 }
 
-// --- TEMPLATE: GURU DASHBOARD (REVISI MEMANFAATKAN KEKOSONGAN LAYAR) ---
+// --- TEMPLATE: GURU DASHBOARD (REVISI AGENDA DIHAPUS -> WARNING LIST) ---
 async function renderGuruDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Ruang Kelas & Binaan Wali Kelas</h4>
         
-        <!-- Baris Kartu Statistik Atas yang Ditambah Menjadi 6 Kolom agar Tidak Lowong sesuai Screenshot (53).png -->
         <div class="row g-3 mb-4">
-            ${createCard('MURID BINAAN', '32 Santri', 'fa-user-graduate', 'bg-primary text-white')}
+            ${createCard('MURID BINAAN', '32 Murid', 'fa-user-graduate', 'bg-primary text-white')}
             ${createCard('SETORAN PEKAN INI', '28 Kali', 'fa-book-open', 'bg-success text-white')}
             ${createCard('ADAB & PEMBINAAN', '2 Kasus', 'fa-exclamation-triangle', 'bg-warning text-dark')}
             ${createCard('KURBAN KELAS', 'Rp12.450.000', 'fa-cow', 'bg-success text-white')}
@@ -400,7 +430,6 @@ async function renderGuruDashboard() {
         </div>
 
         <div class="row g-4 mb-4">
-            <!-- Sisi Kiri: Tabel Riwayat Setoran Aktif Murid -->
             <div class="col-lg-8">
                 <div class="card-enterprise p-4 mb-4">
                     <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-table me-2 text-primary-azhar"></i>Daftar Setoran Aktif Murid Kelas</h6>
@@ -419,7 +448,6 @@ async function renderGuruDashboard() {
                     </div>
                 </div>
 
-                <!-- Mengisi Area Bawah Tabel dengan Grafik Capaian Juz Murid (Memanfaatkan Space Maksimalkan Visual) -->
                 <div class="card-enterprise p-4">
                     <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-chart-bar text-primary-azhar me-2"></i>Distribusi Capaian Hafalan Kelas Binaan</h6>
                     <div style="position: relative; height:180px; width:100%;">
@@ -428,67 +456,94 @@ async function renderGuruDashboard() {
                 </div>
             </div>
 
-            <!-- Sisi Kanan: Menampilkan Widget Adab, Keputrian, & Agenda Wali Kelas -->
+            <!-- Sisi Kanan: Mengganti Agenda Wali Kelas dengan "Warning List Belum Setoran" -->
             <div class="col-lg-4">
-                <div class="mb-4">
-                    ${createAdabDanKeputrianWidgetHTML()}
-                </div>
-                
-                <!-- Tambahan Widget Agenda/Catatan Guru untuk Memadatkan Sisi Kanan Layout -->
-                <div class="card-enterprise p-4 border-top border-4 border-primary-azhar">
-                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-calendar-day me-2"></i>Agenda Wali Kelas Pekan Ini</h6>
-                    <ul class="font-inter small list-unstyled mb-0">
-                        <li class="mb-2 p-2 bg-light rounded"><i class="fas fa-check-circle text-success me-2"></i>Senin: Validasi Tabungan Kurban Kelas</li>
-                        <li class="mb-2 p-2 bg-light rounded"><i class="fas fa-circle text-muted me-2"></i>Rabu: Setoran Raport Bayangan Tahfidz</li>
-                        <li class="p-2 bg-light rounded"><i class="fas fa-circle text-muted me-2"></i>Jumat: Evaluasi Adab & Halaqah Sore</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        ${createFooterHTML()}
-    `;
-
-    // Memicu pembuatan chart kecil khusus kelas guru setelah HTML termuat
-    setTimeout(() => {
-        initBarChart('chartGuruKelas', ['Juz 30', 'Juz 29', 'Juz 28', 'Juz 27'], [18, 10, 3, 1]);
-    }, 50);
-}
-
-// --- TEMPLATE: KEPSEK DASHBOARD ---
-async function renderKepsekDashboard() {
-    DOM.routerView.innerHTML = `
-        ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Monitoring Kepala Sekolah</h4>
-        <div class="row g-3 mb-4">
-            ${createCard('TOTAL GURU AKTIF', '35', 'fa-chalkboard-teacher', 'bg-success text-white')}
-            ${createCard('TARGET GLOBAL TAHFIDZ', '85%', 'fa-star', 'bg-primary text-white')}
-            ${createCard('BERKAS VALIDASI', '12', 'fa-file-signature', 'bg-danger text-white')}
-        </div>
-        <div class="row g-4 mb-4">
-            <div class="col-lg-8">
-                <div class="card-enterprise p-4 h-100">
-                    <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-user-shield text-primary-azhar me-2"></i>Data Guru & Kelas Pengampu</h6>
-                    <div class="table-responsive">
-                        <table class="table table-hover font-inter align-middle small">
-                            <thead class="table-light">
-                                <tr><th>Nama Guru/Ustadz</th><th>Tugas Kelompok</th><th>Status Input</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Ustadz Syam Al-Hafizh</td><td>Koordinator Keagamaan</td><td><span class="badge bg-success">Lengkap</span></td></tr>
-                            </tbody>
-                        </table>
+                <div class="card-enterprise p-4 border-top border-4 border-danger mb-4">
+                    <h6 class="font-poppins fw-bold mb-3 text-danger"><i class="fas fa-user-clock me-2"></i>Belum Setoran Pekan Ini (Warning)</h6>
+                    <div class="font-inter small">
+                        <div class="p-2 mb-2 bg-light rounded d-flex justify-content-between align-items-center">
+                            <span> Ahmad Fauzan (8A)</span>
+                            <span class="badge bg-danger">0 Setoran</span>
+                        </div>
+                        <div class="p-2 mb-2 bg-light rounded d-flex justify-content-between align-items-center">
+                            <span> Siti Khadijah (8A)</span>
+                            <span class="badge bg-danger">0 Setoran</span>
+                        </div>
+                        <p class="text-muted mt-2 mb-0" style="font-size: 11px;">*Segera ingatkan murid di atas saat jam halaqah dimulai.</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
                 ${createAdabDanKeputrianWidgetHTML()}
             </div>
         </div>
         ${createFooterHTML()}
     `;
+
+    setTimeout(() => {
+        initBarChart('chartGuruKelas', ['Juz 30', 'Juz 29', 'Juz 28', 'Juz 27'], [18, 10, 3, 1]);
+    }, 50);
 }
 
-// --- TEMPLATE: REVISI JUARA AYAH BUNDA DASHBOARD ---
+// --- TEMPLATE: KEPSEK DASHBOARD (REVISI PENUH DATA MAKRO STRATEGIS) ---
+async function renderKepsekDashboard() {
+    DOM.routerView.innerHTML = `
+        ${createMutiaraStatisHTML()}
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Dashboard Monitoring Kepala Sekolah</h4>
+        
+        <!-- Baris Kartu Data Penting -->
+        <div class="row g-3 mb-4">
+            ${createCard('TOTAL GURU AKTIF', '35 Ustadz/ah', 'fa-chalkboard-teacher', 'bg-success text-white')}
+            ${createCard('TARGET GLOBAL TAHFIDZ', '85.4%', 'fa-star', 'bg-primary text-white')}
+            ${createCard('TABUNGAN GLOBAL', 'Rp48.200.000', 'fa-wallet', 'bg-info text-white')}
+            ${createCard('BERKAS VALIDASI', '12 Berkas', 'fa-file-signature', 'bg-danger text-white')}
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Sisi Kiri: Rekap Target Kelulusan Tahfidz Per Kelas -->
+            <div class="col-lg-8">
+                <div class="card-enterprise p-4 h-100">
+                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-chart-line me-2"></i>Persentase Capaian Target Kelulusan Per Kelas</h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover font-inter align-middle small text-center">
+                            <thead class="table-light">
+                                <tr><th class="text-start">Kelas Binaan</th><th>Jumlah Murid</th><th>Rata-rata Juz</th><th>Status Capaian</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="text-start fw-bold">Kelas VII - Umar Bin Khattab</td><td>32 Murid</td><td>1.5 Juz</td><td><span class="badge bg-success">On Target (90%)</span></td></tr>
+                                <tr><td class="text-start fw-bold">Kelas VIII - Abu Bakar</td><td>30 Murid</td><td>2.8 Juz</td><td><span class="badge bg-primary">Excellent (95%)</span></td></tr>
+                                <tr><td class="text-start fw-bold">Kelas IX - Ali Bin Abi Thalib</td><td>28 Murid</td><td>4.2 Juz</td><td><span class="badge bg-warning text-dark">Warning (72%)</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sisi Kanan: Laporan Keuangan Ringkas Kurban Makro -->
+            <div class="col-lg-4">
+                <div class="card-enterprise p-4 border-top border-4 border-success h-100">
+                    <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-hand-holding-usd me-2"></i>Akumulasi Kurban Sekolah</h6>
+                    <div class="font-inter small mb-3">
+                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                            <span class="text-muted">Total Pembeli Kurban:</span>
+                            <span class="fw-bold text-dark">24 Murid</span>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                            <span class="text-muted">Target Kelompok Sapi:</span>
+                            <span class="fw-bold text-primary-azhar">3 Kelompok</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Dana Kas Terkumpul:</span>
+                            <span class="fw-bold text-success">Rp48.200.000</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary-azhar btn-sm w-100" onclick="alert('Membuka PDF Laporan Makro Keuangan...')"><i class="fas fa-file-download me-2"></i>Unduh Laporan Lengkap</button>
+                </div>
+            </div>
+        </div>
+        ${createFooterHTML()}
+    `;
+}
+
+// --- TEMPLATE: REVISI JUARA AYAH BUNDA DASHBOARD (DENGAN PESAN WALI KELAS) ---
 async function renderAyahBundaDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
@@ -500,24 +555,24 @@ async function renderAyahBundaDashboard() {
                     <i class="fas fa-user-graduate fa-lg"></i>
                 </div>
                 <div>
-                    <h4 class="font-poppins fw-bold mb-1" style="font-size: 18px;">Profil Akun Santri: Muhammad Fatih</h4>
+                    <h4 class="font-poppins fw-bold mb-1" style="font-size: 18px;">Profil Akun Murid: Muhammad Fatih</h4>
                     <p class="mb-0 text-gold font-inter small fw-medium">Kelas VIII - Abu Bakar • NIS: 1023412 • Wali Kelas: Ustadz Renaldi</p>
                 </div>
             </div>
         </div>
 
-        <!-- 4 Kartu Monitor Atas (Mengisi Kekosongan Layar) -->
+        <!-- 4 Kartu Monitor Atas -->
         <div class="row g-3 mb-4">
             ${createCard('TOTAL HAFALAN', '4.2 Juz', 'fa-book-quran', 'bg-primary text-white')}
             ${createCard('KURBAN REKREASI', 'Rp2.100.000', 'fa-cow', 'bg-success text-white')}
             ${createCard('ABSENSI / SAKIT', '0 Hari', 'fa-calendar-check', 'bg-info text-white')}
-            ${createCard('CATATAN PELANGGARAN', 'Besih ✨', 'fa-heart', 'bg-warning text-dark')}
+            ${createCard('CATATAN PELANGGARAN', 'Bersih ✨', 'fa-heart', 'bg-warning text-dark')}
         </div>
 
         <div class="row g-4 mb-4">
             <!-- Sisi Kiri: Detail Progres Riwayat Hafalan -->
             <div class="col-lg-8">
-                <div class="card-enterprise p-4 h-100">
+                <div class="card-enterprise p-4 mb-4">
                     <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-history me-2"></i>Riwayat Setoran Hafalan Terakhir</h6>
                     <div class="table-responsive">
                         <table class="table table-hover font-inter align-middle small">
@@ -532,9 +587,18 @@ async function renderAyahBundaDashboard() {
                         </table>
                     </div>
                 </div>
+
+                <!-- MASUKAN BARU: Widget Catatan Pesan Dari Wali Kelas langsung ke Orang Tua -->
+                <div class="card-enterprise p-4 border-start border-4 border-gold bg-light">
+                    <h6 class="font-poppins fw-bold mb-2 text-dark"><i class="fas fa-comment-dots me-2 text-warning"></i>Pesan Khusus Wali Kelas Untuk Ayah/Bunda</h6>
+                    <p class="font-inter mb-0 text-muted small" style="line-height: 1.6;">
+                        "Assalamualaikum Ayah/Bunda, alhamdulillah perkembangan hafalan tajwid Ananda Muhammad Fatih sangat baik pekan ini. Mohon bantuannya untuk terus menjaga murajaah ananda di rumah saat libur akhir pekan nanti. Terima kasih." 
+                        <br><strong class="text-dark d-block mt-1">— Ustadz Renaldi, S.Pd</strong>
+                    </p>
+                </div>
             </div>
 
-            <!-- Sisi Kanan (Area Kursor Kosong): Mengisi Slot Kosong dengan Progres Tabungan Kurban -->
+            <!-- Sisi Kanan: Progres Tabungan Kurban -->
             <div class="col-lg-4">
                 <div class="card-enterprise p-4 h-100 border-top border-4 border-success">
                     <h6 class="font-poppins fw-bold mb-3 text-success"><i class="fas fa-wallet me-2"></i>Rincian Tabungan Kurban Ananda</h6>
@@ -544,7 +608,7 @@ async function renderAyahBundaDashboard() {
                             <span class="fw-bold text-success">Rp2.100.000</span>
                         </div>
                         <div class="d-flex justify-content-between mb-3 small text-muted">
-                            <span>Target Minimum kurban:</span>
+                            <span>Target Minimum Kurban:</span>
                             <span>Rp3.500.000</span>
                         </div>
                         <div class="progress" style="height: 10px;">
@@ -554,7 +618,7 @@ async function renderAyahBundaDashboard() {
                     </div>
                     
                     <h6 class="font-poppins fw-bold mb-2 text-dark small"><i class="fas fa-info-circle me-1 text-muted"></i>Catatan Pembinaan Karakter</h6>
-                    <p class="font-inter text-muted mb-0" style="font-size: 12px; line-height: 1.5;">Alhamdulillah, pekan ini Ananda tertib mengikuti shalat berjamaah tepat waktu dan aktif menjaga kebersihan asrama.</p>
+                    <p class="font-inter text-muted mb-0" style="font-size: 12px; line-height: 1.5;">Alhamdulillah, pekan ini Ananda tertib mengikuti shalat berjamaah tepat waktu dan aktif menjaga kebersihan lingkungan sekolah.</p>
                 </div>
             </div>
         </div>
@@ -584,12 +648,12 @@ async function renderDokumenView() {
 
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
-        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Raport & Sertifikat Santri</h4>
+        <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Arsip Raport & Sertifikat Murid</h4>
         <div class="card-enterprise p-4">
             <div class="table-responsive">
                 <table class="table table-hover font-inter align-middle small text-center">
                     <thead class="table-light">
-                        <tr><th>NIS</th><th class="text-start">Nama Lengkap Santri</th><th>Kelas</th><th>E-Raport</th><th>Sertifikat Juz</th></tr>
+                        <tr><th>NIS</th><th class="text-start">Nama Lengkap Murid</th><th>Kelas</th><th>E-Raport</th><th>Sertifikat Juz</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>1023412</td><td class="fw-bold text-start">Muhammad Fatih</td><td>VIII - Abu Bakar</td><td>${actionButtonsHTML}</td><td>${actionSertifikatHTML}</td></tr>
@@ -613,7 +677,7 @@ function createCard(title, value, icon, iconBgClass) {
                 </div>
                 <div>
                     <h6 class="text-muted font-inter mb-1 text-uppercase" style="font-size: 9px; letter-spacing: 0.5px;">${title}</h6>
-                    <h4 class="font-poppins fw-bold mb-0 text-dark" style="font-size: 14px;">${value}</h4>
+                    <h4 class="font-poppins fw-bold mb-0 text-dark" style="font-size: 13px;">${value}</h4>
                 </div>
             </div>
         </div>
