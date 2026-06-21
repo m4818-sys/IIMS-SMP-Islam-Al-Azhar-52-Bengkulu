@@ -16,7 +16,7 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbx0P2qroCtNv2Ryfg31Lnjf
 // ==========================================
 const AppState = {
     user: null, // Berisi { NAMA, ROLE, JENIS_KELAMIN, TOKEN, dll }
-    currentView: 'dashboard'
+    currentView: 'login'
 };
 
 // ==========================================
