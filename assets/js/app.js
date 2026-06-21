@@ -245,8 +245,11 @@ function renderSidebar() {
         });
     });
 
-    // Set first active
-    document.querySelector('.nav-menu-item').classList.add('active');
+   // Set first active
+const firstMenu = document.querySelector('.nav-menu-item');
+
+if (firstMenu) {
+    firstMenu.classList.add('active');
 }
 
 // ==========================================
