@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IIMS - SMP Islam Al-Azhar 52 Bengkulu</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -29,7 +29,7 @@
                         <li><a class="dropdown-item role-select-btn" href="#" data-role="ADMIN"><i class="fas fa-sliders-h me-2 text-primary"></i>Admin Sistem</a></li>
                         <li><a class="dropdown-item role-select-btn" href="#" data-role="KEPSEK"><i class="fas fa-user-tie me-2 text-success"></i>Kepala Sekolah</a></li>
                         <li><a class="dropdown-item role-select-btn" href="#" data-role="GURU"><i class="fas fa-chalkboard-teacher me-2 text-info"></i>Wali Kelas / Guru</a></li>
-                        <li><a class="dropdown-item role-select-btn" href="#" data-role="GURU_TAHFIDZ"><i class="fas fa-book-quran Tri me-2 text-purple"></i>Guru Tahfidz</a></li>
+                        <li><a class="dropdown-item role-select-btn" href="#" data-role="GURU_TAHFIDZ"><i class="fas fa-book-quran me-2 text-purple"></i>Guru Tahfidz</a></li>
                         <li><a class="dropdown-item role-select-btn" href="#" data-role="AYAH_BUNDA"><i class="fas fa-users-viewfinder me-2 text-warning"></i>Orang Tua / Wali</a></li>
                         <li><a class="dropdown-item role-select-btn" href="#" data-role="OSIS"><i class="fas fa-id-card-clip me-2 text-secondary"></i>Petugas OSIS</a></li>
                     </ul>
@@ -45,20 +45,28 @@
 
     <div class="d-flex" id="wrapper" style="min-height: calc(100vh - 56px);">
         
-        <div class="bg-sidebar shadow-sm text-white" id="sidebar-wrapper" style="width: 260px; min-width: 260px;">
-            <div class="p-4 border-bottom border-white border-opacity-10 text-center bg-dark bg-opacity-20">
-                <div class="avatar-circle mx-auto mb-2 d-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle" style="width: 55px; height: 55px;">
-                    <i class="fas fa-user-circle fa-2x text-gold"></i>
+        <div class="bg-sidebar shadow-sm text-white d-flex flex-column justify-content-between" id="sidebar-wrapper" style="width: 260px; min-width: 260px;">
+            <div>
+                <div class="p-4 border-bottom border-white border-opacity-10 text-center bg-dark bg-opacity-20">
+                    <div class="avatar-circle mx-auto mb-2 d-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle" style="width: 55px; height: 55px;">
+                        <i class="fas fa-user-circle fa-2x text-gold"></i>
+                    </div>
+                    <div id="user-greeting-name" class="font-poppins fw-bold text-truncate small mb-1">Memuat Nama...</div>
+                    <span id="user-role-badge" class="badge bg-gold text-dark font-inter fw-bold shadow-sm" style="font-size: 10px; letter-spacing: 0.5px;">ROLE</span>
                 </div>
-                <div id="user-greeting-name" class="font-poppins fw-bold text-truncate small mb-1">Memuat Nama...</div>
-                <span id="user-role-badge" class="badge bg-gold text-dark font-inter fw-bold shadow-sm" style="font-size: 10px; letter-spacing: 0.5px;">ROLE</span>
+                
+                <div class="py-3" id="sidebar-menu-container">
+                    </div>
             </div>
-            
-            <div class="py-3" id="sidebar-menu-container">
-                </div>
+
+            <div class="p-3 border-top border-white border-opacity-10 bg-dark bg-opacity-10">
+                <a href="#" class="nav-link text-white small opacity-80 d-flex align-items-center" onclick="location.reload();">
+                    <i class="fas fa-sign-out-alt me-2"></i> Keluar
+                </a>
+            </div>
         </div>
         
-        <div class="flex-grow-1 p-4" id="router-view">
+        <div class="flex-grow-1 p-4" id="router-view" style="background-color: #f8f9fa;">
             <div class="text-center py-5">
                 <div class="spinner-border text-primary-azhar" role="status">
                     <span class="visually-hidden">Memuat Sistem...</span>
