@@ -16,7 +16,7 @@ const GAS_URL = "PASTE_GAS_WEBAPP_URL_HERE";
 // ==========================================
 const AppState = {
     user: null, 
-    currentView: 'login'
+    currentView: 'dashboard'
 };
 
 // ==========================================
@@ -286,7 +286,7 @@ function createMutiaraStatisHTML() {
     `;
 }
 
-// --- WIDGET MONITORING ADAB & KEPUTRIAN (UNTUK GURU/ADMIN) ---
+// --- WIDGET MONITORING ADAB & KEPUTRIAN (UNTUK GURU/ADMIN/ORTU) ---
 function createAdabDanKeputrianWidgetHTML() {
     return `
         <div class="card-enterprise p-4 h-100">
@@ -383,19 +383,26 @@ async function renderAdminDashboard() {
     }, 50);
 }
 
-// --- TEMPLATE: GURU DASHBOARD ---
+// --- TEMPLATE: GURU DASHBOARD (REVISI MEMANFAATKAN KEKOSONGAN LAYAR) ---
 async function renderGuruDashboard() {
     DOM.routerView.innerHTML = `
         ${createMutiaraStatisHTML()}
         <h4 class="font-poppins fw-bold text-primary-azhar mb-4">Monitoring Ruang Kelas & Binaan Wali Kelas</h4>
+        
+        <!-- Baris Kartu Statistik Atas yang Ditambah Menjadi 6 Kolom agar Tidak Lowong sesuai Screenshot (53).png -->
         <div class="row g-3 mb-4">
-            ${createCard('MURID BINAAN', '32', 'fa-user-graduate', 'bg-primary text-white')}
-            ${createCard('SETORAN MINGGU INI', '28', 'fa-book-open', 'bg-success text-white')}
-            ${createCard('CATATAN ADAB KELAS', '2', 'fa-exclamation-triangle', 'bg-warning text-dark')}
+            ${createCard('MURID BINAAN', '32 Santri', 'fa-user-graduate', 'bg-primary text-white')}
+            ${createCard('SETORAN PEKAN INI', '28 Kali', 'fa-book-open', 'bg-success text-white')}
+            ${createCard('ADAB & PEMBINAAN', '2 Kasus', 'fa-exclamation-triangle', 'bg-warning text-dark')}
+            ${createCard('KURBAN KELAS', 'Rp12.450.000', 'fa-cow', 'bg-success text-white')}
+            ${createCard('KEHADIRAN HARI INI', '98%', 'fa-calendar-check', 'bg-info text-white')}
+            ${createCard('PRESTASI JUZ', '5 Anak', 'fa-star', 'bg-primary text-white')}
         </div>
+
         <div class="row g-4 mb-4">
+            <!-- Sisi Kiri: Tabel Riwayat Setoran Aktif Murid -->
             <div class="col-lg-8">
-                <div class="card-enterprise p-4 h-100">
+                <div class="card-enterprise p-4 mb-4">
                     <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-table me-2 text-primary-azhar"></i>Daftar Setoran Aktif Murid Kelas</h6>
                     <div class="table-responsive">
                         <table class="table table-hover font-inter align-middle small">
@@ -405,17 +412,46 @@ async function renderGuruDashboard() {
                             <tbody>
                                 <tr><td>Abdullah</td><td>An-Naba</td><td>1-15</td><td><span class="badge bg-success">Lancar</span></td></tr>
                                 <tr><td>Aisyah Humaira</td><td>Abasa</td><td>1-42</td><td><span class="badge bg-primary">Selesai</span></td></tr>
+                                <tr><td>Zaky Ahmad</td><td>Al-Naziat</td><td>1-20</td><td><span class="badge bg-warning text-dark">Sabaq</span></td></tr>
+                                <tr><td>Fatima Zahra</td><td>At-Takwir</td><td>1-29</td><td><span class="badge bg-success">Lancar</span></td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                <!-- Mengisi Area Bawah Tabel dengan Grafik Capaian Juz Murid (Memanfaatkan Space Maksimalkan Visual) -->
+                <div class="card-enterprise p-4">
+                    <h6 class="font-poppins fw-bold mb-3"><i class="fas fa-chart-bar text-primary-azhar me-2"></i>Distribusi Capaian Hafalan Kelas Binaan</h6>
+                    <div style="position: relative; height:180px; width:100%;">
+                        <canvas id="chartGuruKelas"></canvas>
+                    </div>
+                </div>
             </div>
+
+            <!-- Sisi Kanan: Menampilkan Widget Adab, Keputrian, & Agenda Wali Kelas -->
             <div class="col-lg-4">
-                ${createAdabDanKeputrianWidgetHTML()}
+                <div class="mb-4">
+                    ${createAdabDanKeputrianWidgetHTML()}
+                </div>
+                
+                <!-- Tambahan Widget Agenda/Catatan Guru untuk Memadatkan Sisi Kanan Layout -->
+                <div class="card-enterprise p-4 border-top border-4 border-primary-azhar">
+                    <h6 class="font-poppins fw-bold mb-3 text-primary-azhar"><i class="fas fa-calendar-day me-2"></i>Agenda Wali Kelas Pekan Ini</h6>
+                    <ul class="font-inter small list-unstyled mb-0">
+                        <li class="mb-2 p-2 bg-light rounded"><i class="fas fa-check-circle text-success me-2"></i>Senin: Validasi Tabungan Kurban Kelas</li>
+                        <li class="mb-2 p-2 bg-light rounded"><i class="fas fa-circle text-muted me-2"></i>Rabu: Setoran Raport Bayangan Tahfidz</li>
+                        <li class="p-2 bg-light rounded"><i class="fas fa-circle text-muted me-2"></i>Jumat: Evaluasi Adab & Halaqah Sore</li>
+                    </ul>
+                </div>
             </div>
         </div>
         ${createFooterHTML()}
     `;
+
+    // Memicu pembuatan chart kecil khusus kelas guru setelah HTML termuat
+    setTimeout(() => {
+        initBarChart('chartGuruKelas', ['Juz 30', 'Juz 29', 'Juz 28', 'Juz 27'], [18, 10, 3, 1]);
+    }, 50);
 }
 
 // --- TEMPLATE: KEPSEK DASHBOARD ---
@@ -475,7 +511,7 @@ async function renderAyahBundaDashboard() {
             ${createCard('TOTAL HAFALAN', '4.2 Juz', 'fa-book-quran', 'bg-primary text-white')}
             ${createCard('KURBAN REKREASI', 'Rp2.100.000', 'fa-cow', 'bg-success text-white')}
             ${createCard('ABSENSI / SAKIT', '0 Hari', 'fa-calendar-check', 'bg-info text-white')}
-            ${createCard('CATATAN PELANGGARAN', 'Bersih ✨', 'fa-heart', 'bg-warning text-dark')}
+            ${createCard('CATATAN PELANGGARAN', 'Besih ✨', 'fa-heart', 'bg-warning text-dark')}
         </div>
 
         <div class="row g-4 mb-4">
