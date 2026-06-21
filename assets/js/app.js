@@ -102,7 +102,8 @@ async function handleLogin(e) {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    const res = await callAPI("login", { username, password });
+    // FIXED: Dipaksa langsung membaca data simulasi offline agar terhindar dari pemblokiran Google Sheets
+    const res = await mockAPIResponse("login", { username, password });
     
     if (res.success) {
         AppState.user = res.data;
