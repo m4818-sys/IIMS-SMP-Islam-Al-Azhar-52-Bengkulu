@@ -4,31 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IIMS - SMP Islam Al Azhar 52 Bengkulu</title>
-    <!-- Premium Fonts: Inter for Corporate, Amiri for Arabic Touch -->
+    <!-- Premium Fonts Engine -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5 Core CSS -->
+    <!-- Bootstrap 5 & FontAwesome CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Pro UI Elements -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Custom Enterprise CSS -->
-    <link rel="stylesheet" href="style.css">
+
+    <!-- INTEGRATED ENTERPRISE EMBEDDED CSS SYSTEM -->
+    <style>
+        :root {
+            --alazhar-blue: #0A3663;
+            --alazhar-gold: #D4AF37;
+            --alazhar-dark-navy: #051E38;
+            --alazhar-light-canvas: #F4F6F9;
+            --alazhar-white-pure: #FFFFFF;
+            --premium-shadow-sm: 0 4px 15px rgba(10, 54, 99, 0.04);
+            --premium-shadow-md: 0 8px 25px rgba(10, 54, 99, 0.08);
+            --corporate-font-stack: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--corporate-font-stack);
+            background-color: var(--alazhar-light-canvas);
+            color: #1E293B;
+            overflow-x: hidden;
+            letter-spacing: -0.015em;
+        }
+
+        .islamic-fine-overlay { position: relative; }
+        .islamic-fine-overlay::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 0 L36 12 L48 0 L36 36 L48 48 L24 36 L0 48 L12 36 L0 0 L12 12 Z' fill='%230A3663' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 0;
+        }
+
+        /* Authentication Page Layout */
+        .login-frame {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--alazhar-dark-navy) 0%, var(--alazhar-blue) 100%);
+            position: relative; padding: 24px; overflow: hidden;
+        }
+        .login-abstract-bg {
+            position: absolute; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L75 25 L100 0 L75 75 L100 100 L50 75 L0 100 L25 75 L0 0 L25 25 Z' fill='%23D4AF37' fill-opacity='0.015'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+        .login-box-premium {
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 16px;
+            padding: 40px; width: 100%; max-width: 450px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            z-index: 2; animation: premiumEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes premiumEntrance {
+            from { opacity: 0; transform: scale(0.97) translateY(15px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .school-logo-asset { height: 95px; width: auto; object-fit: contain; }
+        .system-title { font-size: 1.05rem; font-weight: 700; color: var(--alazhar-blue); letter-spacing: 0.04em; margin-top: 15px; margin-bottom: 2px; text-center; }
+        .system-acronym { font-size: 1.4rem; font-weight: 800; color: var(--alazhar-gold); margin-bottom: 4px; text-align: center; }
+        .institution-name { font-size: 0.85rem; font-weight: 600; color: #475569; text-transform: uppercase; text-align: center; }
+
+        .field-label-premium { font-size: 0.78rem; font-weight: 600; color: var(--alazhar-blue); text-transform: uppercase; margin-bottom: 6px; display: block; }
+        .input-wrapper-premium { display: flex; align-items: center; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0 14px; }
+        .input-addon-icon { color: #94A3B8; margin-right: 12px; font-size: 0.95rem; }
+        .input-control-premium { border: none; background: transparent; width: 100%; padding: 11px 0; font-size: 0.95rem; color: #1E293B; }
+        .input-control-premium:focus { outline: none; }
+        .btn-premium-action { background: linear-gradient(135deg, var(--alazhar-blue) 0%, #0d4884 100%); color: var(--alazhar-white-pure); border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; transition: all 0.25s ease; }
+        .btn-premium-action:hover { background: var(--alazhar-blue); box-shadow: 0 4px 15px rgba(10, 54, 99, 0.2); }
+        .login-developer-branding .dev-label { font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; margin-bottom: 2px; }
+        .login-developer-branding .dev-author { font-size: 0.85rem; font-weight: 600; color: var(--alazhar-blue); }
+
+        /* Dashboard Infrastructure Layout */
+        .dashboard-frame { display: flex; width: 100%; min-height: 100vh; }
+        .sidebar-wrapper { width: 270px; min-width: 270px; background-color: var(--alazhar-dark-navy); color: #F1F5F9; display: flex; flex-direction: column; z-index: 10; border-right: 1px solid rgba(255, 255, 255, 0.04); }
+        .sidebar-brand-zone { padding: 22px 18px; display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); background: rgba(0, 0, 0, 0.12); }
+        .sidebar-logo-asset { height: 40px; width: auto; margin-right: 12px; }
+        .sidebar-brand-meta { display: flex; flex-direction: column; }
+        .sidebar-brand-meta .meta-top { font-size: 0.75rem; font-weight: 700; color: var(--alazhar-gold); }
+        .sidebar-brand-meta .meta-bottom { font-size: 0.8rem; font-weight: 600; color: var(--alazhar-white-pure); }
+        .sidebar-navigation { padding: 10px 12px; }
+        .nav-heading-enterprise { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #475569; letter-spacing: 0.08em; margin-top: 18px; margin-bottom: 6px; padding-left: 12px; }
+        .link-item-premium { display: flex; align-items: center; padding: 11px 14px; color: #94A3B8; text-decoration: none; border-radius: 8px; font-size: 0.88rem; font-weight: 500; margin-bottom: 2px; transition: all 0.2s ease; }
+        .link-item-premium i { width: 22px; margin-right: 10px; text-align: center; }
+        .link-item-premium:hover { color: var(--alazhar-white-pure); background: rgba(255, 255, 255, 0.03); }
+        .link-item-premium.active { color: var(--alazhar-white-pure); background: var(--alazhar-blue); border-left: 3px solid var(--alazhar-gold); font-weight: 600; }
+        .btn-sidebar-logout { background: rgba(239, 68, 68, 0.08); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.15); padding: 11px; font-size: 0.88rem; font-weight: 600; border-radius: 8px; }
+        .btn-sidebar-logout:hover { background: #EF4444; color: white; }
+
+        /* Content Space */
+        .main-viewport-wrapper { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; }
+        .navbar-top-premium { height: 65px; background: var(--alazhar-white-pure); border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: space-between; }
+        .btn-sidebar-trigger { background: transparent; border: none; color: var(--alazhar-blue); font-size: 1.15rem; }
+        .navbar-view-title { font-size: 1.1rem; font-weight: 700; color: var(--alazhar-dark-navy); }
+        .profile-name-text { font-size: 0.88rem; color: #334155; }
+        
+        /* Announcement Sticky */
+        .announcement-sticky-bar { position: sticky; top: 0; z-index: 9; background: linear-gradient(90deg, #FCF8E3 0%, #FFFDF5 100%); border-bottom: 2px solid var(--alazhar-gold); padding: 8px 24px; }
+        .announcement-title-badge { background: var(--alazhar-gold); color: var(--alazhar-dark-navy); font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
+        .announcement-scroller { font-size: 0.88rem; font-weight: 600; color: var(--alazhar-dark-navy); margin-left: 12px; }
+
+        /* Card Widgets */
+        .welcome-card-premium { background: var(--alazhar-white-pure); border-left: 4px solid var(--alazhar-blue); border-radius: 8px; padding: 20px; box-shadow: var(--premium-shadow-sm); margin-bottom: 20px; }
+        .welcome-user-slug { font-size: 1.5rem; font-weight: 700; color: var(--alazhar-blue); }
+        .role-badge-pill { background: rgba(10, 54, 99, 0.06); color: var(--alazhar-blue); font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: inline-block; }
+        .academic-badge-pill { background: rgba(212, 175, 55, 0.1); color: #A3801C; font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: inline-block; }
+        .islamic-quote-box { background: linear-gradient(to right, #FFFFFF, #F8FAFC); border: 1px solid #E2E8F0; border-left: 3px solid var(--alazhar-gold); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+        .arabic-script-render { font-family: 'Amiri', serif; font-size: 1.45rem; direction: rtl; color: var(--alazhar-dark-navy); }
+        .translation-script-render { font-size: 0.92rem; font-style: italic; color: #475569; }
+        .source-script-render { font-size: 0.78rem; font-weight: 700; color: var(--alazhar-blue); text-transform: uppercase; }
+
+        .card-kpi-premium { background: var(--alazhar-white-pure); border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; box-shadow: var(--premium-shadow-sm); height: 100%; }
+        .kpi-label-text { font-size: 0.8rem; font-weight: 600; color: #64748B; text-transform: uppercase; }
+        .kpi-metric-number { font-size: 1.65rem; font-weight: 700; color: var(--alazhar-dark-navy); }
+        .section-block-premium { background: var(--alazhar-white-pure); border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+        .section-block-title { font-size: 1rem; font-weight: 700; color: var(--alazhar-dark-navy); margin-bottom: 16px; }
+        .section-block-title i { color: var(--alazhar-gold); margin-right: 8px; }
+
+        .table-premium-lock { width: 100%; vertical-align: middle; }
+        .table-premium-lock thead th { background-color: #F8FAFC; color: var(--alazhar-blue); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; padding: 10px 14px; }
+        .table-premium-lock tbody td { padding: 12px 14px; font-size: 0.9rem; border-bottom: 1px solid #E2E8F0; }
+        .badge-status-positive { background-color: rgba(34, 197, 94, 0.1); color: #16A34A; font-size: 0.75rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; }
+        .student-meta-box { background: #F8FAFC; border-radius: 8px; padding: 14px 18px; border: 1px dashed #CBD5E1; }
+        .footer-premium-lock { background: var(--alazhar-white-pure); border-top: 1px solid #E2E8F0; }
+        .footer-copy-text { font-size: 0.8rem; color: #64748B; }
+
+        @media (max-width: 991.98px) {
+            .sidebar-wrapper { position: fixed; left: -270px; top: 0; bottom: 0; transition: all 0.3s ease; }
+            .sidebar-wrapper.open { left: 0; }
+        }
+    </style>
 </head>
 <body>
 
     <div id="app-viewport-root">
-        
-        <!-- ========================================== -->
-        <!-- SYSTEM LOGIN PAGE                          -->
-        <!-- ========================================== -->
+        <!-- SYSTEM LOGIN PAGE -->
         <div id="login-page" class="login-frame d-none">
             <div class="login-abstract-bg"></div>
             <div class="login-box-premium">
                 <div class="login-brand-header text-center">
                     <div class="login-logo-container mb-3">
-                        <!-- Jalur Aset Resmi Sesuai Blueprint -->
-                        <img src="assets/img/logo.png" alt="Logo Al Azhar" class="school-logo-asset animate-fade">
+                        <!-- Relative path tanpa garis miring terdepan -->
+                        <img src="assets/img/logo.png" alt="Logo Al Azhar" class="school-logo-asset">
                     </div>
                     <h1 class="system-title">INTEGRATED ISLAMIC MONITORING SYSTEM</h1>
                     <div class="system-acronym">(IIMS)</div>
@@ -40,14 +159,14 @@
                         <label class="field-label-premium">Nama Pengguna</label>
                         <div class="input-wrapper-premium">
                             <span class="input-addon-icon"><i class="fa-solid fa-user-tie"></i></span>
-                            <input type="text" id="username" class="input-control-premium" placeholder="Masukkan username" required autocomplete="username">
+                            <input type="text" id="username" class="input-control-premium" placeholder="Masukkan username" required>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="field-label-premium">Kata Sandi</label>
                         <div class="input-wrapper-premium">
                             <span class="input-addon-icon"><i class="fa-solid fa-shield-halved"></i></span>
-                            <input type="password" id="password" class="input-control-premium" placeholder="••••••••" required autocomplete="current-password">
+                            <input type="password" id="password" class="input-control-premium" placeholder="••••••••" required>
                         </div>
                     </div>
                     <button type="submit" id="btn-login" class="btn-premium-action w-100">
@@ -63,12 +182,8 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- ENTERPRISE DASHBOARD LAYOUT                -->
-        <!-- ========================================== -->
+        <!-- ENTERPRISE DASHBOARD LAYOUT -->
         <div id="main-layout" class="dashboard-frame d-none">
-            
-            <!-- SIDEBAR BERDASARKAN ROLE (DIINJEKSI MURNI VIA APP.JS) -->
             <aside id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-brand-zone">
                     <img src="assets/img/logo.png" alt="Al Azhar Mini Logo" class="sidebar-logo-asset">
@@ -77,23 +192,15 @@
                         <span class="meta-bottom">MONITORING SYSTEM</span>
                     </div>
                 </div>
-                
-                <!-- Target Injeksi Menu Bersih Tanpa Manipulasi Display CSS Hidden -->
-                <nav id="sidebar-menu-container" class="sidebar-navigation mt-3">
-                    <!-- Dinonaktifkan dari hardcode, dirender dinamis via JavaScript -->
-                </nav>
-
-                <div class="sidebar-termination-zone mt-auto">
+                <nav id="sidebar-menu-container" class="sidebar-navigation mt-3"></nav>
+                <div class="sidebar-termination-zone mt-auto p-3">
                     <button id="btn-logout" class="btn-sidebar-logout w-100">
                         <i class="fa-solid fa-power-off me-2"></i> Keluar Sistem
                     </button>
                 </div>
             </aside>
 
-            <!-- VIEWPORT UTAMA KONTEN KANAN -->
             <div id="content-viewport" class="main-viewport-wrapper">
-                
-                <!-- NAVBAR ATAS BERSIH ELEGAN -->
                 <header class="navbar-top-premium px-4">
                     <div class="d-flex align-items-center">
                         <button id="sidebarToggle" class="btn-sidebar-trigger me-3">
@@ -102,29 +209,22 @@
                         <h4 class="navbar-view-title mb-0" id="current-view-title">Dashboard Utama</h4>
                     </div>
                     <div class="navbar-profile-indicator d-flex align-items-center">
-                        <div class="avatar-holder me-2">
-                            <i class="fa-solid fa-circle-user text-white"></i>
-                        </div>
+                        <div class="avatar-holder me-2"><i class="fa-solid fa-circle-user text-secondary fs-4"></i></div>
                         <span class="profile-name-text fw-medium" id="nav-user-name">Loading...</span>
                     </div>
                 </header>
 
-                <!-- STICKY ANNOUNCEMENT BAR (SELALU TERLIHAT DI ATAS) -->
                 <div id="global-announcement-sticky" class="announcement-sticky-bar">
                     <div class="announcement-container d-flex align-items-center">
-                        <span class="announcement-title-badge"><i class="fa-solid fa-bullhorn me-1"></i> 📢 Pengumuman Sekolah</span>
+                        <span class="announcement-title-badge"><i class="fa-solid fa-bullhorn me-1"></i> Pengumuman</span>
                         <marquee id="announcement-marquee" behavior="scroll" direction="left" class="announcement-scroller">
                             Munaqasyah Tahfidz Kelas IX dilaksanakan tanggal 15 Februari 2027. Mohon Ayah/Bunda dan Ustadz/Ustadzah mendampingi persiapan Ananda.
                         </marquee>
                     </div>
                 </div>
 
-                <!-- MAIN INTERFACE VIEW ROUTER -->
-                <main id="router-view" class="container-fluid py-4 layout-scroll-container">
-                    <!-- Seluruh modul dashboard dirender terisolasi secara sekuensial ketat di sini -->
-                </main>
+                <main id="router-view" class="container-fluid py-4 layout-scroll-container"></main>
 
-                <!-- BRANDING FOOTER CORPORATE -->
                 <footer class="footer-premium-lock py-3 mt-auto text-center">
                     <div class="container-fluid">
                         <p class="mb-0 footer-copy-text">
@@ -132,17 +232,12 @@
                         </p>
                     </div>
                 </footer>
-
             </div>
         </div>
-
     </div>
 
-    <!-- Bootstrap Bundle with Popper JS Framework -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js Core Framework Engine -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Core Application Custom Code -->
     <script src="assets/js/app.js"></script>
 </body>
 </html>
