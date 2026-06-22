@@ -13,115 +13,119 @@
 
     <style>
         :root {
-            --alazhar-navy: #0F172A;
-            --alazhar-blue-primary: #1E3A8A;
-            --alazhar-blue-light: #3B82F6;
-            --alazhar-gold: #D4AF37;
-            --canvas-bg: #F8FAFC;
-            --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
-            --premium-border: 1px solid #E2E8F0;
+            --alazhar-navy: #0B192C;
+            --alazhar-blue-royal: #1E3A8A;
+            --alazhar-blue-light: #2563EB;
+            --alazhar-gold: #F59E0B;
+            --canvas-bg: #F3F4F6;
+            --card-shadow: 0 10px 25px rgba(15, 23, 42, 0.03);
+            --premium-border: 1px solid #E5E7EB;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--canvas-bg);
-            color: #334155;
+            color: #1F2937;
             letter-spacing: -0.01em;
         }
 
-        /* ELEGANT INTERNATIONAL CORPORATE ZOOM LOGIN ANIMATION */
+        /* ISLAMIC GEOMETRIC PATTERN SEAMLESS OVERLAY (REF: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) */
+        .islamic-pattern-bg {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L45 15 L60 0 L45 45 L60 60 L30 45 L0 60 L15 45 L0 0 L15 15 Z' fill='%231e3a8a' fill-opacity='0.015'/%3E%3C/svg%3E");
+        }
+
         @keyframes smoothZoomOverlay {
-            0% { transform: scale(1.15); opacity: 0; }
+            0% { transform: scale(1.1); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         @keyframes elegantBoxEntrance {
-            0% { transform: translateY(30px); opacity: 0; }
+            0% { transform: translateY(20px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
         }
 
         .login-corporate-frame {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #1E3A8A 0%, #0F172A 100%);
+            background: radial-gradient(circle at center, #1E3A8A 0%, #0B192C 100%);
             position: relative; padding: 20px; overflow: hidden;
         }
         .login-zoom-bg {
             position: absolute; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L60 20 L80 0 L60 60 L80 80 L40 60 L0 80 L20 60 L0 0 L20 20 Z' fill='%23D4AF37' fill-opacity='0.02'/%3E%3C/svg%3E");
-            animation: smoothZoomOverlay 4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L60 20 L80 0 L60 60 L80 80 L40 60 L0 80 L20 60 L0 0 L20 20 Z' fill='%23F59E0B' fill-opacity='0.025'/%3E%3C/svg%3E");
+            animation: smoothZoomOverlay 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             z-index: 1;
         }
         .login-box-premium {
-            background: rgba(255, 255, 255, 0.99); border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px; padding: 45px; width: 100%; max-width: 480px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35); z-index: 2;
-            animation: elegantBoxEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background: #FFFFFF; border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: 16px; padding: 40px; width: 100%; max-width: 460px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); z-index: 2;
+            animation: elegantBoxEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .system-title { font-size: 1.1rem; font-weight: 800; color: var(--alazhar-blue-primary); letter-spacing: 0.05em; margin-top: 15px; }
-        .system-acronym { font-size: 1.6rem; font-weight: 800; color: var(--alazhar-gold); }
-        .institution-name { font-size: 0.85rem; font-weight: 600; color: #64748B; text-transform: uppercase; }
+        .system-title { font-size: 1.15rem; font-weight: 800; color: var(--alazhar-blue-royal); letter-spacing: 0.03em; margin-top: 12px; }
+        .system-acronym { font-size: 1.5rem; font-weight: 800; color: var(--alazhar-gold); }
+        .institution-name { font-size: 0.85rem; font-weight: 600; color: #4B5563; text-transform: uppercase; }
 
-        .field-label-premium { font-size: 0.75rem; font-weight: 700; color: var(--alazhar-blue-primary); text-transform: uppercase; margin-bottom: 6px; display: block; }
-        .input-wrapper-premium { display: flex; align-items: center; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0 16px; margin-bottom: 18px; }
-        .input-addon-icon { color: #94A3B8; margin-right: 12px; }
-        .input-control-premium { border: none; background: transparent; width: 100%; padding: 12px 0; font-size: 0.95rem; color: #0F172A; }
+        .field-label-premium { font-size: 0.75rem; font-weight: 700; color: var(--alazhar-blue-royal); text-transform: uppercase; margin-bottom: 6px; display: block; }
+        .input-wrapper-premium { display: flex; align-items: center; background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 8px; padding: 0 14px; margin-bottom: 16px; }
+        .input-addon-icon { color: #9CA3AF; margin-right: 10px; }
+        .input-control-premium { border: none; background: transparent; width: 100%; padding: 11px 0; font-size: 0.9rem; color: #111827; }
         .input-control-premium:focus { outline: none; }
-        .btn-premium-action { background: linear-gradient(135deg, var(--alazhar-blue-primary) 0%, #0F172A 100%); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 700; width: 100%; transition: all 0.3s; }
-        .btn-premium-action:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30, 58, 138, 0.25); }
+        .btn-premium-action { background: linear-gradient(135deg, var(--alazhar-blue-royal) 0%, #0B192C 100%); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; transition: all 0.2s; }
+        .btn-premium-action:hover { transform: translateY(-1px); box-shadow: 0 6px 15px rgba(30, 58, 138, 0.2); }
 
         /* Dashboard Infrastructure */
         .dashboard-frame { display: flex; width: 100%; min-height: 100vh; }
-        .sidebar-wrapper { width: 280px; min-width: 280px; background-color: var(--alazhar-navy); color: #F1F5F9; display: flex; flex-direction: column; z-index: 10; }
-        .sidebar-brand-zone { padding: 25px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .sidebar-navigation { padding: 15px 15px; }
-        .nav-heading-enterprise { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: #475569; letter-spacing: 0.1em; margin-top: 20px; margin-bottom: 8px; padding-left: 10px; }
-        .link-item-premium { display: flex; align-items: center; padding: 12px 15px; color: #94A3B8; text-decoration: none; border-radius: 10px; font-size: 0.88rem; font-weight: 500; margin-bottom: 4px; transition: all 0.2s; }
-        .link-item-premium i { width: 24px; margin-right: 10px; text-align: center; }
-        .link-item-premium:hover { color: white; background: rgba(255, 255, 255, 0.03); }
-        .link-item-premium.active { color: white; background: var(--alazhar-blue-primary); border-left: 4px solid var(--alazhar-gold); font-weight: 600; }
+        .sidebar-wrapper { 
+            width: 280px; min-width: 280px; background-color: var(--alazhar-blue-royal); color: #F3F4F6; display: flex; flex-direction: column; z-index: 10; 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L60 20 L80 0 L60 60 L80 80 L40 60 L0 80 L20 60 L0 0 L20 20 Z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
+            border-right: 2px solid var(--alazhar-gold);
+        }
+        .sidebar-brand-zone { padding: 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .sidebar-navigation { padding: 15px; }
+        .nav-heading-enterprise { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.08em; margin-top: 18px; margin-bottom: 6px; padding-left: 8px; }
+        .link-item-premium { display: flex; align-items: center; padding: 10px 12px; color: rgba(255, 255, 255, 0.75); text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; transition: all 0.2s; }
+        .link-item-premium i { width: 22px; margin-right: 8px; text-align: center; font-size: 1rem; }
+        .link-item-premium:hover { color: white; background: rgba(255, 255, 255, 0.06); }
+        .link-item-premium.active { color: white; background: rgba(255, 255, 255, 0.15); border-left: 4px solid var(--alazhar-gold); font-weight: 600; }
         
-        .main-viewport-wrapper { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; }
+        .main-viewport-wrapper { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; background-color: #F8FAFC; }
         .navbar-top-premium { height: 70px; background: white; border-bottom: var(--premium-border); display: flex; align-items: center; justify-content: space-between; }
         
-        /* Moving Announcement Mechanics */
-        .announcement-sticky-bar { background: linear-gradient(90deg, #FFFBEB 0%, #FFFFFF 100%); border-bottom: 2px solid var(--alazhar-gold); padding: 10px 24px; }
-        .announcement-title-badge { background: #F59E0B; color: white; font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 6px; }
+        .announcement-sticky-bar { background: #FFFBEB; border-bottom: 1px solid #FDE68A; padding: 8px 24px; }
+        .announcement-title-badge { background: var(--alazhar-gold); color: white; font-size: 0.7rem; font-weight: 800; padding: 3px 10px; border-radius: 4px; }
 
-        /* Premium Interface Blocks */
-        .welcome-card-premium { background: white; border-left: 5px solid var(--alazhar-blue-primary); border-radius: 12px; padding: 24px; box-shadow: var(--card-shadow); margin-bottom: 24px; }
-        .welcome-user-slug { font-size: 1.6rem; font-weight: 800; color: var(--alazhar-blue-primary); }
-        .islamic-quote-box { background: #F8FAFC; border: var(--premium-border); border-left: 4px solid var(--alazhar-gold); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
-        .translation-script-render { font-size: 0.95rem; font-style: italic; color: #334155; font-weight: 500; }
+        /* Premium Panels */
+        .welcome-card-premium { background: white; border-left: 5px solid var(--alazhar-blue-royal); border-radius: 10px; padding: 20px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+        .welcome-user-slug { font-size: 1.4rem; font-weight: 800; color: var(--alazhar-blue-royal); }
         
-        .card-kpi-premium { background: white; border: var(--premium-border); border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow); height: 100%; transition: transform 0.2s; }
-        .card-kpi-premium:hover { transform: translateY(-3px); }
-        .kpi-label-text { font-size: 0.78rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.02em; }
-        .kpi-metric-number { font-size: 1.8rem; font-weight: 800; color: var(--alazhar-navy); margin-top: 5px; }
+        .card-kpi-premium { background: white; border: var(--premium-border); border-radius: 10px; padding: 18px; box-shadow: var(--card-shadow); height: 100%; }
+        .kpi-label-text { font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; }
+        .kpi-metric-number { font-size: 1.6rem; font-weight: 800; color: var(--alazhar-navy); margin-top: 4px; }
         
-        .section-block-premium { background: white; border: var(--premium-border); border-radius: 14px; padding: 24px; box-shadow: var(--card-shadow); margin-bottom: 24px; }
-        .section-block-title { font-size: 1.05rem; font-weight: 700; color: var(--alazhar-navy); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
-        .section-block-title i { color: var(--alazhar-gold); margin-right: 8px; }
+        .section-block-premium { background: white; border: var(--premium-border); border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+        .section-block-title { font-size: 0.95rem; font-weight: 700; color: var(--alazhar-navy); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; }
+        .section-block-title i { color: var(--alazhar-gold); margin-right: 6px; }
 
         .table-premium-lock { width: 100%; vertical-align: middle; margin-bottom: 0; }
-        .table-premium-lock thead th { background-color: #F8FAFC; color: var(--alazhar-blue-primary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; padding: 12px 16px; border-bottom: 2px solid #E2E8F0; }
-        .table-premium-lock tbody td { padding: 14px 16px; font-size: 0.88rem; border-bottom: 1px solid #F1F5F9; color: #334155; }
+        .table-premium-lock thead th { background-color: #F9FAFB; color: var(--alazhar-blue-royal); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; padding: 10px 14px; border-bottom: 2px solid #E5E7EB; }
+        .table-premium-lock tbody td { padding: 12px 14px; font-size: 0.85rem; border-bottom: 1px solid #F3F4F6; color: #374151; }
         
-        .badge-danger-premium { background-color: #FEE2E2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
-        .badge-success-premium { background-color: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
-        .identity-student-grid { background: #F1F5F9; border-radius: 12px; padding: 20px; border: 1px dashed #CBD5E1; }
-        
-        .btn-action-download { font-size: 0.8rem; font-weight: 700; padding: 6px 12px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-allowed { background-color: var(--alazhar-blue-primary); color: white; }
-        .btn-allowed:hover { background-color: #0F172A; color: white; }
-        .btn-locked { background-color: #E2E8F0; color: #94A3B8; cursor: not-allowed; pointer-events: none; }
+        /* Official Predict Badges (Ref: cad461b0-413c-4d05-9f02-67158a529115.png) */
+        .pred-mumtaz { background-color: #D1FAE5; color: #065F46; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+        .pred-jayyid-jiddan { background-color: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+        .pred-jayyid { background-color: #DBEAFE; color: #1E40AF; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+        .pred-maqbul { background-color: #F3F4F6; color: #374151; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
 
+        .badge-danger-premium { background-color: #FEE2E2; color: #991B1B; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+        .identity-student-grid { background: #F9FAFB; border-radius: 8px; padding: 16px; border: 1px dashed #D1D5DB; }
+        
         @media (max-width: 991.98px) {
             .sidebar-wrapper { position: fixed; left: -280px; top: 0; bottom: 0; transition: all 0.3s ease; }
             .sidebar-wrapper.open { left: 0; }
         }
     </style>
 </head>
-<body>
+<body class="islamic-pattern-bg">
 
     <div id="app-viewport-root">
         <!-- CORPORATE LOGIN VIEW -->
@@ -129,7 +133,7 @@
             <div class="login-zoom-bg"></div>
             <div class="login-box-premium">
                 <div class="text-center">
-                    <img src="assets/img/logo.png" alt="Logo Al Azhar" style="height: 100px; width: auto;" onerror="this.src='https://placehold.co/100x100?text=AlAzhar'">
+                    <img src="assets/img/logo.png" alt="Logo Al Azhar" style="height: 90px; width: auto;" onerror="this.src='https://placehold.co/90x90?text=AlAzhar'">
                     <h1 class="system-title">INTEGRATED ISLAMIC MONITORING SYSTEM</h1>
                     <div class="system-acronym">(IIMS)</div>
                     <p class="institution-name">SMP ISLAM AL AZHAR 52 BENGKULU</p>
@@ -140,7 +144,7 @@
                         <label class="field-label-premium">ID Pengguna / Akun IIMS</label>
                         <div class="input-wrapper-premium">
                             <span class="input-addon-icon"><i class="fa-solid fa-id-card-clip"></i></span>
-                            <input type="text" id="username" class="input-control-premium" placeholder="Contoh: kepsek, eko, anisa, osis, wali, wali_putri" required>
+                            <input type="text" id="username" class="input-control-premium" placeholder="Contoh: kepsek, eko, anisa, osis, wali" required>
                         </div>
                     </div>
                     <div>
@@ -155,27 +159,10 @@
                         <div class="input-wrapper-premium">
                             <span class="input-addon-icon"><i class="fa-solid fa-calendar-days"></i></span>
                             <select id="login-period" class="input-control-premium" style="background: transparent; border:none; -webkit-appearance: none;">
-                                <!-- Loop Terbentang Dinamis Hingga 2036/2037 Sesuai Permintaan Baku -->
                                 <option value="2025/2026 Ganjil">TA 2025/2026 - Ganjil</option>
                                 <option value="2025/2026 Genap">TA 2025/2026 - Genap</option>
                                 <option value="2026/2027 Ganjil" selected>TA 2026/2027 - Ganjil</option>
                                 <option value="2026/2027 Genap">TA 2026/2027 - Genap</option>
-                                <option value="2027/2028 Ganjil">TA 2027/2028 - Ganjil</option>
-                                <option value="2027/2028 Genap">TA 2027/2028 - Genap</option>
-                                <option value="2028/2029 Ganjil">TA 2028/2029 - Ganjil</option>
-                                <option value="2028/2029 Genap">TA 2028/2029 - Genap</option>
-                                <option value="2029/2030 Ganjil">TA 2029/2030 - Ganjil</option>
-                                <option value="2029/2030 Genap">TA 2029/2030 - Genap</option>
-                                <option value="2030/2031 Ganjil">TA 2030/2031 - Ganjil</option>
-                                <option value="2030/2031 Genap">TA 2030/2031 - Genap</option>
-                                <option value="2031/2032 Ganjil">TA 2031/2032 - Ganjil</option>
-                                <option value="2031/2032 Genap">TA 2031/2032 - Genap</option>
-                                <option value="2032/2033 Ganjil">TA 2032/2033 - Ganjil</option>
-                                <option value="2032/2033 Genap">TA 2032/2033 - Genap</option>
-                                <option value="2033/2034 Ganjil">TA 2033/2034 - Ganjil</option>
-                                <option value="2033/2034 Genap">TA 2033/2034 - Genap</option>
-                                <option value="2034/2035 Ganjil">TA 2034/2035 - Ganjil</option>
-                                <option value="2034/2035 Genap">TA 2034/2035 - Genap</option>
                                 <option value="2035/2036 Ganjil">TA 2035/2036 - Ganjil</option>
                                 <option value="2035/2036 Genap">TA 2035/2036 - Genap</option>
                                 <option value="2036/2037 Ganjil">TA 2036/2037 - Ganjil</option>
@@ -187,7 +174,7 @@
                         <i class="fa-solid fa-shield-check me-2"></i> Verifikasi & Masuk Ke Sistem
                     </button>
                 </form>
-                <div class="text-center mt-4" style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em;">
+                <div class="text-center mt-4" style="font-size: 0.7rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em;">
                     Technology & System Development by M. Renaldi A. S
                 </div>
             </div>
@@ -197,15 +184,15 @@
         <div id="main-layout" class="dashboard-frame d-none">
             <aside id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-brand-zone">
-                    <img src="assets/img/logo.png" alt="Mini Logo" style="height: 42px; width: auto;" onerror="this.src='https://placehold.co/40x40?text=AA'">
+                    <img src="assets/img/logo.png" alt="Mini Logo" style="height: 38px; width: auto;" onerror="this.src='https://placehold.co/40x40?text=AA'">
                     <div class="ms-3">
-                        <div style="font-size: 0.75rem; font-weight: 800; color: var(--alazhar-gold);">IIMS PANEL</div>
-                        <div style="font-size: 0.85rem; font-weight: 700; color: white;">AL AZHAR 52</div>
+                        <div style="font-size: 0.7rem; font-weight: 800; color: var(--alazhar-gold);">IIMS PANEL</div>
+                        <div style="font-size: 0.8rem; font-weight: 700; color: white;">AL AZHAR 52</div>
                     </div>
                 </div>
                 <nav id="sidebar-menu-container" class="sidebar-navigation mt-2"></nav>
                 <div class="p-3 mt-auto">
-                    <button id="btn-logout" class="btn btn-outline-danger w-100 btn-sm font-weight-bold" style="border-radius: 8px;">
+                    <button id="btn-logout" class="btn btn-outline-light w-100 btn-sm" style="border-radius: 6px; font-weight: 600; font-size: 0.8rem;">
                         <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Keluar Aplikasi
                     </button>
                 </div>
@@ -215,27 +202,27 @@
                 <header class="navbar-top-premium px-4">
                     <div class="d-flex align-items-center">
                         <button id="sidebarToggle" class="btn d-lg-none me-3 text-primary"><i class="fa-solid fa-bars fs-4"></i></button>
-                        <h4 class="mb-0 fw-bold text-dark" id="current-view-title">Dashboard Operasional</h4>
+                        <h4 class="mb-0 fw-bold text-dark" id="current-view-title" style="font-size: 1.1rem;">Dashboard Operasional</h4>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="badge bg-light text-dark border me-3"><i class="fa-solid fa-calendar-days text-warning me-1"></i> <span id="global-period-label">TA 2026/2027 - Ganjil</span></span>
-                        <div class="fw-semibold text-secondary" id="nav-user-name">Loading Profile...</div>
+                        <span class="badge bg-light text-dark border me-3"><i class="fa-solid fa-calendar-days text-warning me-1"></i> <span id="global-period-label">TA 2026/2027</span></span>
+                        <div class="fw-semibold text-secondary" id="nav-user-name" style="font-size: 0.85rem;">Profile...</div>
                     </div>
                 </header>
 
                 <div class="announcement-sticky-bar">
                     <div class="d-flex align-items-center">
-                        <span class="announcement-title-badge"><i class="fa-solid fa-bullhorn me-1"></i> INFORMASI</span>
-                        <marquee behavior="scroll" direction="left" class="ms-3 fw-bold text-danger" style="font-size: 0.9rem;">
-                            Pengisian jurnal adab kesiswaan disinkronisasikan berkala menuju Google Sheets Master Data IIMS oleh Tim Pengembang M. Renaldi A. S.
+                        <span class="announcement-title-badge"><i class="fa-solid fa-bullhorn me-1"></i> LOG UTAMA</span>
+                        <marquee behavior="scroll" direction="left" class="ms-3 fw-bold text-dark" style="font-size: 0.82rem;">
+                            Seluruh rekaman adab kesiswaan dan mutaba'ah keputrian murid tersinkronisasi terpadu menuju Google Sheets Engine IIMS. Pengembang: M. Renaldi A. S.
                         </marquee>
                     </div>
                 </div>
 
                 <main id="router-view" class="container-fluid py-4 flex-grow-1"></main>
 
-                <footer class="bg-white border-top py-3 text-center" style="font-size: 0.8rem; color: #64748B;">
-                    Sistem Pemantauan Terpadu IIMS &bull; Developed by <span class="fw-bold text-dark">M. Renaldi A. S</span> &bull; Pelaporan Korporat Realtime
+                <footer class="bg-white border-top py-3 text-center" style="font-size: 0.75rem; color: #6B7280;">
+                    Sistem Pemantauan Terpadu IIMS &bull; Developed by <span class="fw-bold text-dark">M. Renaldi A. S</span> &bull; Pelaporan Al Azhar Korporat
                 </footer>
             </div>
         </div>
@@ -246,24 +233,25 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // DATA MASTER BERBASIS INTEGRASI STRUKTUR NIS (MOCK DATABASE SPREADSHEET)
+        // DATA MASTER INTEGRASI BERBASIS JANGKAR NIS (MOCK SPREADSHEET MASTER)
         const MASTER_STUDENTS = {
-            "26001": { nis: "26001", nama: "Muhammad Rayhan", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadzah Anisa", hafalanTerakhir: "Juz 30, Surah An-Naba Ayat 20", jenisKelamin: "L", kurbanSaldo: "Rp 3.500.000" },
-            "26002": { nis: "26002", nama: "Aisyah Putri", kelas: "IX-B", waliKelas: "Ustadzah Anisa, S.PdI", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah Al-Mulk Ayat 10", jenisKelamin: "P", kurbanSaldo: "Rp 4.100.000" },
-            "26003": { nis: "26003", nama: "Ahmad Fathoni", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah Al-Mulk Ayat 15", jenisKelamin: "L", kurbanSaldo: "Rp 1.200.000" },
-            "26004": { nis: "26004", nama: "Farhan Zaki", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah An-Naba Ayat 20", jenisKelamin: "L", kurbanSaldo: "Rp 2.000.000" },
-            "26005": { nis: "26005", nama: "Bambang Pamungkas", kelas: "VIII-B", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadzah Anisa", hafalanTerakhir: "Surah An-Nas Ayat 1", jenisKelamin: "L", kurbanSaldo: "Rp 500.000" }
+            "26001": { nis: "26001", nama: "Muhammad Rayhan", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadzah Anisa", hafalanTerakhir: "Juz 30, Surah An-Naba Ayat 20", jenisKelamin: "L", kurbanPaid: 4500000, kurbanTotal: 6000000 },
+            "26002": { nis: "26002", nama: "Aisyah Putri", kelas: "IX-B", waliKelas: "Ustadzah Anisa, S.PdI", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah Al-Mulk Ayat 10", jenisKelamin: "P", kurbanPaid: 2000000, kurbanTotal: 6000000 },
+            "26003": { nis: "26003", nama: "Ahmad Fathoni", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah Al-Mulk Ayat 15", jenisKelamin: "L", kurbanPaid: 6000000, kurbanTotal: 6000000 },
+            "26004": { nis: "26004", nama: "Farhan Zaki", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah An-Naba Ayat 20", jenisKelamin: "L", kurbanPaid: 1500000, kurbanTotal: 6000000 }
         };
+
+        const TEACHER_MAPPING = [
+            { namaGuru: "Ustadz Eko, S.Pd", kelasBinaan: "VII-A", jumlahMurid: "3 Murid" },
+            { namaGuru: "Ustadzah Anisa, S.PdI", kelasBinaan: "IX-B", jumlahMurid: "1 Murid" }
+        ];
 
         const MOCK_PROFILES = {
             "kepsek": { username: "Dr. H. Ahmad", role: "KEPSEK", greeting: "Selamat Datang Bapak Kepala Sekolah, Dr. H. Ahmad" },
-            "koordinator": { username: "Ustadz Syarif, M.Pd", role: "KOORDINATOR_KEAGAMAAN", greeting: "Selamat Datang Koordinator Keagamaan, Ustadz Syarif, M.Pd" },
             "eko": { username: "Ustadz Eko, S.Pd", role: "GURU", greeting: "Selamat Datang Ustadz Eko", kelasBinaan: "VII-A" },
-            "anisa": { username: "Ustadzah Anisa, S.PdI", role: "GURU", greeting: "Selamat Datang Ustadzah Anisa", kelasBinaan: "IX-B" },
-            "osis": { username: "Pengurus OSIS (Bidang Kesiswaan)", role: "OSIS", greeting: "Selamat Datang Pengurus OSIS" },
-            "wali": { username: "Ayah/Bunda dari Muhammad Rayhan", role: "AYAH_BUNDA", greeting: "Selamat Datang Ayah/Bunda dari Muhammad Rayhan", targetNis: "26001" },
-            "wali_putri": { username: "Ayah/Bunda dari Aisyah Putri", role: "AYAH_BUNDA", greeting: "Selamat Datang Ayah/Bunda dari Aisyah Putri", targetNis: "26002" },
-            "admin": { username: "M. Renaldi A. S (Super Admin)", role: "ADMIN", greeting: "Selamat Datang Super Administrator System, M. Renaldi A. S" }
+            "osis": { username: "Pengurus OSIS (Kesiswaan)", role: "OSIS", greeting: "Selamat Datang Rekan Pengurus OSIS" },
+            "wali": { username: "Ayah/Bunda dari Muhammad Rayhan", role: "AYAH_BUNDA", greeting: "Selamat Datang Orang Tua Murid, Muhammad Rayhan", targetNis: "26001" },
+            "admin": { username: "M. Renaldi A. S (Super Admin)", role: "ADMIN", greeting: "Selamat Datang Tim Pengembang Utama, M. Renaldi A. S" }
         };
 
         let activeUser = null;
@@ -294,7 +282,7 @@
                     document.getElementById('global-period-label').textContent = "TA " + selectedPeriod;
                     buildDashboardEnvironment();
                 } else {
-                    alert('ID Pengguna tidak terdaftar dalam Master Data Spreadsheet IIMS.');
+                    alert('Akun IIMS tidak ditemukan.');
                 }
             });
 
@@ -311,382 +299,196 @@
         function buildDashboardEnvironment() {
             document.getElementById('login-page').classList.add('d-none');
             document.getElementById('main-layout').classList.remove('d-none');
-            
             generateSidebarMenus(activeUser.role);
-            renderDashboardPayload(activeUser.role);
-        }
-
-        function hasDownloadPrivilege(role) {
-            return ['ADMIN', 'KEPSEK', 'KOORDINATOR_KEAGAMAAN'].includes(role);
+            loadSubView('dashboard');
         }
 
         function generateSidebarMenus(role) {
             let html = `<div class="nav-heading-enterprise">Navigasi Utama</div>`;
-            html += `<a href="#" class="link-item-premium active" onclick="loadSubView('dashboard')"><i class="fa-solid fa-grid-2"></i><span>Dashboard Utama</span></a>`;
+            html += `<a href="#" class="link-item-premium" id="menu-dashboard" onclick="loadSubView('dashboard')"><i class="fa-solid fa-table-columns"></i><span>Dashboard Utama</span></a>`;
             
-            if (['GURU', 'ADMIN', 'KEPSEK', 'KOORDINATOR_KEAGAMAAN'].includes(role)) {
-                html += `<div class="nav-heading-enterprise">Aktivitas Guru</div>`;
-                html += `<a href="#" class="link-item-premium" onclick="loadSubView('input-tahfidz')"><i class="fa-solid fa-book-open-reader"></i><span>Input Tahfidz Berkala</span></a>`;
+            if (['GURU', 'ADMIN'].includes(role)) {
+                html += `<div class="nav-heading-enterprise">Aktivitas Input</div>`;
+                html += `<a href="#" class="link-item-premium" id="menu-input-tahfidz" onclick="loadSubView('input-tahfidz')"><i class="fa-solid fa-book-open-reader"></i><span>Input Tahfidz Berkala</span></a>`;
             }
 
-            if (['ADMIN', 'KEPSEK', 'KOORDINATOR_KEAGAMAAN'].includes(role)) {
-                html += `<div class="nav-heading-enterprise">Verifikasi Keagamaan</div>`;
-                html += `<a href="#" class="link-item-premium" onclick="loadSubView('approval-kurban')"><i class="fa-solid fa-money-check-dollar-pen"></i><span>Approval Tabungan Kurban</span></a>`;
+            if (['KEPSEK', 'ADMIN'].includes(role)) {
+                html += `<div class="nav-heading-enterprise">Otoritas Eksekutif</div>`;
+                html += `<a href="#" class="link-item-premium" id="menu-data-guru" onclick="loadSubView('data-guru')"><i class="fa-solid fa-chalkboard-user"></i><span>Data Guru & Binaan</span></a>`;
             }
 
-            if (role === 'OSIS' || role === 'ADMIN') {
-                html += `<div class="nav-heading-enterprise">Akses Kesiswaan / OSIS</div>`;
-                html += `<a href="#" class="link-item-premium" onclick="loadSubView('osis-input')"><i class="fa-solid fa-pen-line"></i><span>Input Adab & Pembinaan</span></a>`;
-            }
-
-            if (['ADMIN', 'GURU', 'KEPSEK', 'KOORDINATOR_KEAGAMAAN'].includes(role)) {
-                html += `<div class="nav-heading-enterprise">Sertifikasi Dokumen</div>`;
-                html += `<a href="#" class="link-item-premium" onclick="loadSubView('review-raport')"><i class="fa-solid fa-file-invoice"></i><span>Review Raport & Sertifikat</span></a>`;
+            if (['OSIS', 'ADMIN'].includes(role)) {
+                html += `<div class="nav-heading-enterprise">Kesiswaan</div>`;
+                html += `<a href="#" class="link-item-premium" id="menu-osis-input" onclick="loadSubView('osis-input')"><i class="fa-solid fa-scale-balanced"></i><span>Input Jurnal Karakter</span></a>`;
+                html += `<a href="#" class="link-item-premium" id="menu-osis-keputrian" onclick="loadSubView('osis-keputrian')"><i class="fa-solid fa-venus"></i><span>Jurnal Keputrian Murid</span></a>`;
             }
 
             document.getElementById('sidebar-menu-container').innerHTML = html;
+        }
+
+        function loadSubView(viewName) {
+            document.querySelectorAll('.link-item-premium').forEach(el => el.classList.remove('active'));
+            const targetMenu = document.getElementById('menu-' + viewName);
+            if (targetMenu) targetMenu.classList.add('active');
+            
+            document.getElementById('current-view-title').textContent = viewName.toUpperCase().replace('-', ' ');
+
+            let targetOutput = document.getElementById('router-view');
+            
+            if (viewName === 'dashboard') {
+                renderDashboardPayload(activeUser.role);
+                return;
+            }
+
+            let buffer = `<div class="section-block-premium">`;
+
+            if (viewName === 'input-tahfidz') {
+                const matchedClass = activeUser.kelasBinaan || "VII-A";
+                buffer += `
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-book-bookmark text-primary me-2"></i>Form Kelanjutan Setoran Tahfidz</h5>
+                    <form onsubmit="alert('Data setoran baru berhasil diverifikasi masuk log historis NIS!'); loadSubView('dashboard'); return false;">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Pilih Nama Murid (${matchedClass})</label>
+                            <select class="form-select" onchange="const previewEl = document.getElementById('tahfidz-last-preview'); if(this.value && MASTER_STUDENTS[this.value]){ previewEl.textContent = 'Hafalan Terakhir Terdata: ' + MASTER_STUDENTS[this.value].hafalanTerakhir; }else{ previewEl.textContent=''; }" required>
+                                <option value="">-- Pilih Murid --</option>
+                                ${Object.values(MASTER_STUDENTS).filter(s => s.kelas === matchedClass).map(s => `<option value="${s.nis}">${s.nama} [NIS: ${s.nis}]</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="mb-3 text-primary font-monospace fw-bold" id="tahfidz-last-preview" style="font-size:0.88rem;"></div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6"><label class="form-label fw-bold">Surah Lanjutan</label><input type="text" class="form-control" required></div>
+                            <div class="col-md-6"><label class="form-label fw-bold">Sampai Ayat</label><input type="number" class="form-control" required></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Kategori Kelancaran Hafalan</label>
+                            <select class="form-select">
+                                <option value="Mumtaz">Mumtaz (Istimewa)</option>
+                                <option value="Jayyid Jiddan">Jayyid Jiddan (Sangat Baik)</option>
+                                <option value="Jayyid">Jayyid (Baik)</option>
+                                <option value="Maqbul">Maqbul (Cukup)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary fw-bold">Simpan Progres Hafalan</button>
+                    </form>
+                `;
+            } else if (viewName === 'data-guru') {
+                buffer += `
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-chalkboard-user text-primary me-2"></i>Data Guru & Daftar Murid Binaan Kolektif</h5>
+                    <table class="table table-premium-lock">
+                        <thead><tr><th>Nama Pendidik / Guru</th><th>Kelas Binaan</th><th>Jumlah Anggota Murid</th><th>Aksi Monitoring</th></tr></thead>
+                        <tbody>
+                            ${TEACHER_MAPPING.map(g => `
+                                <tr>
+                                    <td><strong>${g.namaGuru}</strong></td>
+                                    <td><span class="badge bg-secondary">${g.kelasBinaan}</span></td>
+                                    <td>${g.jumlahMurid}</td>
+                                    <td><button class="btn btn-sm btn-outline-primary fw-bold" onclick="alert('Menampilkan daftar lampiran murid di bawah naungan ${g.namaGuru}...')"><i class="fa-solid fa-magnifying-glass-chart"></i> Tinjau Murid</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } else if (viewName === 'osis-input') {
+                buffer += `
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-scale-balanced text-primary me-2"></i>Form Jurnal Adab Kesiswaan (Koneksi Cloud Sheets)</h5>
+                    <form onsubmit="alert('Data Karakter Sukses Tersimpan Ke Google Sheets!'); loadSubView('dashboard'); return false;">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Pilih Murid Al Azhar</label>
+                            <select class="form-select" required>
+                                ${Object.values(MASTER_STUDENTS).map(s => `<option value="${s.nis}">${s.nama} [Kelas ${s.kelas}]</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Bentuk Tindakan Pelanggaran Adab</label>
+                            <input type="text" class="form-control" placeholder="Contoh: Terlambat shalat berjamaah" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary fw-bold">Kunci & Amankan ke Sheets</button>
+                    </form>
+                `;
+            } else if (viewName === 'osis-keputrian') {
+                buffer += `
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-venus text-primary me-2"></i>Monitoring Log Keputrian & Kondisi Haidh Murid Putri</h5>
+                    <table class="table table-premium-lock">
+                        <thead><tr><th>Nama Murid</th><th>Status Hari Ini</th><th>Hari Ke-</th><th>Siklus Haidh Bulan Ini</th></tr></thead>
+                        <tbody>
+                            <tr><td>Aisyah Putri</td><td><span class="badge bg-danger">Sedang Keputrian (Haidh)</span></td><td>Hari ke-3</td><td>Siklus Pertama</td></tr>
+                            <tr><td>Zhafira Aulia</td><td><span class="badge bg-success">Mudzakarah (Suci)</span></td><td>-</td><td>Selesai</td></tr>
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            buffer += `</div>`;
+            targetOutput.innerHTML = buffer;
         }
 
         function renderDashboardPayload(role) {
             let buffer = `
                 <div class="welcome-card-premium">
                     <div class="welcome-user-slug">${activeUser.greeting}</div>
-                    <div class="text-muted mt-1" style="font-size:0.85rem;"><i class="fa-solid fa-circle-check text-success me-1"></i> Terotentikasi | Periode Operasional Aktif: ${selectedPeriod}</div>
-                </div>
-
-                <div class="islamic-quote-box">
-                    <div class="translation-script-render">
-                        "Sebaik-baik kalian adalah orang yang belajar Al-Qur'an dan mengajarkannya." (HR. Bukhari)
-                    </div>
+                    <div class="text-muted mt-1" style="font-size:0.82rem;"><i class="fa-solid fa-circle-check text-success me-1"></i> Otoritas Akses: ${activeUser.role} | Periode: ${selectedPeriod}</div>
                 </div>
             `;
 
-            if (role === 'GURU' || role === 'ADMIN') buffer += getGuruDashboard();
-            else if (role === 'AYAH_BUNDA') buffer += getParentDashboard();
-            else if (role === 'OSIS') buffer += getOsisDashboard();
-            else if (role === 'KEPSEK' || role === 'KOORDINATOR_KEAGAMAAN') buffer += getKepsekDashboard();
-
-            document.getElementById('router-view').innerHTML = buffer;
-            if (document.getElementById('chart-performance')) loadPerformanceChart();
-        }
-
-        function handleNisSelectionChange(selectEl) {
-            const nis = selectEl.value;
-            const previewEl = document.getElementById('tahfidz-last-preview');
-            if (MASTER_STUDENTS[nis]) {
-                previewEl.textContent = "Hafalan Terakhir Terdata: " + MASTER_STUDENTS[nis].hafalanTerakhir;
-            } else {
-                previewEl.textContent = "";
-            }
-        }
-
-        function loadSubView(viewName) {
-            document.querySelectorAll('.link-item-premium').forEach(el => el.classList.remove('active'));
-            document.getElementById('current-view-title').textContent = viewName.toUpperCase().replace('-', ' ');
-
-            let buffer = `<div class="section-block-premium">`;
-            const dlBtnClass = hasDownloadPrivilege(activeUser.role) ? 'btn-allowed' : 'btn-locked';
-            const dlText = hasDownloadPrivilege(activeUser.role) ? 'Unduh & Cetak Tersedia' : 'Hak Unduh Dikunci (Hanya Lihat)';
-
-            if (viewName === 'dashboard') {
-                renderDashboardPayload(activeUser.role);
-                return;
-            } else if (viewName === 'input-tahfidz') {
-                const matchedClass = activeUser.kelasBinaan || "VII-A";
+            if (role === 'GURU' || role === 'ADMIN') {
+                const cls = activeUser.kelasBinaan || "VII-A";
                 buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-book-bookmark text-primary me-2"></i>Form Kelanjutan Setoran Tahfidz Terpadu</h5>
-                    <div class="alert alert-info py-2" style="font-size: 0.85rem;"><strong>Sistem Mengunci Kelas Otomatis:</strong> Kelas Binaan ${matchedClass} | Periode Target: ${selectedPeriod}</div>
-                    <form onsubmit="alert('Data setoran baru berhasil diverifikasi masuk log historis NIS!'); loadSubView('dashboard'); return false;" class="mt-3">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Pilih Nama Murid (${matchedClass})</label>
-                            <select class="form-select" onchange="handleNisSelectionChange(this)" required>
-                                <option value="">-- Pilih Murid Berdasarkan NIS Master --</option>
-                                ${Object.values(MASTER_STUDENTS).filter(s => s.kelas === matchedClass).map(s => `<option value="${s.nis}">${s.nama} [NIS: ${s.nis}]</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="mb-3 text-secondary font-monospace fw-bold" id="tahfidz-last-preview" style="font-size:0.9rem;"></div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Surah Lanjutan</label>
-                                <input type="text" class="form-control" placeholder="Misal: Al-Mulk" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Sampai Ayat</label>
-                                <input type="number" class="form-control" placeholder="Misal: 30" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Nilai Kelancaran</label>
-                            <select class="form-select"><option>A (Sangat Lancar)</option><option>B (Lancar)</option><option>C (Cukup)</option><option>D (Kurang)</option></select>
-                        </div>
-                        <button type="submit" class="btn btn-primary fw-bold px-4">Simpan Progres Setoran</button>
-                    </form>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Kelas Terkunci</div><div class="kpi-metric-number text-primary">${cls}</div></div></div>
+                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Belum Setor Pekan Ini</div><div class="kpi-metric-number text-danger">2 Murid</div></div></div>
+                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Log Adab Terdata</div><div class="kpi-metric-number text-warning">1 Kasus</div></div></div>
+                    </div>
+                    <div class="section-block-premium">
+                        <div class="section-block-title"><span><i class="fa-solid fa-book-open"></i> Log Setoran Terbaru Binaan Kelas ${cls}</span></div>
+                        <table class="table table-premium-lock">
+                            <thead><tr><th>Nama Murid</th><th>Capaian Hafalan</th><th>Predikat Kelancaran</th></tr></thead>
+                            <tbody>
+                                <tr><td>Muhammad Rayhan</td><td>Juz 30, An-Naba: 1-20</td><td><span class="pred-mumtaz">Mumtaz</span></td></tr>
+                                <tr><td>Farhan Zaki</td><td>Surah An-Naba: 1-10</td><td><span class="pred-jayyid-jiddan">Jayyid Jiddan</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 `;
-            } else if (viewName === 'approval-kurban') {
+            } else if (role === 'KEPSEK') {
                 buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-cash-register text-warning me-2"></i>Antrean Bukti Transfer Tabungan Kurban Wali Murid</h5>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Wali Murid</th><th>Ananda (NIS)</th><th>Nominal Transfer</th><th>Bukti Fisik</th><th>Aksi Mutasi</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td>Ayah Muhammad Rayhan</td><td>Muhammad Rayhan (26001)</td><td>Rp 500.000</td>
-                                <td><span class="badge bg-info text-dark" style="cursor:pointer;"><i class="fa-solid fa-image me-1"></i> Lihat Gambar</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-sm fw-bold me-1" onclick="alert('Setoran Berhasil Disetujui Masuk Ke Kas Kurban!')">Setujui ✔</button>
-                                    <button class="btn btn-danger btn-sm fw-bold" onclick="alert('Setoran Ditolak!')">Tolak ✖</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>`;
-            } else if (viewName === 'osis-input') {
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Total Kolektif Guru</div><div class="kpi-metric-number text-primary">28 Guru Aktif</div></div></div>
+                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Total Evaluasi Murid</div><div class="kpi-metric-number text-primary">384 Murid</div></div></div>
+                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Status Sistem</div><div class="kpi-metric-number text-success">Monitoring Aktif</div></div></div>
+                    </div>
+                    <div class="alert alert-warning"><strong>Mode Otoritas Kepala Sekolah:</strong> Pengisian dinonaktifkan dari panel ini. Silakan gunakan menu samping untuk melakukan peninjauan <strong>Data Guru & Binaan</strong> komplit.</div>
+                `;
+            } else if (role === 'AYAH_BUNDA') {
+                const s = MASTER_STUDENTS[activeUser.targetNis];
+                const sisa = s.kurbanTotal - s.kurbanPaid;
+                const pct = Math.round((s.kurbanPaid / s.kurbanTotal) * 100);
                 buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-scale-balanced text-warning me-2"></i>Form Catatan Karakter Adab & Pelanggaran Pembinaan (Sinkronisasi Otomatis Google Sheets)</h5>
-                    <form onsubmit="alert('Data Karakter Sukses Diinput & Tersimpan Ke Google Sheets!'); loadSubView('dashboard'); return false;">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Pilih Murid Al Azhar</label>
-                            <select class="form-select" required>
-                                ${Object.values(MASTER_STUDENTS).map(s => `<option value="${s.nis}">${s.nama} - Kelas ${s.kelas} [NIS: ${s.nis}]</option>`).join('')}
-                            </select>
+                    <div class="section-block-premium">
+                        <h5 class="fw-bold text-primary mb-3"><i class="fa-solid fa-id-card me-2"></i>Identitas Ringkas Murid</h5>
+                        <div class="identity-student-grid row g-3 m-0">
+                            <div class="col-md-6"><strong>Nama Lengkap:</strong><br>${s.nama}</div>
+                            <div class="col-md-6"><strong>NIS Mandat:</strong><br>${s.nis}</div>
+                            <div class="col-md-6"><strong>Kelas Sekarang:</strong><br>${s.kelas}</div>
+                            <div class="col-md-6"><strong>Wali Kelas Binaan:</strong><br>${s.waliKelas}</div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Jenis Aktivitas Karakter / Adab</label>
-                            <select class="form-select">
-                                <option>Terlambat datang ke Masjid (Pelanggaran)</option>
-                                <option>Tidak Membawa Buku Mutaba'ah (Pelanggaran)</option>
-                                <option>Membantu Merapikan Mukena/Sajadah (Kebaikan)</option>
-                            </select>
+                    </div>
+                    <div class="section-block-premium">
+                        <div class="section-block-title"><span><i class="fa-solid fa-chart-line-up"></i> Progres Keuangan Tabungan Kurban Ananda</span></div>
+                        <div class="row text-center mb-3">
+                            <div class="col-4"><strong>Sudah Dibayar</strong><br><span class="text-success fw-bold">Rp ${s.kurbanPaid.toLocaleString()}</span></div>
+                            <div class="col-4"><strong>Sisa Tagihan</strong><br><span class="text-danger fw-bold">Rp ${sisa.toLocaleString()}</span></div>
+                            <div class="col-4"><strong>Persentase Capaian</strong><br><span class="text-primary fw-bold">${pct}%</span></div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Bobot Skor Poin</label>
-                            <input type="number" class="form-control" value="10">
-                        </div>
-                        <button type="submit" class="btn btn-primary fw-bold"><i class="fa-solid fa-cloud-arrow-up me-2"></i>Kirim & Amankan ke Sheets</button>
-                    </form>`;
-            } else if (viewName === 'review-raport') {
+                        <div class="progress" style="height:12px;"><div class="progress-bar bg-success" style="width: ${pct}%"></div></div>
+                    </div>
+                `;
+            } else if (role === 'OSIS') {
                 buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-file-signature text-warning me-2"></i>Portal Berkas Evaluasi Capaian Siswa</h5>
-                    <p class="text-muted">Status Otorisasi Dokumen Anda: <span class="badge ${hasDownloadPrivilege(activeUser.role)?'bg-success':'bg-danger'}">${dlText}</span></p>
-                    <table class="table table-premium-lock mt-3">
-                        <thead><tr><th>Nama Dokumen</th><th>Jenis Berkas</th><th>Hak Akses</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td>Raport Pembinaan & Tahfidz Terpadu Semester Ganjil</td>
-                                <td>PDF Digital</td>
-                                <td>
-                                    <a href="#" class="btn-action-download btn-allowed me-2" onclick="alert('Membuka Viewer Dokumen Terproteksi...')"><i class="fa-solid fa-eye"></i> Lihat Berkas</a>
-                                    <a href="#" class="btn-action-download ${dlBtnClass}"><i class="fa-solid fa-download"></i> Cetak / Unduh</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>`;
+                    <div class="alert alert-info">Akses Pengurus Bidang Kesiswaan diaktifkan. Gunakan menu navigasi di sebelah kiri untuk memasukkan data pelanggaran adab harian atau melihat pembinaan berkala keputrian murid putri.</div>
+                `;
             }
-            buffer += `</div>`;
+
             document.getElementById('router-view').innerHTML = buffer;
-        }
-
-        // TEACHER (GURU) DASHBOARD ENGINE
-        function getGuruDashboard() {
-            const cls = activeUser.kelasBinaan || "VII-A";
-            return `
-                <div class="row g-3 mb-4">
-                    <div class="col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Kelas Binaan Utama</div><div class="kpi-metric-number text-primary">${cls}</div></div></div>
-                    <div class="col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Murid Belum Setor Pekan Ini</div><div class="kpi-metric-number text-danger">3 Anak</div></div></div>
-                    <div class="col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Total Kas Kurban Kelas</div><div class="kpi-metric-number text-success">Rp 4,2 Jt</div></div></div>
-                    <div class="col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Pelanggaran Adab Baru</div><div class="kpi-metric-number text-warning">2 Kasus</div></div></div>
-                </div>
-
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-user-clock"></i> Daftar Murid Belum Setor Hafalan Minggu Ini (Binaan Kelas ${cls})</span></div>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Nama Murid</th><th>Status Setoran</th><th>Batas Capaian Terakhir</th></tr></thead>
-                        <tbody>
-                            <tr><td>Ahmad Fathoni</td><td><span class="badge-danger-premium">Belum Setor Minggu Ini</span></td><td>Surah Al-Mulk: Ayat 15</td></tr>
-                            <tr><td>Farhan Zaki</td><td><span class="badge-danger-premium">Belum Setor Minggu Ini</span></td><td>Surah An-Naba: Ayat 20</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="row g-4">
-                    <div class="col-lg-6">
-                        <div class="section-block-premium">
-                            <div class="section-block-title"><span><i class="fa-solid fa-trophy text-warning"></i> Rangking Hafalan Terbanyak Teratas di Kelas ${cls}</span></div>
-                            <table class="table table-premium-lock">
-                                <thead><tr><th>Rank</th><th>Nama Murid</th><th>Jumlah Juz/Surah</th></tr></thead>
-                                <tbody>
-                                    <tr><td><strong>#1</strong></td><td>Muhammad Rayhan</td><td>3 Juz Selesai (Juz 30, 29, 28)</td></tr>
-                                    <tr><td><strong>#2</strong></td><td>Zhafira Aulia</td><td>2.5 Juz (Juz 30, 29)</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <!-- MENU KEPUTRIAN TERBUKA UNTUK SEMUA GURU SESUAI REVISI MANDAT -->
-                        <div class="section-block-premium">
-                            <div class="section-block-title"><span><i class="fa-solid fa-venus text-pink"></i> Agenda Laporan Pembinaan Keputrian Siswi (Global Akses Guru)</span></div>
-                            <table class="table table-premium-lock">
-                                <thead><tr><th>Nama Siswi</th><th>Agenda Keputrian</th><th>Keterangan Mentor</th></tr></thead>
-                                <tbody>
-                                    <tr><td>Aisyah Putri</td><td>Fiqh Thaharah & Wanita Muslimah</td><td><span class="badge-success-premium">Sangat Baik</span></td></tr>
-                                    <tr><td>Siti Aminah</td><td>Adab Muslimah Kontemporer</td><td><span class="badge-success-premium">Hadir Aktif</span></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-triangle-exclamation"></i> Log Catatan Adab & Pembinaan Siswa Terbaru (Sinkronisasi Sheets)</span></div>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Tanggal Input</th><th>Nama Murid</th><th>Deskripsi Perilaku</th><th>Skor Poin</th></tr></thead>
-                        <tbody>
-                            <tr><td>22 Juni 2026</td><td>Farhan Zaki</td><td>Terlambat berjamaah datang ke masjid</td><td><span class="badge-danger-premium">10 Poin</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            `;
-        }
-
-        // PARENT (AYAH / BUNDA) DASHBOARD ENGINE - BERSIH TANPA FOTO SAMA SEKALI
-        function getParentDashboard() {
-            const studentNis = activeUser.targetNis || "26001";
-            const student = MASTER_STUDENTS[studentNis];
-            const isPutri = student.jenisKelamin === 'P';
-            const progressHafalanText = isPutri ? "Batas Surah: Al-Mulk s/d An-Naba (Belum Capai 1 Juz)" : "Laporan Hafalan: Selesai Juz 30 & Juz 29";
-
-            let res = `
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-id-card"></i> Identitas Akademik Ananda</span></div>
-                    <div class="identity-student-grid">
-                        <div class="row g-3">
-                            <div class="col-md-4"><strong>Nama Lengkap Ananda:</strong> <br><span class="text-primary fw-bold">${student.nama}</span></div>
-                            <div class="col-md-4"><strong>Nomor Induk Siswa (NIS):</strong> <br><span class="fw-bold">${student.nis}</span></div>
-                            <div class="col-md-4"><strong>Kelas Operasional:</strong> <br>${student.kelas}</div>
-                            <div class="col-md-4"><strong>Wali Kelas Pendamping:</strong> <br>${student.waliKelas}</div>
-                            <div class="col-md-4"><strong>Pendamping Tahfidz:</strong> <br>${student.pendampingTahfidz}</div>
-                            <div class="col-md-4"><strong>Periode Akademik:</strong> <br><span class="badge bg-dark">${selectedPeriod}</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <div class="card-kpi-premium">
-                            <div class="kpi-label-text">Progres Akumulasi Dana Tabungan Kurban</div>
-                            <div class="kpi-metric-number text-success">${student.kurbanSaldo}</div>
-                            <div class="progress mt-2" style="height: 8px;"><div class="progress-bar bg-success" style="width: 75%"></div></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-kpi-premium">
-                            <div class="kpi-label-text">Status Capaian Al-Qur'an Terkini</div>
-                            <div class="kpi-metric-number text-primary">${progressHafalanText}</div>
-                            <div class="mt-2 text-muted" style="font-size:0.8rem; font-weight:700;"><i class="fa-solid fa-book-bookmark text-warning me-1"></i> Posisi Terakhir: ${student.hafalanTerakhir}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-shield-heart"></i> Deteksi Dini Laporan Laporan Adab & Pembinaan</span></div>
-                    <div class="alert alert-danger bg-light text-dark border-danger d-flex align-items-center" style="border-left: 5px solid #DC2626 !important;">
-                        <i class="fa-solid fa-triangle-exclamation text-danger fs-4 me-3"></i>
-                        <div>
-                            <strong class="text-danger">Catatan Pembinaan Karakter:</strong> Ananda terdeteksi sering terlambat datang ke masjid untuk persiapan Shalat Berjamaah.
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            if (isPutri) {
-                res += `
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-venus"></i> Catatan Khusus Karakter Keputrian Siswi</span></div>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Materi Pembinaan</th><th>Evaluasi Mentor Kedisiplinan</th></tr></thead>
-                        <tbody><tr><td>Kedisiplinan Hijab & Aurat Muslimah</td><td><span class="badge-success-premium">Sangat Terpuji & Istiqamah</span></td></tr></tbody>
-                    </table>
-                </div>`;
-            }
-
-            res += `
-                <div class="section-block-premium text-center">
-                    <h6 class="fw-bold text-start mb-3"><i class="fa-solid fa-stamp text-warning me-2"></i>Akses Dokumen Resmi Lembar Hasil Belajar (Hanya Tinjau)</h6>
-                    <button class="btn btn-primary fw-bold btn-sm me-2" onclick="loadSubView('review-raport')"><i class="fa-solid fa-eye"></i> Tinjau Raport Digital</button>
-                    <button class="btn btn-secondary fw-bold btn-sm" onclick="loadSubView('review-raport')"><i class="fa-solid fa-certificate"></i> Tinjau Sertifikat Tahfidz</button>
-                </div>
-            `;
-            return res;
-        }
-
-        // OSIS DASHBOARD ENGINE
-        function getOsisDashboard() {
-            return `
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6"><div class="card-kpi-premium"><div class="kpi-label-text">Total Entri Pelanggaran Terinput</div><div class="kpi-metric-number text-danger">42 Kasus Pekan Ini</div></div></div>
-                    <div class="col-md-6"><div class="card-kpi-premium"><div class="kpi-label-text">Status Sinkronisasi Cloud Sheets</div><div class="kpi-metric-number text-success">Terhubung</div></div></div>
-                </div>
-
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-triangle-exclamation"></i> Rekapitulasi Murid Dengan Poin Pelanggaran Di Atas 50</span></div>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Nama Murid</th><th>Kelas</th><th>Akumulasi Skor Pelanggaran</th><th>Status Tindakan</th></tr></thead>
-                        <tbody>
-                            <tr class="table-danger">
-                                <td><strong>Bambang Pamungkas</strong></td><td>VIII-B</td><td><span class="badge bg-danger text-white">65 Poin</span></td>
-                                <td><span class="text-danger fw-bold"><i class="fa-solid fa-user-shield"></i> Panggilan BK & Kesiswaan</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-chart-area"></i> Dashboard Laporan Mingguan Perilaku Siswa</span></div>
-                    <div style="height:250px;"><canvas id="chart-performance"></canvas></div>
-                </div>
-            `;
-        }
-
-        // KEPALA SEKOLAH DASHBOARD ENGINE
-        function getKepsekDashboard() {
-            return `
-                <div class="row g-3 mb-4">
-                    <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Total Pendidik / Guru Aktif</div><div class="kpi-metric-number text-primary">35 SDM Terdata</div></div></div>
-                    <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Total Murid Terintegrasi</div><div class="kpi-metric-number text-primary">420 Santri</div></div></div>
-                    <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Capaian Ketuntasan Lembaga</div><div class="kpi-metric-number text-success">94.8% Bagus</div></div></div>
-                </div>
-
-                <div class="section-block-premium">
-                    <div class="section-block-title"><span><i class="fa-solid fa-users-viewfinder"></i> Monitor Status Setoran Hafalan Mingguan Di Bawah Binaan Kelas</span></div>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Kelas Binaan</th><th>Guru Pendamping / Pendamping Tahfidz</th><th>Jumlah Murid Belum Setoran Seminggu Ini</th><th>Daftar Nama Murid Krisis</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Kelas VII-A</strong></td><td>Ustadz Eko, S.Pd</td><td><span class="badge bg-danger text-white">2 Murid</span></td>
-                                <td>Ahmad Fathoni, Farhan Zaki</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Kelas IX-B</strong></td><td>Ustadzah Anisa, S.PdI</td><td><span class="badge bg-danger text-white">3 Murid</span></td>
-                                <td>Siti Aminah, Hendra Wijaya, Gilang Ramadhan</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            `;
-        }
-
-        function loadPerformanceChart() {
-            const ctx = document.getElementById('chart-performance').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Pekan 1', 'Pekan 2', 'Pekan 3', 'Pekan 4'],
-                    datasets: [{
-                        label: 'Total Poin Pelanggaran Kesiswaan Global',
-                        data: [65, 45, 80, 42],
-                        borderColor: '#1E3A8A', backgroundColor: 'rgba(30, 58, 138, 0.1)', fill: true, tension: 0.3
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
         }
     </script>
 </body>
