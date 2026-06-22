@@ -195,9 +195,7 @@ function dispatchDashboardViewRenderer(role) {
         </div>
     `;
 
-    // 2. ANNOUNCEMENT BAR (Terintegrasi di Layout Atas HTML)
-
-    // 3. AYAT / HADITS HARIAN
+    // 2. AYAT / HADITS HARIAN
     htmlBuffer += `
         <div class="islamic-quote-box">
             <div class="d-flex align-items-start">
@@ -235,13 +233,13 @@ function dispatchDashboardViewRenderer(role) {
 
 /**
  * ==========================================================================
- * SUB-ROUTER PAYLOAD INDEPENDEN (HINDARI REWRITE TOTAL)
+ * SUB-ROUTER PAYLOAD INDEPENDEN
  * ==========================================================================
  */
 
 function renderAdminDashboardPayload() {
     return `
-        <!-- 4. KPI ADMIN DARI BACKEND SINKRONISASI -->
+        <!-- KPI ADMIN DARI BACKEND SINKRONISASI -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-xl-2"><div class="card-kpi-premium"><div class="kpi-label-text">Total Murid</div><div class="kpi-metric-number">420</div></div></div>
             <div class="col-6 col-xl-2"><div class="card-kpi-premium"><div class="kpi-label-text">Total Guru</div><div class="kpi-metric-number">35</div></div></div>
@@ -250,14 +248,14 @@ function renderAdminDashboardPayload() {
             <div class="col-6 col-xl-2"><div class="card-kpi-premium"><div class="kpi-label-text">Pengumuman</div><div class="kpi-metric-number">3</div></div></div>
             <div class="col-6 col-xl-2"><div class="card-kpi-premium"><div class="kpi-label-text">Tab. Kurban</div><div class="kpi-metric-number">42</div></div></div>
         </div>
-        <!-- 5 & 6. GRAFIK & MONITORING -->
+        <!-- GRAFIK & MONITORING -->
         <div class="row g-4 mb-4">
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-chart-bar"></i> Statistik Global Sinkronisasi</div><div style="height:250px;"><canvas id="chart-slot"></canvas></div></div></div>
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-server"></i> Monitoring Realtime Sistem</div>
                 <table class="table table-premium-lock"><thead><tr><th>User</th><th>Aktivitas</th><th>Status</th></tr></thead><tbody><tr><td>Admin System</td><td>Dump Database Master</td><td><span class="badge-status-positive">Berhasil</span></td></tr></tbody></table>
             </div></div>
         </div>
-        <!-- 7. RANKING TAHFIDZ -->
+        <!-- RANKING TAHFIDZ -->
         <div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-trophy"></i> Ranking Tahfidz Global</div>
             <table class="table table-premium-lock"><thead><tr><th>Rank</th><th>Nama</th><th>Kelas</th><th>Capaian</th></tr></thead><tbody><tr><td>1</td><td>Ali bin Abi Thalib Jr</td><td>IX-A</td><td>8 Juz</td></tr></tbody></table>
         </div>
@@ -266,21 +264,21 @@ function renderAdminDashboardPayload() {
 
 function renderGuruDashboardPayload() {
     return `
-        <!-- 4. KPI GURU -->
+        <!-- KPI GURU -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Monitoring Kelas</div><div class="kpi-metric-number">IX-A</div></div></div>
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Sudah Setor</div><div class="kpi-metric-number">28</div></div></div>
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Belum Setor</div><div class="kpi-metric-number">4</div></div></div>
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Adab & Keputrian</div><div class="kpi-metric-number">6 Baru</div></div></div>
         </div>
-        <!-- 5 & 6. GRAFIK & MONITORING -->
+        <!-- GRAFIK & MONITORING -->
         <div class="row g-4 mb-4">
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-chart-line"></i> Grafik Kepatuhan Setoran Kelas</div><div style="height:230px;"><canvas id="chart-slot"></canvas></div></div></div>
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-table-list"></i> Jurnal Log Aktivitas Murid</div>
                 <table class="table table-premium-lock"><thead><tr><th>Siswa</th><th>Agenda</th><th>Keterangan</th></tr></thead><tbody><tr><td>Fatima Az-Zahra</td><td>Keputrian Fiqh</td><td><span class="badge-status-positive">Hadir</span></td></tr></tbody></table>
             </div></div>
         </div>
-        <!-- 7. RANKING -->
+        <!-- RANKING -->
         <div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-award"></i> Ranking Internal Kelas</div>
             <table class="table table-premium-lock"><thead><tr><th>Peringkat</th><th>Nama Murid</th><th>Akumulasi Hafalan</th></tr></thead><tbody><tr><td>1</td><td>Zaid bin Tsabit</td><td>5 Juz 12 Baris</td></tr></tbody></table>
         </div>
@@ -289,20 +287,20 @@ function renderGuruDashboardPayload() {
 
 function renderGuruTahfidzDashboardPayload() {
     return `
-        <!-- 4. KPI GURU TAHFIDZ (OPERASIONAL HARIAN) -->
+        <!-- KPI GURU TAHFIDZ (OPERASIONAL HARIAN) -->
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Monitoring Halaqah</div><div class="kpi-metric-number">Kelompok 3</div></div></div>
             <div class="col-6 col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Siswa Sudah Setor</div><div class="kpi-metric-number">14</div></div></div>
             <div class="col-6 col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Siswa Belum Setor</div><div class="kpi-metric-number">2</div></div></div>
         </div>
-        <!-- 5 & 6. GRAFIK & MONITORING SETORAN -->
+        <!-- GRAFIK & MONITORING SETORAN -->
         <div class="row g-4 mb-4">
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-chart-column"></i> Grafik Progress Capaian Hafalan</div><div style="height:230px;"><canvas id="chart-slot"></canvas></div></div></div>
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-bolt"></i> Setoran Terbaru Hari Ini</div>
                 <table class="table table-premium-lock"><thead><tr><th>Nama Murid</th><th>Surah</th><th>Status</th></tr></thead><tbody><tr><td>Usman bin Affan</td><td>Al-Mulk: 1-10</td><td><span class="badge-status-positive">Mumtaz</span></td></tr></tbody></table>
             </div></div>
         </div>
-        <!-- 7. RANKING TAHFIDZ HALAQAH -->
+        <!-- RANKING TAHFIDZ HALAQAH -->
         <div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-star"></i> Ranking Tahfidz Kelompok</div>
             <table class="table table-premium-lock"><thead><tr><th>No</th><th>Nama Murid</th><th>Progres Juz</th></tr></thead><tbody><tr><td>1</td><td>Mus'ab bin Umair</td><td>Juz 30 Selesai</td></tr></tbody></table>
         </div>
@@ -311,14 +309,14 @@ function renderGuruTahfidzDashboardPayload() {
 
 function renderKepsekDashboardPayload() {
     return `
-        <!-- 4. KPI EXECUTIVE -->
+        <!-- KPI EXECUTIVE -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Ketercapaian Target</div><div class="kpi-metric-number">92.4%</div></div></div>
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Tenaga Pendidik</div><div class="kpi-metric-number">35 Aktif</div></div></div>
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Rata Indeks Adab</div><div class="kpi-metric-number">A (Mumtaz)</div></div></div>
             <div class="col-6 col-md-3"><div class="card-kpi-premium"><div class="kpi-label-text">Dana Kurban Masuk</div><div class="kpi-metric-number">18 Sapi</div></div></div>
         </div>
-        <!-- 5 & 6. EXECUTIVE GRAPHICS -->
+        <!-- EXECUTIVE GRAPHICS -->
         <div class="row g-4 mb-4">
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-chart-pie"></i> Perbandingan Target Kelulusan</div><div style="height:230px;"><canvas id="chart-slot"></canvas></div></div></div>
             <div class="col-12 col-lg-6"><div class="section-block-premium"><div class="section-block-title"><i class="fa-solid fa-eye"></i> Monitoring Kinerja Pembinaan</div>
@@ -330,8 +328,8 @@ function renderKepsekDashboardPayload() {
 
 function renderParentDashboardPayload() {
     return `
-        <!-- DASHBOARD AYAH/BUNDA TERISOLASI TOTAL TANPA MONITORING GLOBAL & RANKING -->
-        <!-- 1. PROFIL ANANDA -->
+        <!-- DASHBOARD AYAH/BUNDA TERISOLASI TOTAL -->
+        <!-- PROFIL ANANDA -->
         <div class="section-block-premium mb-3">
             <div class="section-block-title"><i class="fa-solid fa-id-card"></i> Profil Singkat Ananda</div>
             <div class="student-meta-box">
@@ -343,13 +341,13 @@ function renderParentDashboardPayload() {
             </div>
         </div>
         
-        <!-- 2. PROGRESS HAFALAN -->
+        <!-- PROGRESS HAFALAN -->
         <div class="row g-3 mb-3">
             <div class="col-6"><div class="card-kpi-premium"><div class="kpi-label-text">Total Akumulasi Hafalan</div><div class="kpi-metric-number">3 Juz 4 Halaman</div></div></div>
             <div class="col-6"><div class="card-kpi-premium"><div class="kpi-label-text">Target Kurikulum Al Azhar</div><div class="kpi-metric-number">85% Tercapai</div></div></div>
         </div>
 
-        <!-- 3. SETORAN TERAKHIR ANANDA -->
+        <!-- SETORAN TERAKHIR ANANDA -->
         <div class="section-block-premium mb-3">
             <div class="section-block-title"><i class="fa-solid fa-clock-rotate-left"></i> Rekam Jurnal Setoran Terakhir Ananda</div>
             <table class="table table-premium-lock">
@@ -358,13 +356,13 @@ function renderParentDashboardPayload() {
             </table>
         </div>
 
-        <!-- 4. GRAFIK HAFALAN -->
+        <!-- GRAFIK HAFALAN -->
         <div class="section-block-premium mb-3">
             <div class="section-block-title"><i class="fa-solid fa-chart-line"></i> Grafik Kenaikan Hafalan Mingguan Ananda</div>
             <div style="height:200px;"><canvas id="chart-slot"></canvas></div>
         </div>
 
-        <!-- 5. TABUNGAN KURBAN -->
+        <!-- TABUNGAN KURBAN -->
         <div class="section-block-premium mb-3">
             <div class="section-block-title"><i class="fa-solid fa-cow"></i> Tabungan Kurban Ananda</div>
             <div class="alert alert-success bg-light border-success text-dark mb-0">
@@ -372,7 +370,7 @@ function renderParentDashboardPayload() {
             </div>
         </div>
 
-        <!-- 6. ADAB DAN PEMBINAAN -->
+        <!-- ADAB DAN PEMBINAAN -->
         <div class="section-block-premium mb-3">
             <div class="section-block-title"><i class="fa-solid fa-hands-praying"></i> Jurnal Pembinaan Adab & Karakter Terakhir</div>
             <table class="table table-premium-lock">
@@ -384,7 +382,7 @@ function renderParentDashboardPayload() {
             </table>
         </div>
 
-        <!-- 7. PENGUMUMAN KHUSUS WALI MURID -->
+        <!-- PENGUMUMAN KHUSUS WALI MURID -->
         <div class="alert alert-warning border-warning bg-light text-dark mb-0">
             <i class="fa-solid fa-circle-exclamation text-warning me-2"></i> <strong>Agenda Parenting:</strong> Undangan Pertemuan Komite dan Pembagian Raport Tahfidz Tengah Semester diadakan Sabtu besok pukul 08:00 WIB di Aula Utama Lantai 2.
         </div>
@@ -398,52 +396,65 @@ function renderOsisDashboardPayload() {
         </div>
         <div class="section-block-premium">
             <div class="section-block-title"><i class="fa-solid fa-calendar-check"></i> Monitoring Kalender Proker OSIS</div>
-            <p class="text-muted">Menghubungkan visualisasi data program kerja OSIS SMP Islam Al Azhar 52 Bengkulu...</p>
+            <p class="text-muted">Menghubungkan visualisasi data program kerja OSIS...</p>
             <div style="height:200px;"><canvas id="chart-slot"></canvas></div>
         </div>
     `;
 }
 
 /**
- * CORE GRAPHICS ENGINE INITIALIZER
+ * CORE GRAPHICS ENGINE INITIALIZER (FIXED & FULL REFACTOR)
  */
 function initiateCanvasChartEngine(role) {
-    const ctx = document.getElementById('chart-slot');
-    if (!ctx) return;
+    // Memberikan delay kecil agar Chart.js berjalan setelah elemen dipastikan tercetak utuh di DOM
+    setTimeout(() => {
+        const ctx = document.getElementById('chart-slot');
+        if (!ctx) return;
 
-    let chartType = 'bar';
-    let labelText = 'Progress';
-    let dataSets = [12, 19, 3, 5, 2];
-    let bgCol = '#0A3663';
+        let chartType = 'bar';
+        let labelText = 'Progress';
+        let dataSets = [12, 19, 3, 5, 2];
+        let bgCol = '#0A3663';
 
-    if (role === 'KEPSEK') {
-        chartType = 'pie';
-        labelText = 'Target';
-        dataSets = [75, 25];
-    } else if (role === 'AYAH_BUNDA') {
-        chartType = 'line';
-        labelText = 'Halaman';
-        dataSets = [4, 8, 12, 15, 20];
-        bgCol = '#D4AF37';
-    }
-
-    new Chart(ctx, {
-        type: chartType,
-        data: {
-            labels: role === 'KEPSEK' ? ['Tercapai', 'Sisa Target'] : ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'],
-            datasets: [{
-                label: labelText,
-                data: dataSets,
-                backgroundColor: bgCol,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: role === 'KEPSEK' } }
+        if (role === 'KEPSEK') {
+            chartType = 'pie';
+            labelText = 'Target';
+            dataSets = [75, 25];
+            bgCol = ['#0A3663', '#D4AF37'];
+        } else if (role === 'AYAH_BUNDA') {
+            chartType = 'line';
+            labelText = 'Halaman';
+            dataSets = [4, 8, 12, 15, 20];
+            bgCol = '#D4AF37';
         }
-    });
+
+        // Singkirkan instance chart lama jika terjadi tumpang tindih re-render view
+        const existingChart = Chart.getChart(ctx);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: role === 'KEPSEK' ? ['Tercapai', 'Sisa Target'] : ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'],
+                datasets: [{
+                    label: labelText,
+                    data: dataSets,
+                    backgroundColor: bgCol,
+                    borderColor: role === 'AYAH_BUNDA' ? '#D4AF37' : 'transparent',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: role === 'KEPSEK' } 
+                }
+            }
+        });
+    }, 50);
 }
 
 function renderSubFeatureModulePlaceholder(id) {
