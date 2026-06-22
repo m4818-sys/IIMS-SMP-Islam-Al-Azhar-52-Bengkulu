@@ -3,364 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IIMS - SMP Islam Al Azhar 52 Bengkulu</title>
-    <!-- Corporate Engine Fonts & Icons -->
+    <title>IIMS Premium - SMP Islam Al Azhar 52 Bengkulu</title>
+    <!-- Google Fonts & Frameworks -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
         :root {
-            --alazhar-navy: #0B192C;
-            --alazhar-blue-royal: #1E3A8A;
-            --alazhar-blue-light: #2563EB;
-            --alazhar-gold: #F59E0B;
-            --canvas-bg: #F3F4F6;
-            --card-shadow: 0 10px 25px rgba(15, 23, 42, 0.03);
-            --premium-border: 1px solid #E5E7EB;
+            --luxury-navy: #0A192F;
+            --luxury-surface: #112240;
+            --luxury-bg: #F4F7FA;
+            --luxury-gold: #C5A880;
+            --luxury-text-dark: #2D3748;
+            --luxury-text-muted: #718096;
+            --premium-border: 1px solid #E2E8F0;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--canvas-bg);
-            color: #1F2937;
-            letter-spacing: -0.01em;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--luxury-bg);
+            color: var(--luxury-text-dark);
         }
 
-        /* ISLAMIC GEOMETRIC PATTERN SEAMLESS OVERLAY (REF: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) */
-        .islamic-pattern-bg {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L45 15 L60 0 L45 45 L60 60 L30 45 L0 60 L15 45 L0 0 L15 15 Z' fill='%231e3a8a' fill-opacity='0.015'/%3E%3C/svg%3E");
+        /* SOFT SUBTLE ISLAMIC GEOMETRIC BACKGROUND Pattern (Ref: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) */
+        .islamic-subtle-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L45 15 L60 0 L45 45 L60 60 L30 45 L0 60 L15 45 L0 0 L15 15 Z' fill='%23C5A880' fill-opacity='0.02'/%3E%3C/svg%3E");
         }
 
-        @keyframes smoothZoomOverlay {
-            0% { transform: scale(1.1); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes elegantBoxEntrance {
-            0% { transform: translateY(20px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-
-        .login-corporate-frame {
+        /* Login Screen Minimalist Modern */
+        .login-frame-modern {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #1E3A8A 0%, #0B192C 100%);
-            position: relative; padding: 20px; overflow: hidden;
+            background: linear-gradient(135deg, #0A192F 0%, #112240 100%);
+            padding: 20px; position: relative; overflow: hidden;
         }
-        .login-zoom-bg {
-            position: absolute; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L60 20 L80 0 L60 60 L80 80 L40 60 L0 80 L20 60 L0 0 L20 20 Z' fill='%23F59E0B' fill-opacity='0.025'/%3E%3C/svg%3E");
-            animation: smoothZoomOverlay 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            z-index: 1;
-        }
-        .login-box-premium {
-            background: #FFFFFF; border: 1px solid rgba(245, 158, 11, 0.25);
-            border-radius: 16px; padding: 40px; width: 100%; max-width: 460px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); z-index: 2;
-            animation: elegantBoxEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .login-card-modern {
+            background: #FFFFFF; border-radius: 20px; padding: 45px; width: 100%; max-width: 450px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); z-index: 5; border: 1px solid rgba(197, 168, 128, 0.2);
         }
 
-        .system-title { font-size: 1.15rem; font-weight: 800; color: var(--alazhar-blue-royal); letter-spacing: 0.03em; margin-top: 12px; }
-        .system-acronym { font-size: 1.5rem; font-weight: 800; color: var(--alazhar-gold); }
-        .institution-name { font-size: 0.85rem; font-weight: 600; color: #4B5563; text-transform: uppercase; }
-
-        .field-label-premium { font-size: 0.75rem; font-weight: 700; color: var(--alazhar-blue-royal); text-transform: uppercase; margin-bottom: 6px; display: block; }
-        .input-wrapper-premium { display: flex; align-items: center; background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 8px; padding: 0 14px; margin-bottom: 16px; }
-        .input-addon-icon { color: #9CA3AF; margin-right: 10px; }
-        .input-control-premium { border: none; background: transparent; width: 100%; padding: 11px 0; font-size: 0.9rem; color: #111827; }
-        .input-control-premium:focus { outline: none; }
-        .btn-premium-action { background: linear-gradient(135deg, var(--alazhar-blue-royal) 0%, #0B192C 100%); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; transition: all 0.2s; }
-        .btn-premium-action:hover { transform: translateY(-1px); box-shadow: 0 6px 15px rgba(30, 58, 138, 0.2); }
-
-        /* Dashboard Infrastructure */
-        .dashboard-frame { display: flex; width: 100%; min-height: 100vh; }
-        .sidebar-wrapper { 
-            width: 280px; min-width: 280px; background-color: var(--alazhar-blue-royal); color: #F3F4F6; display: flex; flex-direction: column; z-index: 10; 
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L60 20 L80 0 L60 60 L80 80 L40 60 L0 80 L20 60 L0 0 L20 20 Z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
-            border-right: 2px solid var(--alazhar-gold);
+        /* Structural Layout */
+        .sidebar-modern {
+            width: 280px; min-width: 280px; background-color: var(--luxury-navy); color: #FFFFFF;
+            display: flex; flex-direction: column; border-right: 1px solid rgba(197, 168, 128, 0.15);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Cpath d='M25 0 L37.5 12.5 L50 0 L37.5 37.5 L50 50 L25 37.5 L0 50 L12.5 37.5 L0 0 L12.5 12.5 Z' fill='%23ffffff' fill-opacity='0.015'/%3E%3C/svg%3E");
         }
-        .sidebar-brand-zone { padding: 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-        .sidebar-navigation { padding: 15px; }
-        .nav-heading-enterprise { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.08em; margin-top: 18px; margin-bottom: 6px; padding-left: 8px; }
-        .link-item-premium { display: flex; align-items: center; padding: 10px 12px; color: rgba(255, 255, 255, 0.75); text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; transition: all 0.2s; }
-        .link-item-premium i { width: 22px; margin-right: 8px; text-align: center; font-size: 1rem; }
-        .link-item-premium:hover { color: white; background: rgba(255, 255, 255, 0.06); }
-        .link-item-premium.active { color: white; background: rgba(255, 255, 255, 0.15); border-left: 4px solid var(--alazhar-gold); font-weight: 600; }
-        
-        .main-viewport-wrapper { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; background-color: #F8FAFC; }
-        .navbar-top-premium { height: 70px; background: white; border-bottom: var(--premium-border); display: flex; align-items: center; justify-content: space-between; }
-        
-        .announcement-sticky-bar { background: #FFFBEB; border-bottom: 1px solid #FDE68A; padding: 8px 24px; }
-        .announcement-title-badge { background: var(--alazhar-gold); color: white; font-size: 0.7rem; font-weight: 800; padding: 3px 10px; border-radius: 4px; }
+        .sidebar-brand { padding: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .nav-section-title { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--luxury-gold); letter-spacing: 0.1em; margin: 20px 0 8px 15px; opacity: 0.8; }
+        .nav-link-modern { display: flex; align-items: center; padding: 11px 16px; color: #A0AEC0; text-decoration: none; border-radius: 8px; font-size: 0.88rem; font-weight: 500; margin: 2px 15px; transition: all 0.2s ease; }
+        .nav-link-modern i { width: 24px; font-size: 1rem; margin-right: 8px; }
+        .nav-link-modern:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.03); }
+        .nav-link-modern.active { color: #0A192F; background-color: var(--luxury-gold); font-weight: 600; box-shadow: 0 4px 12px rgba(197, 168, 128, 0.2); }
 
-        /* Premium Panels */
-        .welcome-card-premium { background: white; border-left: 5px solid var(--alazhar-blue-royal); border-radius: 10px; padding: 20px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
-        .welcome-user-slug { font-size: 1.4rem; font-weight: 800; color: var(--alazhar-blue-royal); }
-        
-        .card-kpi-premium { background: white; border: var(--premium-border); border-radius: 10px; padding: 18px; box-shadow: var(--card-shadow); height: 100%; }
-        .kpi-label-text { font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; }
-        .kpi-metric-number { font-size: 1.6rem; font-weight: 800; color: var(--alazhar-navy); margin-top: 4px; }
-        
-        .section-block-premium { background: white; border: var(--premium-border); border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
-        .section-block-title { font-size: 0.95rem; font-weight: 700; color: var(--alazhar-navy); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; }
-        .section-block-title i { color: var(--alazhar-gold); margin-right: 6px; }
+        .viewport-main { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; }
+        .topbar-modern { height: 75px; background: #FFFFFF; border-bottom: var(--premium-border); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
 
-        .table-premium-lock { width: 100%; vertical-align: middle; margin-bottom: 0; }
-        .table-premium-lock thead th { background-color: #F9FAFB; color: var(--alazhar-blue-royal); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; padding: 10px 14px; border-bottom: 2px solid #E5E7EB; }
-        .table-premium-lock tbody td { padding: 12px 14px; font-size: 0.85rem; border-bottom: 1px solid #F3F4F6; color: #374151; }
+        /* Component Styling */
+        .card-premium-box { background: #FFFFFF; border: var(--premium-border); border-radius: 14px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); margin-bottom: 24px; position: relative; overflow: hidden; }
+        .card-premium-box::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--luxury-gold); }
+        .card-title-text { font-size: 1rem; font-weight: 700; color: var(--luxury-navy); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
         
-        /* Official Predict Badges (Ref: cad461b0-413c-4d05-9f02-67158a529115.png) */
-        .pred-mumtaz { background-color: #D1FAE5; color: #065F46; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-        .pred-jayyid-jiddan { background-color: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-        .pred-jayyid { background-color: #DBEAFE; color: #1E40AF; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-        .pred-maqbul { background-color: #F3F4F6; color: #374151; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+        .kpi-card-modern { background: #FFFFFF; border: var(--premium-border); border-radius: 12px; padding: 20px; display: flex; align-items: center; justify-content: space-between; }
+        .kpi-icon-container { width: 48px; height: 48px; border-radius: 10px; background: rgba(197, 168, 128, 0.1); color: var(--luxury-gold); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
 
-        .badge-danger-premium { background-color: #FEE2E2; color: #991B1B; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-        .identity-student-grid { background: #F9FAFB; border-radius: 8px; padding: 16px; border: 1px dashed #D1D5DB; }
+        /* Table Modernization */
+        .table-modernized { width: 100%; vertical-align: middle; }
+        .table-modernized thead th { background: #F8FAFC; color: var(--luxury-navy); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 16px; border-bottom: 2px solid #E2E8F0; }
+        .table-modernized tbody td { padding: 14px 16px; font-size: 0.85rem; border-bottom: 1px solid #EDF2F7; }
+
+        /* Official Badges */
+        .badge-status-active { background: #DEF7EC; color: #03543F; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
+        .badge-status-cuti { background: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
+        .badge-status-out { background: #FDE8E8; color: #9B1C1C; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
+
+        .pred-mumtaz { background-color: #DEF7EC; color: #03543F; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; }
+        .pred-jayyid-jiddan { background-color: #FEF3C7; color: #92400E; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; }
         
-        @media (max-width: 991.98px) {
-            .sidebar-wrapper { position: fixed; left: -280px; top: 0; bottom: 0; transition: all 0.3s ease; }
-            .sidebar-wrapper.open { left: 0; }
-        }
+        .progress-luxury { height: 8px; background-color: #E2E8F0; border-radius: 4px; overflow: hidden; }
+        .progress-bar-luxury { background: linear-gradient(90deg, var(--luxury-gold) 0%, #A38A60 100%); }
     </style>
 </head>
-<body class="islamic-pattern-bg">
+<body class="islamic-subtle-overlay">
 
-    <div id="app-viewport-root">
-        <!-- CORPORATE LOGIN VIEW -->
-        <div id="login-page" class="login-corporate-frame">
-            <div class="login-zoom-bg"></div>
-            <div class="login-box-premium">
-                <div class="text-center">
-                    <img src="assets/img/logo.png" alt="Logo Al Azhar" style="height: 90px; width: auto;" onerror="this.src='https://placehold.co/90x90?text=AlAzhar'">
-                    <h1 class="system-title">INTEGRATED ISLAMIC MONITORING SYSTEM</h1>
-                    <div class="system-acronym">(IIMS)</div>
-                    <p class="institution-name">SMP ISLAM AL AZHAR 52 BENGKULU</p>
+    <div id="root-framework">
+        <!-- MODAL WINDOW LOGIN -->
+        <div id="login-screen" class="login-frame-modern">
+            <div class="login-card-modern">
+                <div class="text-center mb-4">
+                    <img src="https://placehold.co/80x80/0A192F/C5A880?text=AZ" alt="Logo Al Azhar" style="border-radius: 12px; height: 75px;">
+                    <h5 class="fw-bold mt-3 mb-1" style="color: var(--luxury-navy); letter-spacing: -0.02em;">IIMS CORPORATE PORTAL</h5>
+                    <p class="text-muted" style="font-size: 0.75rem; font-weight: 600; uppercase;">SMP Islam Al Azhar 52 Bengkulu</p>
                 </div>
-                
-                <form id="login-form" class="mt-4">
-                    <div>
-                        <label class="field-label-premium">ID Pengguna / Akun IIMS</label>
-                        <div class="input-wrapper-premium">
-                            <span class="input-addon-icon"><i class="fa-solid fa-id-card-clip"></i></span>
-                            <input type="text" id="username" class="input-control-premium" placeholder="Contoh: kepsek, eko, anisa, osis, wali" required>
-                        </div>
+                <form id="form-auth-processor">
+                    <div class="mb-3">
+                        <label class="small fw-bold text-secondary mb-1">ID INTEGRASI</label>
+                        <input type="text" id="input-uid" class="form-control" style="border-radius: 8px; padding: 10px;" placeholder="admin, kepsek, wali, eko, osis" required>
                     </div>
-                    <div>
-                        <label class="field-label-premium">Sandi Keamanan</label>
-                        <div class="input-wrapper-premium">
-                            <span class="input-addon-icon"><i class="fa-solid fa-key"></i></span>
-                            <input type="password" id="password" class="input-control-premium" placeholder="••••••••" required>
-                        </div>
+                    <div class="mb-4">
+                        <label class="small fw-bold text-secondary mb-1">KODE OTENTIKASI</label>
+                        <input type="password" class="form-control" style="border-radius: 8px; padding: 10px;" placeholder="••••••••" value="123456">
                     </div>
-                    <div>
-                        <label class="field-label-premium">Tahun Ajaran & Semester Target</label>
-                        <div class="input-wrapper-premium">
-                            <span class="input-addon-icon"><i class="fa-solid fa-calendar-days"></i></span>
-                            <select id="login-period" class="input-control-premium" style="background: transparent; border:none; -webkit-appearance: none;">
-                                <option value="2025/2026 Ganjil">TA 2025/2026 - Ganjil</option>
-                                <option value="2025/2026 Genap">TA 2025/2026 - Genap</option>
-                                <option value="2026/2027 Ganjil" selected>TA 2026/2027 - Ganjil</option>
-                                <option value="2026/2027 Genap">TA 2026/2027 - Genap</option>
-                                <option value="2035/2036 Ganjil">TA 2035/2036 - Ganjil</option>
-                                <option value="2035/2036 Genap">TA 2035/2036 - Genap</option>
-                                <option value="2036/2037 Ganjil">TA 2036/2037 - Ganjil</option>
-                                <option value="2036/2037 Genap">TA 2036/2037 - Genap</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" id="btn-login" class="btn-premium-action">
-                        <i class="fa-solid fa-shield-check me-2"></i> Verifikasi & Masuk Ke Sistem
+                    <button type="submit" class="btn w-100 text-white fw-bold" style="background: var(--luxury-navy); border-radius: 8px; padding: 11px;">
+                        Otentikasi Masuk Sesi
                     </button>
                 </form>
-                <div class="text-center mt-4" style="font-size: 0.7rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em;">
-                    Technology & System Development by M. Renaldi A. S
-                </div>
             </div>
         </div>
 
-        <!-- MAIN CORPORATE DASHBOARD FRAMEWORK -->
-        <div id="main-layout" class="dashboard-frame d-none">
-            <aside id="sidebar" class="sidebar-wrapper">
-                <div class="sidebar-brand-zone">
-                    <img src="assets/img/logo.png" alt="Mini Logo" style="height: 38px; width: auto;" onerror="this.src='https://placehold.co/40x40?text=AA'">
-                    <div class="ms-3">
-                        <div style="font-size: 0.7rem; font-weight: 800; color: var(--alazhar-gold);">IIMS PANEL</div>
-                        <div style="font-size: 0.8rem; font-weight: 700; color: white;">AL AZHAR 52</div>
+        <!-- MAIN PLATFORM INTERFACE -->
+        <div id="main-interface" class="d-flex d-none" style="min-height: 100vh;">
+            <aside class="sidebar-modern">
+                <div class="sidebar-brand">
+                    <div class="d-flex align-items-center">
+                        <div style="background: var(--luxury-gold); width: 8px; height: 25px; border-radius: 2px; margin-right: 10px;"></div>
+                        <div>
+                            <h6 class="mb-0 fw-bold text-white" style="font-size: 0.95rem;">AL AZHAR 52</h6>
+                            <small style="color: var(--luxury-gold); font-size: 0.68rem; font-weight: 700;">MANAGEMENT MODULE</small>
+                        </div>
                     </div>
                 </div>
-                <nav id="sidebar-menu-container" class="sidebar-navigation mt-2"></nav>
-                <div class="p-3 mt-auto">
-                    <button id="btn-logout" class="btn btn-outline-light w-100 btn-sm" style="border-radius: 6px; font-weight: 600; font-size: 0.8rem;">
-                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Keluar Aplikasi
-                    </button>
+                <div id="render-navigation-nodes"></div>
+                <div class="p-3 mt-auto border-top border-secondary" style="border-opacity: 0.1;">
+                    <button id="action-trigger-logout" class="btn btn-sm btn-outline-light w-100" style="border-radius: 6px; font-size: 0.8rem;"><i class="fa-solid fa-power-off me-2"></i>Selesai Sesi</button>
                 </div>
             </aside>
 
-            <div class="main-viewport-wrapper">
-                <header class="navbar-top-premium px-4">
+            <div class="viewport-main">
+                <header class="topbar-modern">
+                    <h5 class="fw-bold mb-0 text-dark" id="display-title-view" style="font-size: 1.1rem;">-</h5>
                     <div class="d-flex align-items-center">
-                        <button id="sidebarToggle" class="btn d-lg-none me-3 text-primary"><i class="fa-solid fa-bars fs-4"></i></button>
-                        <h4 class="mb-0 fw-bold text-dark" id="current-view-title" style="font-size: 1.1rem;">Dashboard Operasional</h4>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="badge bg-light text-dark border me-3"><i class="fa-solid fa-calendar-days text-warning me-1"></i> <span id="global-period-label">TA 2026/2027</span></span>
-                        <div class="fw-semibold text-secondary" id="nav-user-name" style="font-size: 0.85rem;">Profile...</div>
+                        <span class="badge bg-light border text-dark py-2 px-3 me-3" style="font-size: 0.8rem;"><i class="fa-solid fa-calendar text-muted me-2"></i>TA 2026/2027</span>
+                        <div class="fw-bold text-secondary" id="display-user-profile" style="font-size: 0.85rem;">-</div>
                     </div>
                 </header>
 
-                <div class="announcement-sticky-bar">
-                    <div class="d-flex align-items-center">
-                        <span class="announcement-title-badge"><i class="fa-solid fa-bullhorn me-1"></i> LOG UTAMA</span>
-                        <marquee behavior="scroll" direction="left" class="ms-3 fw-bold text-dark" style="font-size: 0.82rem;">
-                            Seluruh rekaman adab kesiswaan dan mutaba'ah keputrian murid tersinkronisasi terpadu menuju Google Sheets Engine IIMS. Pengembang: M. Renaldi A. S.
-                        </marquee>
-                    </div>
-                </div>
-
-                <main id="router-view" class="container-fluid py-4 flex-grow-1"></main>
-
-                <footer class="bg-white border-top py-3 text-center" style="font-size: 0.75rem; color: #6B7280;">
-                    Sistem Pemantauan Terpadu IIMS &bull; Developed by <span class="fw-bold text-dark">M. Renaldi A. S</span> &bull; Pelaporan Al Azhar Korporat
-                </footer>
+                <main class="container-fluid p-4 flex-grow-1" id="dynamic-content-router"></main>
             </div>
         </div>
     </div>
 
-    <!-- Core Script Engines -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
-        // DATA MASTER INTEGRASI BERBASIS JANGKAR NIS (MOCK SPREADSHEET MASTER)
-        const MASTER_STUDENTS = {
-            "26001": { nis: "26001", nama: "Muhammad Rayhan", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadzah Anisa", hafalanTerakhir: "Juz 30, Surah An-Naba Ayat 20", jenisKelamin: "L", kurbanPaid: 4500000, kurbanTotal: 6000000 },
-            "26002": { nis: "26002", nama: "Aisyah Putri", kelas: "IX-B", waliKelas: "Ustadzah Anisa, S.PdI", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah Al-Mulk Ayat 10", jenisKelamin: "P", kurbanPaid: 2000000, kurbanTotal: 6000000 },
-            "26003": { nis: "26003", nama: "Ahmad Fathoni", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah Al-Mulk Ayat 15", jenisKelamin: "L", kurbanPaid: 6000000, kurbanTotal: 6000000 },
-            "26004": { nis: "26004", nama: "Farhan Zaki", kelas: "VII-A", waliKelas: "Ustadz Eko, S.Pd", pendampingTahfidz: "Ustadz Syarif", hafalanTerakhir: "Surah An-Naba Ayat 20", jenisKelamin: "L", kurbanPaid: 1500000, kurbanTotal: 6000000 }
-        };
-
-        const TEACHER_MAPPING = [
-            { namaGuru: "Ustadz Eko, S.Pd", kelasBinaan: "VII-A", jumlahMurid: "3 Murid" },
-            { namaGuru: "Ustadzah Anisa, S.PdI", kelasBinaan: "IX-B", jumlahMurid: "1 Murid" }
+        // LIVE MEMORY STATE ENGINE
+        let DATA_GURU = [
+            { id: "G01", nama: "Ustadz Eko, S.Pd", peran: "Wali Kelas 7B", status: "Aktif" },
+            { id: "G02", nama: "Ustadzah Anisa, S.PdI", peran: "Pendamping Tahfidz 9C", status: "Aktif" },
+            { id: "G03", nama: "Ustadz Syarif, Lc", peran: "Pendamping Tahfidz 7A", status: "Cuti" }
         ];
 
-        const MOCK_PROFILES = {
-            "kepsek": { username: "Dr. H. Ahmad", role: "KEPSEK", greeting: "Selamat Datang Bapak Kepala Sekolah, Dr. H. Ahmad" },
-            "eko": { username: "Ustadz Eko, S.Pd", role: "GURU", greeting: "Selamat Datang Ustadz Eko", kelasBinaan: "VII-A" },
-            "osis": { username: "Pengurus OSIS (Kesiswaan)", role: "OSIS", greeting: "Selamat Datang Rekan Pengurus OSIS" },
-            "wali": { username: "Ayah/Bunda dari Muhammad Rayhan", role: "AYAH_BUNDA", greeting: "Selamat Datang Orang Tua Murid, Muhammad Rayhan", targetNis: "26001" },
-            "admin": { username: "M. Renaldi A. S (Super Admin)", role: "ADMIN", greeting: "Selamat Datang Tim Pengembang Utama, M. Renaldi A. S" }
+        let DATA_MURID = [
+            { nis: "26001", nama: "Muhammad Rayhan", kelas: "VII-A", status: "Aktif", kurbanPaid: 4500000, kurbanTotal: 6000000 },
+            { nis: "26002", nama: "Aisyah Putri", kelas: "IX-B", status: "Aktif", kurbanPaid: 2000000, kurbanTotal: 6000000 },
+            { nis: "26003", nama: "Ahmad Fathoni", kelas: "VII-A", status: "Tamat", kurbanPaid: 6000000, kurbanTotal: 6000000 }
+        ];
+
+        const ACCOUNTS = {
+            "admin": { name: "M. Renaldi (Super Admin)", role: "ADMIN" },
+            "kepsek": { name: "Dr. H. Ahmad (Kepala Sekolah)", role: "KEPSEK" },
+            "wali": { name: "Orang Tua - Muhammad Rayhan", role: "PARENT", targetNis: "26001" },
+            "eko": { name: "Ustadz Eko, S.Pd", role: "GURU" },
+            "osis": { name: "Pengurus OSIS Kesiswaan", role: "OSIS" }
         };
 
-        let activeUser = null;
-        let selectedPeriod = "2026/2027 Ganjil";
+        let currentSession = null;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initAppRoute();
-            setupInteractions();
+        document.getElementById('form-auth-processor').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const uid = document.getElementById('input-uid').value.trim().toLowerCase();
+            if (ACCOUNTS[uid]) {
+                currentSession = ACCOUNTS[uid];
+                document.getElementById('login-screen').classList.add('d-none');
+                document.getElementById('main-interface').classList.remove('d-none');
+                document.getElementById('display-user-profile').textContent = currentSession.name;
+                buildNavigationMenu(currentSession.role);
+                routingView('dashboard');
+            } else {
+                alert('ID Otentikasi tidak valid!');
+            }
         });
 
-        function initAppRoute() {
-            if (!activeUser) {
-                document.getElementById('login-page').classList.remove('d-none');
-                document.getElementById('main-layout').classList.add('d-none');
+        document.getElementById('action-trigger-logout').addEventListener('click', () => {
+            currentSession = null;
+            document.getElementById('login-screen').classList.remove('d-none');
+            document.getElementById('main-interface').classList.add('d-none');
+        });
+
+        function buildNavigationMenu(role) {
+            let navHtml = `<div class="nav-section-title">MENU UTAMA</div>`;
+            navHtml += `<a href="#" class="nav-link-modern" id="nav-dashboard" onclick="routingView('dashboard')"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>`;
+
+            if (role === 'ADMIN') {
+                navHtml += `<div class="nav-section-title">KONTROL DATA MASTER</div>`;
+                navHtml += `<a href="#" class="nav-link-modern" id="nav-master-guru" onclick="routingView('master-guru')"><i class="fa-solid fa-user-tie"></i>Manajemen Guru</a>`;
+                navHtml += `<a href="#" class="nav-link-modern" id="nav-master-murid" onclick="routingView('master-murid')"><i class="fa-solid fa-graduation-cap"></i>Manajemen Murid</a>`;
+            }
+
+            if (role === 'KEPSEK' || role === 'ADMIN') {
+                navHtml += `<div class="nav-section-title">MONITORING EKSEKUTIF</div>`;
+                navHtml += `<a href="#" class="nav-link-modern" id="nav-kepsek-view" onclick="routingView('kepsek-view')"><i class="fa-solid fa-clipboard-check"></i>Monitoring Guru & Binaan</a>`;
+            }
+
+            if (role === 'GURU' || role === 'ADMIN') {
+                navHtml += `<div class="nav-section-title">FUNGSIONAL INPUT</div>`;
+                navHtml += `<a href="#" class="nav-link-modern" id="nav-input-tahfidz" onclick="routingView('input-tahfidz')"><i class="fa-solid fa-book-medical"></i>Input Tahfidz</a>`;
+            }
+
+            if (role === 'OSIS' || role === 'ADMIN') {
+                navHtml += `<div class="nav-section-title">KESISWAAN & OSIS</div>`;
+                navHtml += `<a href="#" class="nav-link-modern" id="nav-osis-keputrian" onclick="routingView('osis-keputrian')"><i class="fa-solid fa-venus-mars"></i>Jurnal Keputrian</a>`;
+            }
+
+            document.getElementById('render-navigation-nodes').innerHTML = navHtml;
+        }
+
+        function routingView(viewKey) {
+            document.querySelectorAll('.nav-link-modern').forEach(el => el.classList.remove('active'));
+            const node = document.getElementById('nav-' + viewKey);
+            if (node) node.classList.add('active');
+
+            document.getElementById('display-title-view').textContent = viewKey.toUpperCase().replace('-', ' ');
+            const container = document.getElementById('dynamic-content-router');
+
+            if (viewKey === 'dashboard') {
+                renderDashboard(container);
+            } else if (viewKey === 'master-guru') {
+                renderMasterGuru(container);
+            } else if (viewKey === 'master-murid') {
+                renderMasterMurid(container);
+            } else if (viewKey === 'kepsek-view') {
+                renderKepsekView(container);
+            } else if (viewKey === 'input-tahfidz') {
+                renderInputTahfidz(container);
+            } else if (viewKey === 'osis-keputrian') {
+                renderOsisKeputrian(container);
+            }
+        }
+
+        function renderDashboard(target) {
+            let html = `
+                <div class="card-premium-box">
+                    <h4 class="fw-bold mb-1 text-dark" style="letter-spacing:-0.03em;">Ahlan Wa Sahlan,</h4>
+                    <p class="text-muted small mb-0">Sistem Informasi Monitoring Karakter & Tahfidz SMP Islam Al Azhar 52 Bengkulu</p>
+                </div>
+            `;
+
+            if (currentSession.role === 'PARENT') {
+                const murid = DATA_MURID.find(m => m.nis === currentSession.targetNis);
+                const sisa = murid.kurbanTotal - murid.kurbanPaid;
+                const pct = Math.round((murid.kurbanPaid / murid.kurbanTotal) * 100);
+
+                html += `
+                    <!-- DATA IDENTITAS ANAK UTUH -->
+                    <div class="card-premium-box">
+                        <div class="card-title-text"><span><i class="fa-solid fa-id-card text-warning me-2"></i>Identitas Ringkas Murid</span></div>
+                        <div class="row g-3">
+                            <div class="col-md-3"><strong>Nama Murid:</strong><br>${murid.nama}</div>
+                            <div class="col-md-3"><strong>NIS:</strong><br>${murid.nis}</div>
+                            <div class="col-md-3"><strong>Kelas:</strong><br>${murid.kelas}</div>
+                            <div class="col-md-3"><strong>Status Akademik:</strong><br><span class="badge-status-active">${murid.status}</span></div>
+                        </div>
+                    </div>
+
+                    <!-- TABUNGAN KURBAN -->
+                    <div class="card-premium-box">
+                        <div class="card-title-text"><span><i class="fa-solid fa-wallet text-success me-2"></i>Laporan Tabungan Kurban Ananda</span></div>
+                        <div class="row text-center mb-3">
+                            <div class="col-4"><strong>Sudah Dibayar</strong><br><span class="text-success fw-bold">Rp ${murid.kurbanPaid.toLocaleString()}</span></div>
+                            <div class="col-4"><strong>Sisa Tagihan</strong><br><span class="text-danger fw-bold">Rp ${sisa.toLocaleString()}</span></div>
+                            <div class="col-4"><strong>Progres Persentase</strong><br><span class="text-primary fw-bold">${pct}%</span></div>
+                        </div>
+                        <div class="progress-luxury"><div class="progress-bar-luxury h-100" style="width: ${pct}%"></div></div>
+                    </div>
+
+                    <!-- LAPORAN CAPAIAN TAHFIDZ UTUH (Ref: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) -->
+                    <div class="card-premium-box">
+                        <div class="card-title-text"><span><i class="fa-solid fa-book-quran text-primary me-2"></i>Surah yang Sudah Selesai</span></div>
+                        <table class="table table-modernized">
+                            <thead><tr><th>No</th><th>Nama Surah</th><th>Jumlah Ayat</th><th>Tanggal Selesai</th><th>Predikat Kelancaran</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>An-Nas</td><td>6 Ayat</td><td>10 Mei 2026</td><td><span class="pred-mumtaz">Mumtaz</span></td></tr>
+                                <tr><td>2</td><td>Al-Falaq</td><td>5 Ayat</td><td>12 Mei 2026</td><td><span class="pred-mumtaz">Mumtaz</span></td></tr>
+                                <tr><td>3</td><td>Al-Ikhlas</td><td>4 Ayat</td><td>14 Mei 2026</td><td><span class="pred-jayyid-jiddan">Jayyid Jiddan</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
             } else {
-                buildDashboardEnvironment();
+                html += `
+                    <div class="row g-3">
+                        <div class="col-md-4"><div class="kpi-card-modern"><div><div class="text-muted small fw-bold">TOTAL GURU</div><div class="fs-3 fw-bold">${DATA_GURU.length}</div></div><div class="kpi-icon-container"><i class="fa-solid fa-user-tie"></i></div></div></div>
+                        <div class="col-md-4"><div class="kpi-card-modern"><div><div class="text-muted small fw-bold">TOTAL MURID</div><div class="fs-3 fw-bold">${DATA_MURID.length}</div></div><div class="kpi-icon-container"><i class="fa-solid fa-graduation-cap"></i></div></div></div>
+                        <div class="col-md-4"><div class="kpi-card-modern"><div><div class="text-muted small fw-bold">STATUS SISTEM</div><div class="text-success fw-bold">ONLINE & AMAN</div></div><div class="kpi-icon-container"><i class="fa-solid fa-shield"></i></div></div></div>
+                    </div>
+                `;
             }
+            target.innerHTML = html;
         }
 
-        function setupInteractions() {
-            document.getElementById('login-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const u = document.getElementById('username').value.trim().toLowerCase();
-                selectedPeriod = document.getElementById('login-period').value;
-                if (MOCK_PROFILES[u]) {
-                    activeUser = MOCK_PROFILES[u];
-                    document.getElementById('nav-user-name').textContent = activeUser.username;
-                    document.getElementById('global-period-label').textContent = "TA " + selectedPeriod;
-                    buildDashboardEnvironment();
-                } else {
-                    alert('Akun IIMS tidak ditemukan.');
-                }
-            });
-
-            document.getElementById('btn-logout').addEventListener('click', () => {
-                activeUser = null;
-                initAppRoute();
-            });
-
-            document.getElementById('sidebarToggle').addEventListener('click', () => {
-                document.getElementById('sidebar').classList.toggle('open');
-            });
-        }
-
-        function buildDashboardEnvironment() {
-            document.getElementById('login-page').classList.add('d-none');
-            document.getElementById('main-layout').classList.remove('d-none');
-            generateSidebarMenus(activeUser.role);
-            loadSubView('dashboard');
-        }
-
-        function generateSidebarMenus(role) {
-            let html = `<div class="nav-heading-enterprise">Navigasi Utama</div>`;
-            html += `<a href="#" class="link-item-premium" id="menu-dashboard" onclick="loadSubView('dashboard')"><i class="fa-solid fa-table-columns"></i><span>Dashboard Utama</span></a>`;
-            
-            if (['GURU', 'ADMIN'].includes(role)) {
-                html += `<div class="nav-heading-enterprise">Aktivitas Input</div>`;
-                html += `<a href="#" class="link-item-premium" id="menu-input-tahfidz" onclick="loadSubView('input-tahfidz')"><i class="fa-solid fa-book-open-reader"></i><span>Input Tahfidz Berkala</span></a>`;
-            }
-
-            if (['KEPSEK', 'ADMIN'].includes(role)) {
-                html += `<div class="nav-heading-enterprise">Otoritas Eksekutif</div>`;
-                html += `<a href="#" class="link-item-premium" id="menu-data-guru" onclick="loadSubView('data-guru')"><i class="fa-solid fa-chalkboard-user"></i><span>Data Guru & Binaan</span></a>`;
-            }
-
-            if (['OSIS', 'ADMIN'].includes(role)) {
-                html += `<div class="nav-heading-enterprise">Kesiswaan</div>`;
-                html += `<a href="#" class="link-item-premium" id="menu-osis-input" onclick="loadSubView('osis-input')"><i class="fa-solid fa-scale-balanced"></i><span>Input Jurnal Karakter</span></a>`;
-                html += `<a href="#" class="link-item-premium" id="menu-osis-keputrian" onclick="loadSubView('osis-keputrian')"><i class="fa-solid fa-venus"></i><span>Jurnal Keputrian Murid</span></a>`;
-            }
-
-            document.getElementById('sidebar-menu-container').innerHTML = html;
-        }
-
-        function loadSubView(viewName) {
-            document.querySelectorAll('.link-item-premium').forEach(el => el.classList.remove('active'));
-            const targetMenu = document.getElementById('menu-' + viewName);
-            if (targetMenu) targetMenu.classList.add('active');
-            
-            document.getElementById('current-view-title').textContent = viewName.toUpperCase().replace('-', ' ');
-
-            let targetOutput = document.getElementById('router-view');
-            
-            if (viewName === 'dashboard') {
-                renderDashboardPayload(activeUser.role);
-                return;
-            }
-
-            let buffer = `<div class="section-block-premium">`;
-
-            if (viewName === 'input-tahfidz') {
-                const matchedClass = activeUser.kelasBinaan || "VII-A";
-                buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-book-bookmark text-primary me-2"></i>Form Kelanjutan Setoran Tahfidz</h5>
-                    <form onsubmit="alert('Data setoran baru berhasil diverifikasi masuk log historis NIS!'); loadSubView('dashboard'); return false;">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Pilih Nama Murid (${matchedClass})</label>
-                            <select class="form-select" onchange="const previewEl = document.getElementById('tahfidz-last-preview'); if(this.value && MASTER_STUDENTS[this.value]){ previewEl.textContent = 'Hafalan Terakhir Terdata: ' + MASTER_STUDENTS[this.value].hafalanTerakhir; }else{ previewEl.textContent=''; }" required>
-                                <option value="">-- Pilih Murid --</option>
-                                ${Object.values(MASTER_STUDENTS).filter(s => s.kelas === matchedClass).map(s => `<option value="${s.nis}">${s.nama} [NIS: ${s.nis}]</option>`).join('')}
+        function renderMasterGuru(target) {
+            let html = `
+                <div class="card-premium-box">
+                    <div class="card-title-text">
+                        <span><i class="fa-solid fa-user-tie me-2"></i>Manajemen Database Guru</span>
+                        <div>
+                            <button class="btn btn-sm btn-outline-secondary me-2" onclick="alert('Template XLSX Berhasil Diunduh!')"><i class="fa-solid fa-file-excel me-1"></i> Unduh Template XLSX</button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="alert('Simulasi: File XLSX sukses dibaca dan diunggah!')"><i class="fa-solid fa-upload me-1"></i> Upload File XLSX</button>
+                        </div>
+                    </div>
+                    
+                    <form id="form-add-guru" class="row g-3 mb-4 bg-light p-3 rounded" onsubmit="saveGuru(event)">
+                        <div class="col-md-3"><input type="text" id="g-nama" class="form-control form-control-sm" placeholder="Nama Guru Lengkap" required></div>
+                        <div class="col-md-3">
+                            <select id="g-peran" class="form-select form-control-sm" required>
+                                <option value="">-- Pilih Peran Tugas --</option>
+                                <option value="Wali Kelas 7B">Wali Kelas 7B</option>
+                                <option value="Wali Kelas 8A">Wali Kelas 8A</option>
+                                <option value="Pendamping Tahfidz 9C">Pendamping Tahfidz 9C</option>
+                                <option value="Pendamping Tahfidz 7A">Pendamping Tahfidz 7A</option>
                             </select>
                         </div>
-                        <div class="mb-3 text-primary font-monospace fw-bold" id="tahfidz-last-preview" style="font-size:0.88rem;"></div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6"><label class="form-label fw-bold">Surah Lanjutan</label><input type="text" class="form-control" required></div>
-                            <div class="col-md-6"><label class="form-label fw-bold">Sampai Ayat</label><input type="number" class="form-control" required></div>
+                        <div class="col-md-3">
+                            <select id="g-status" class="form-select form-control-sm" required>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Cuti">Cuti</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3"><button type="submit" class="btn btn-sm text-white w-100" style="background:var(--luxury-navy);"><i class="fa-solid fa-plus me-1"></i>Tambah Guru Manual</button></div>
+                    </form>
+
+                    <table class="table table-modernized">
+                        <thead><tr><th>ID</th><th>Nama Lengkap</th><th>Penugasan Kelas</th><th>Status</th></tr></thead>
+                        <tbody>
+                            ${DATA_GURU.map(g => `<tr><td>${g.id}</td><td><strong>${g.nama}</strong></td><td>${g.peran}</td><td><span class="${g.status === 'Aktif' ? 'badge-status-active' : 'badge-status-cuti'}">${g.status}</span></td></tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            target.innerHTML = html;
+        }
+
+        function saveGuru(e) {
+            e.preventDefault();
+            const id = "G0" + (DATA_GURU.length + 1);
+            const nama = document.getElementById('g-nama').value;
+            const peran = document.getElementById('g-peran').value;
+            const status = document.getElementById('g-status').value;
+            DATA_GURU.push({ id, nama, peran, status });
+            renderMasterGuru(document.getElementById('dynamic-content-router'));
+        }
+
+        function renderMasterMurid(target) {
+            let html = `
+                <div class="card-premium-box">
+                    <div class="card-title-text"><span><i class="fa-solid fa-graduation-cap me-2"></i>Manajemen Database Murid</span></div>
+                    
+                    <form id="form-add-murid" class="row g-3 mb-4 bg-light p-3 rounded" onsubmit="saveMurid(event)">
+                        <div class="col-md-3"><input type="text" id="m-nis" class="form-control form-control-sm" placeholder="NIS Murid" required></div>
+                        <div class="col-md-3"><input type="text" id="m-nama" class="form-control form-control-sm" placeholder="Nama Murid Lengkap" required></div>
+                        <div class="col-md-2">
+                            <select id="m-kelas" class="form-select form-control-sm" required>
+                                <option value="VII-A">VII-A</option>
+                                <option value="VII-B">VII-B</option>
+                                <option value="IX-B">IX-B</option>
+                                <option value="IX-C">IX-C</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="m-status" class="form-select form-control-sm" required>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Keluar">Keluar</option>
+                                <option value="Pindah">Pindah</option>
+                                <option value="Tamat">Tamat</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2"><button type="submit" class="btn btn-sm text-white w-100" style="background:var(--luxury-navy);"><i class="fa-solid fa-plus me-1"></i>Simpan</button></div>
+                    </form>
+
+                    <table class="table table-modernized">
+                        <thead><tr><th>NIS</th><th>Nama Lengkap</th><th>Alokasi Kelas</th><th>Status Kontrol</th></tr></thead>
+                        <tbody>
+                            ${DATA_MURID.map(m => `<tr><td>${m.nis}</td><td><strong>${m.nama}</strong></td><td><span class="badge bg-light text-dark border">${m.kelas}</span></td><td><span class="${m.status === 'Aktif' ? 'badge-status-active' : 'badge-status-out'}">${m.status}</span></td></tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            target.innerHTML = html;
+        }
+
+        function saveMurid(e) {
+            e.preventDefault();
+            const nis = document.getElementById('m-nis').value;
+            const nama = document.getElementById('m-nama').value;
+            const kelas = document.getElementById('m-kelas').value;
+            const status = document.getElementById('m-status').value;
+            DATA_MURID.push({ nis, nama, kelas, status, kurbanPaid: 0, kurbanTotal: 6000000 });
+            renderMasterMurid(document.getElementById('dynamic-content-router'));
+        }
+
+        function renderKepsekView(target) {
+            target.innerHTML = `
+                <div class="card-premium-box">
+                    <div class="card-title-text"><span><i class="fa-solid fa-clipboard-check me-2"></i>Data Pengawasan Guru & Murid Binaan</span></div>
+                    <div class="alert alert-info py-2" style="font-size:0.85rem;"><i class="fa-solid fa-shield-halved me-2"></i><strong>Otoritas Monitoring Eksekutif:</strong> Anda hanya diizinkan memantau sebaran data tanpa hak manipulasi setoran tahfidz.</div>
+                    <table class="table table-modernized mt-3">
+                        <thead><tr><th>Nama Tenaga Pendidik</th><th>Tugas Utama / Kelas</th><th>Status Kehadiran</th></tr></thead>
+                        <tbody>
+                            ${DATA_GURU.map(g => `<tr><td><strong>${g.nama}</strong></td><td>${g.peran}</td><td><span class="${g.status === 'Aktif' ? 'badge-status-active' : 'badge-status-cuti'}">${g.status}</span></td></tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function renderInputTahfidz(target) {
+            target.innerHTML = `
+                <div class="card-premium-box">
+                    <div class="card-title-text"><span><i class="fa-solid fa-book-open-reader me-2"></i>Pengisian Kelancaran Tahfidz Murid</span></div>
+                    <form onsubmit="alert('Data berhasil dikunci ke sistem!'); routingView('dashboard'); return false;">
+                        <div class="mb-3">
+                            <label class="small fw-bold mb-1">Nama Murid Binaan</label>
+                            <select class="form-select" required>
+                                ${DATA_MURID.filter(m => m.status === 'Aktif').map(m => `<option value="${m.nis}">${m.nama} [Kelas ${m.kelas}]</option>`).join('')}
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Kategori Kelancaran Hafalan</label>
+                            <label class="small fw-bold mb-1">Kategori Capaian Kelancaran</label>
                             <select class="form-select">
                                 <option value="Mumtaz">Mumtaz (Istimewa)</option>
                                 <option value="Jayyid Jiddan">Jayyid Jiddan (Sangat Baik)</option>
@@ -368,127 +436,24 @@
                                 <option value="Maqbul">Maqbul (Cukup)</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary fw-bold">Simpan Progres Hafalan</button>
+                        <button type="submit" class="btn text-white px-4" style="background:var(--luxury-navy);">Kunci Nilai</button>
                     </form>
-                `;
-            } else if (viewName === 'data-guru') {
-                buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-chalkboard-user text-primary me-2"></i>Data Guru & Daftar Murid Binaan Kolektif</h5>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Nama Pendidik / Guru</th><th>Kelas Binaan</th><th>Jumlah Anggota Murid</th><th>Aksi Monitoring</th></tr></thead>
-                        <tbody>
-                            ${TEACHER_MAPPING.map(g => `
-                                <tr>
-                                    <td><strong>${g.namaGuru}</strong></td>
-                                    <td><span class="badge bg-secondary">${g.kelasBinaan}</span></td>
-                                    <td>${g.jumlahMurid}</td>
-                                    <td><button class="btn btn-sm btn-outline-primary fw-bold" onclick="alert('Menampilkan daftar lampiran murid di bawah naungan ${g.namaGuru}...')"><i class="fa-solid fa-magnifying-glass-chart"></i> Tinjau Murid</button></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } else if (viewName === 'osis-input') {
-                buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-scale-balanced text-primary me-2"></i>Form Jurnal Adab Kesiswaan (Koneksi Cloud Sheets)</h5>
-                    <form onsubmit="alert('Data Karakter Sukses Tersimpan Ke Google Sheets!'); loadSubView('dashboard'); return false;">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Pilih Murid Al Azhar</label>
-                            <select class="form-select" required>
-                                ${Object.values(MASTER_STUDENTS).map(s => `<option value="${s.nis}">${s.nama} [Kelas ${s.kelas}]</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Bentuk Tindakan Pelanggaran Adab</label>
-                            <input type="text" class="form-control" placeholder="Contoh: Terlambat shalat berjamaah" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary fw-bold">Kunci & Amankan ke Sheets</button>
-                    </form>
-                `;
-            } else if (viewName === 'osis-keputrian') {
-                buffer += `
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-venus text-primary me-2"></i>Monitoring Log Keputrian & Kondisi Haidh Murid Putri</h5>
-                    <table class="table table-premium-lock">
-                        <thead><tr><th>Nama Murid</th><th>Status Hari Ini</th><th>Hari Ke-</th><th>Siklus Haidh Bulan Ini</th></tr></thead>
-                        <tbody>
-                            <tr><td>Aisyah Putri</td><td><span class="badge bg-danger">Sedang Keputrian (Haidh)</span></td><td>Hari ke-3</td><td>Siklus Pertama</td></tr>
-                            <tr><td>Zhafira Aulia</td><td><span class="badge bg-success">Mudzakarah (Suci)</span></td><td>-</td><td>Selesai</td></tr>
-                        </tbody>
-                    </table>
-                `;
-            }
-
-            buffer += `</div>`;
-            targetOutput.innerHTML = buffer;
-        }
-
-        function renderDashboardPayload(role) {
-            let buffer = `
-                <div class="welcome-card-premium">
-                    <div class="welcome-user-slug">${activeUser.greeting}</div>
-                    <div class="text-muted mt-1" style="font-size:0.82rem;"><i class="fa-solid fa-circle-check text-success me-1"></i> Otoritas Akses: ${activeUser.role} | Periode: ${selectedPeriod}</div>
                 </div>
             `;
+        }
 
-            if (role === 'GURU' || role === 'ADMIN') {
-                const cls = activeUser.kelasBinaan || "VII-A";
-                buffer += `
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Kelas Terkunci</div><div class="kpi-metric-number text-primary">${cls}</div></div></div>
-                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Belum Setor Pekan Ini</div><div class="kpi-metric-number text-danger">2 Murid</div></div></div>
-                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Log Adab Terdata</div><div class="kpi-metric-number text-warning">1 Kasus</div></div></div>
-                    </div>
-                    <div class="section-block-premium">
-                        <div class="section-block-title"><span><i class="fa-solid fa-book-open"></i> Log Setoran Terbaru Binaan Kelas ${cls}</span></div>
-                        <table class="table table-premium-lock">
-                            <thead><tr><th>Nama Murid</th><th>Capaian Hafalan</th><th>Predikat Kelancaran</th></tr></thead>
-                            <tbody>
-                                <tr><td>Muhammad Rayhan</td><td>Juz 30, An-Naba: 1-20</td><td><span class="pred-mumtaz">Mumtaz</span></td></tr>
-                                <tr><td>Farhan Zaki</td><td>Surah An-Naba: 1-10</td><td><span class="pred-jayyid-jiddan">Jayyid Jiddan</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            } else if (role === 'KEPSEK') {
-                buffer += `
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Total Kolektif Guru</div><div class="kpi-metric-number text-primary">28 Guru Aktif</div></div></div>
-                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Total Evaluasi Murid</div><div class="kpi-metric-number text-primary">384 Murid</div></div></div>
-                        <div class="col-md-4"><div class="card-kpi-premium"><div class="kpi-label-text">Status Sistem</div><div class="kpi-metric-number text-success">Monitoring Aktif</div></div></div>
-                    </div>
-                    <div class="alert alert-warning"><strong>Mode Otoritas Kepala Sekolah:</strong> Pengisian dinonaktifkan dari panel ini. Silakan gunakan menu samping untuk melakukan peninjauan <strong>Data Guru & Binaan</strong> komplit.</div>
-                `;
-            } else if (role === 'AYAH_BUNDA') {
-                const s = MASTER_STUDENTS[activeUser.targetNis];
-                const sisa = s.kurbanTotal - s.kurbanPaid;
-                const pct = Math.round((s.kurbanPaid / s.kurbanTotal) * 100);
-                buffer += `
-                    <div class="section-block-premium">
-                        <h5 class="fw-bold text-primary mb-3"><i class="fa-solid fa-id-card me-2"></i>Identitas Ringkas Murid</h5>
-                        <div class="identity-student-grid row g-3 m-0">
-                            <div class="col-md-6"><strong>Nama Lengkap:</strong><br>${s.nama}</div>
-                            <div class="col-md-6"><strong>NIS Mandat:</strong><br>${s.nis}</div>
-                            <div class="col-md-6"><strong>Kelas Sekarang:</strong><br>${s.kelas}</div>
-                            <div class="col-md-6"><strong>Wali Kelas Binaan:</strong><br>${s.waliKelas}</div>
-                        </div>
-                    </div>
-                    <div class="section-block-premium">
-                        <div class="section-block-title"><span><i class="fa-solid fa-chart-line-up"></i> Progres Keuangan Tabungan Kurban Ananda</span></div>
-                        <div class="row text-center mb-3">
-                            <div class="col-4"><strong>Sudah Dibayar</strong><br><span class="text-success fw-bold">Rp ${s.kurbanPaid.toLocaleString()}</span></div>
-                            <div class="col-4"><strong>Sisa Tagihan</strong><br><span class="text-danger fw-bold">Rp ${sisa.toLocaleString()}</span></div>
-                            <div class="col-4"><strong>Persentase Capaian</strong><br><span class="text-primary fw-bold">${pct}%</span></div>
-                        </div>
-                        <div class="progress" style="height:12px;"><div class="progress-bar bg-success" style="width: ${pct}%"></div></div>
-                    </div>
-                `;
-            } else if (role === 'OSIS') {
-                buffer += `
-                    <div class="alert alert-info">Akses Pengurus Bidang Kesiswaan diaktifkan. Gunakan menu navigasi di sebelah kiri untuk memasukkan data pelanggaran adab harian atau melihat pembinaan berkala keputrian murid putri.</div>
-                `;
-            }
-
-            document.getElementById('router-view').innerHTML = buffer;
+        function renderOsisKeputrian(target) {
+            target.innerHTML = `
+                <div class="card-premium-box">
+                    <div class="card-title-text"><span><i class="fa-solid fa-venus me-2"></i>Log Pendataan Keputrian Berkelanjutan</span></div>
+                    <table class="table table-modernized">
+                        <thead><tr><th>Nama Murid</th><th>Kelas</th><th>Kondisi Murid</th><th>Indikator Hari</th><th>Haidh Bulan Ini</th></tr></thead>
+                        <tbody>
+                            <tr><td>Aisyah Putri</td><td>IX-B</td><td><span class="badge bg-danger">Sedang Keputrian</span></td><td>Hari Ke-3</td><td>Siklus 1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
         }
     </script>
 </body>
