@@ -1,156 +1,558 @@
-/* =========================================================
-   IIMS - CUSTOM CSS
-   Developer: Renaldi | Design: Enterprise Islamic
-========================================================= */
+/* ==========================================================================
+   PREMIUM ENTERPRISE UI/UX SPECIFICATION V1.0
+   SMP ISLAM AL AZHAR 52 BENGKULU
+   DESIGN SYSTEM FOR INDEPENDENT SCHOOL ERP INTERFACE (NO OVERFLOW)
+   ========================================================================== */
 
 :root {
-    /* Color Palette */
-    --primary-azhar: #0A3663;
-    --gold: #D4AF37;
-    --bg-main: #F5F7FA;
-    --text-dark: #2C3E50;
-    --text-muted: #7F8C8D;
-    
-    /* Design System */
-    --shadow-soft: 0 4px 20px rgba(10, 54, 99, 0.08);
-    --shadow-hover: 0 10px 25px rgba(10, 54, 99, 0.15);
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    
-    /* Transitions */
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --alazhar-blue: #0A3663;
+    --alazhar-gold: #D4AF37;
+    --alazhar-dark-navy: #051E38;
+    --alazhar-light-canvas: #F4F6F9;
+    --alazhar-white-pure: #FFFFFF;
+    --premium-shadow-sm: 0 4px 15px rgba(10, 54, 99, 0.04);
+    --premium-shadow-md: 0 8px 25px rgba(10, 54, 99, 0.08);
+    --corporate-font-stack: 'Inter', sans-serif;
 }
 
-/* Typography */
+/* Core Document Rules */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-dark);
-}
-.font-poppins { font-family: 'Poppins', sans-serif; }
-.font-inter { font-family: 'Inter', sans-serif; }
-
-/* Utilities */
-.text-primary-azhar { color: var(--primary-azhar) !important; }
-.bg-primary-azhar { background-color: var(--primary-azhar) !important; }
-.text-gold { color: var(--gold) !important; }
-.bg-gold { background-color: var(--gold) !important; }
-.bg-main { background-color: var(--bg-main) !important; }
-
-/* Islamic Geometric Background Pattern (Soft Data URI) */
-.islamic-pattern {
-    background-color: var(--bg-main);
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230a3663' fill-opacity='0.03'%3E%3Cpath d='M30 30L15 15H0v30h15L30 30zm30 0L45 45H60V15H45L30 30zM15 60L30 45v15H15zM45 0L30 15V0h15zM0 0h15v15H0V0zm60 60H45V45h15v15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    font-family: var(--corporate-font-stack);
+    background-color: var(--alazhar-light-canvas);
+    color: #1E293B;
+    overflow-x: hidden;
+    letter-spacing: -0.015em;
 }
 
-/* Base Components */
-.btn-primary-azhar {
-    background-color: var(--primary-azhar);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    transition: var(--transition);
+/* Fine Pattern Geometric Accent (Islamic Touch Subtle Style) */
+.islamic-fine-overlay {
+    position: relative;
 }
-.btn-primary-azhar:hover {
-    background-color: #082b4f;
-    color: var(--gold);
-    box-shadow: var(--shadow-hover);
-}
-
-/* Enterprise Cards */
-.card-enterprise {
-    background: white;
-    border: none;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-soft);
-    transition: var(--transition);
-}
-.card-enterprise:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-hover);
+.islamic-fine-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 0 L36 12 L48 0 L36 36 L48 48 L24 36 L0 48 L12 36 L0 0 L12 12 Z' fill='%230A3663' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* Glassmorphism (Login & Panels) */
-.glass-panel {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-hover);
+/* ==========================================================================
+   AUTHENTICATION VIEW STYLING (ANIMATION FADE IN LOCK)
+   ========================================================================== */
+.login-frame {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--alazhar-dark-navy) 0%, var(--alazhar-blue) 100%);
+    position: relative;
+    padding: 24px;
+    overflow: hidden;
 }
 
-/* --- LOGIN PAGE --- */
-.login-container {
-    animation: zoomFadeIn 0.8s ease-out forwards;
+.login-abstract-bg {
+    position: absolute;
+    width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L75 25 L100 0 L75 75 L100 100 L50 75 L0 100 L25 75 L0 0 L25 25 Z' fill='%23D4AF37' fill-opacity='0.015'/%3E%3C/svg%3E");
+    z-index: 1;
 }
-.login-card {
+
+.login-box-premium {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 16px;
+    padding: 40px;
     width: 100%;
-    max-width: 420px;
-    padding: 3rem 2.5rem;
-}
-@keyframes zoomFadeIn {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+    animation: premiumEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* --- SIDEBAR --- */
-.sidebar {
-    width: 260px;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    transition: var(--transition);
-    z-index: 1040;
+@keyframes premiumEntrance {
+    from { opacity: 0; transform: scale(0.97) translateY(15px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.school-logo-asset {
+    height: 95px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+.login-box-premium:hover .school-logo-asset {
+    transform: translateY(-2px);
+}
+
+.system-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--alazhar-blue);
+    letter-spacing: 0.04em;
+    margin-top: 15px;
+    margin-bottom: 2px;
+}
+.system-acronym {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--alazhar-gold);
+    margin-bottom: 4px;
+}
+.institution-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+.field-label-premium {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--alazhar-blue);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-wrapper-premium {
+    display: flex;
+    align-items: center;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 0 14px;
+    transition: all 0.25s ease;
+}
+.input-wrapper-premium:focus-within {
+    border-color: var(--alazhar-blue);
+    background: var(--alazhar-white-pure);
+    box-shadow: 0 0 0 3px rgba(10, 54, 99, 0.08);
+}
+.input-addon-icon {
+    color: #94A3B8;
+    margin-right: 12px;
+    font-size: 0.95rem;
+}
+.input-control-premium {
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: 11px 0;
+    font-size: 0.95rem;
+    color: #1E293B;
+}
+.input-control-premium:focus {
+    outline: none;
+}
+
+.btn-premium-action {
+    background: linear-gradient(135deg, var(--alazhar-blue) 0%, #0d4884 100%);
+    color: var(--alazhar-white-pure);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+}
+.btn-premium-action:hover {
+    background: var(--alazhar-blue);
+    box-shadow: 0 4px 15px rgba(10, 54, 99, 0.2);
+    transform: translateY(-0.5px);
+}
+
+.login-developer-branding .dev-label {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.login-developer-branding .dev-author {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--alazhar-blue);
+}
+
+/* ==========================================================================
+   SIDEBAR LAYOUT INFRASTRUCTURE
+   ========================================================================== */
+.dashboard-frame {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.sidebar-wrapper {
+    width: 270px;
+    min-width: 270px;
+    background-color: var(--alazhar-dark-navy);
+    color: #F1F5F9;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-brand-zone {
+    padding: 22px 18px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.12);
+}
+.sidebar-logo-asset {
+    height: 40px;
+    width: auto;
+    margin-right: 12px;
+}
+.sidebar-brand-meta {
     display: flex;
     flex-direction: column;
 }
-.sidebar .nav-link {
-    color: rgba(255, 255, 255, 0.7);
+.sidebar-brand-meta .meta-top {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--alazhar-gold);
+}
+.sidebar-brand-meta .meta-bottom {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--alazhar-white-pure);
+}
+
+.sidebar-navigation {
+    padding: 10px 12px;
+}
+.nav-heading-enterprise {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.08em;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    padding-left: 12px;
+}
+
+.link-item-premium {
+    display: flex;
+    align-items: center;
+    padding: 11px 14px;
+    color: #94A3B8;
+    text-decoration: none;
     border-radius: 8px;
-    margin-bottom: 5px;
+    font-size: 0.88rem;
     font-weight: 500;
-    transition: var(--transition);
-    padding: 12px 16px;
+    margin-bottom: 2px;
+    transition: all 0.2s ease;
 }
-.sidebar .nav-link:hover, .sidebar .nav-link.active {
-    background-color: rgba(212, 175, 55, 0.1);
-    color: var(--gold);
-}
-.sidebar .nav-link i {
-    width: 24px;
+.link-item-premium i {
+    width: 22px;
+    margin-right: 10px;
+    font-size: 0.95rem;
     text-align: center;
 }
+.link-item-premium:hover {
+    color: var(--alazhar-white-pure);
+    background: rgba(255, 255, 255, 0.03);
+}
+.link-item-premium.active {
+    color: var(--alazhar-white-pure);
+    background: var(--alazhar-blue);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+    border-left: 3px solid var(--alazhar-gold);
+}
 
-/* --- ANNOUNCEMENT MARQUEE --- */
-.marquee-container {
+.btn-sidebar-logout {
+    background: rgba(239, 68, 68, 0.08);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    padding: 11px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.btn-sidebar-logout:hover {
+    background: #EF4444;
+    color: var(--alazhar-white-pure);
+}
+
+/* ==========================================================================
+   MAIN CONTENT SPACE & STICKY NAVIGATION
+   ========================================================================== */
+.main-viewport-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.navbar-top-premium {
+    height: 65px;
+    background: var(--alazhar-white-pure);
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn-sidebar-trigger {
+    background: transparent;
+    border: none;
+    color: var(--alazhar-blue);
+    font-size: 1.15rem;
+}
+.navbar-view-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--alazhar-dark-navy);
+}
+.avatar-holder {
+    width: 30px; height: 30px;
+    background: var(--alazhar-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-name-text {
+    font-size: 0.88rem;
+    color: #334155;
+}
+
+/* Announcement Layout */
+.announcement-sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    background: linear-gradient(90deg, #FCF8E3 0%, #FFFDF5 100%);
+    border-bottom: 2px solid var(--alazhar-gold);
+    padding: 8px 24px;
+}
+.announcement-title-badge {
+    background: var(--alazhar-gold);
+    color: var(--alazhar-dark-navy);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 4px;
     white-space: nowrap;
 }
-.marquee-content {
+.announcement-scroller {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--alazhar-dark-navy);
+    margin-left: 12px;
+}
+
+/* ==========================================================================
+   COMPONENTS ARCHITECTURE (GLASSMORPHISM LIGHT & CARDS CONTEXT)
+   ========================================================================== */
+.welcome-card-premium {
+    background: var(--alazhar-white-pure);
+    border-left: 4px solid var(--alazhar-blue);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--premium-shadow-sm);
+    margin-bottom: 20px;
+}
+.welcome-intro {
+    font-size: 0.85rem;
+    color: #64748B;
+    font-weight: 500;
+}
+.welcome-user-slug {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--alazhar-blue);
+    line-height: 1.2;
+}
+.role-badge-pill {
+    background: rgba(10, 54, 99, 0.06);
+    color: var(--alazhar-blue);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
     display: inline-block;
-    animation: marquee 25s linear infinite;
 }
-@keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-
-/* --- LOADING OVERLAY --- */
-#loading-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(5px);
-    z-index: 9999;
+.academic-badge-pill {
+    background: rgba(212, 175, 55, 0.1);
+    color: #A3801C;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 4px;
 }
 
-/* --- RESPONSIVE ADJUSTMENTS --- */
+/* Islamic Card Presentation */
+.islamic-quote-box {
+    background: linear-gradient(to right, #FFFFFF, #F8FAFC);
+    border: 1px solid #E2E8F0;
+    border-left: 3px solid var(--alazhar-gold);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--premium-shadow-sm);
+    margin-bottom: 20px;
+}
+.arabic-script-render {
+    font-family: 'Amiri', serif;
+    font-size: 1.45rem;
+    direction: rtl;
+    line-height: 1.6;
+    color: var(--alazhar-dark-navy);
+}
+.translation-script-render {
+    font-size: 0.92rem;
+    font-style: italic;
+    color: #475569;
+}
+.source-script-render {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--alazhar-blue);
+    text-transform: uppercase;
+}
+
+/* KPI Architecture Grid */
+.card-kpi-premium {
+    background: var(--alazhar-white-pure);
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: var(--premium-shadow-sm);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+}
+.card-kpi-premium:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--premium-shadow-md);
+    border-color: rgba(10, 54, 99, 0.12);
+}
+.kpi-label-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+}
+.kpi-metric-number {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--alazhar-dark-navy);
+    line-height: 1.2;
+}
+.kpi-icon-decorator {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.kpi-icon-decorator.theme-blue { background: rgba(10, 54, 99, 0.06); color: var(--alazhar-blue); }
+.kpi-icon-decorator.theme-gold { background: rgba(212, 175, 55, 0.1); color: #9A7B1C; }
+.kpi-icon-decorator.theme-green { background: rgba(34, 197, 94, 0.08); color: #16A34A; }
+.kpi-icon-decorator.theme-purple { background: rgba(147, 51, 234, 0.08); color: #7C3AED; }
+
+/* Blocks / Section Boxes Container */
+.section-block-premium {
+    background: var(--alazhar-white-pure);
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--premium-shadow-sm);
+    margin-bottom: 20px;
+}
+.section-block-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--alazhar-dark-navy);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+.section-block-title i {
+    color: var(--alazhar-gold);
+    margin-right: 8px;
+}
+
+/* Master Data Table UI */
+.table-premium-lock {
+    width: 100%;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+.table-premium-lock thead th {
+    background-color: #F8FAFC;
+    color: var(--alazhar-blue);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border-bottom: 2px solid #E2E8F0;
+}
+.table-premium-lock tbody td {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #E2E8F0;
+    color: #334155;
+}
+.table-premium-lock tbody tr:hover td {
+    background-color: #F8FAFC;
+}
+
+/* Status Badges */
+.badge-status-positive {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #16A34A;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+.badge-status-negative {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #DC2626;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+/* Profile Specific Layout (Parent Area View) */
+.student-meta-box {
+    background: #F8FAFC;
+    border-radius: 8px;
+    padding: 14px 18px;
+    border: 1px dashed #CBD5E1;
+}
+
+/* Footer Lock */
+.footer-premium-lock {
+    background: var(--alazhar-white-pure);
+    border-top: 1px solid #E2E8F0;
+}
+.footer-copy-text {
+    font-size: 0.8rem;
+    color: #64748B;
+}
+
+/* Responsive Trigger Breakpoint rules */
 @media (max-width: 991.98px) {
-    .sidebar {
+    .sidebar-wrapper {
         position: fixed;
-        left: -260px;
+        left: -270px;
+        top: 0; bottom: 0;
     }
-    .sidebar.show {
+    .sidebar-wrapper.open {
         left: 0;
     }
 }
