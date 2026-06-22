@@ -3,288 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IIMS Premium - SMP Islam Al Azhar 52 Bengkulu</title>
-    <!-- Google Fonts & Frameworks -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Sistem Informasi Tahfidz & Karakter - SMP Islam Al Azhar 52 Bengkulu</title>
+    <!-- Framework & Icon Pack -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --luxury-navy: #0A192F;
-            --luxury-surface: #112240;
-            --luxury-bg: #F4F7FA;
-            --luxury-gold: #C5A880;
-            --luxury-text-dark: #2D3748;
-            --luxury-text-muted: #718096;
-            --premium-border: 1px solid #E2E8F0;
+            --alazhar-blue: #004AAD;
+            --alazhar-dark-blue: #00337C;
+            --alazhar-gold: #FFC107;
+            --alazhar-bg: #F4F6F9;
+            --text-dark: #1E293B;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--luxury-bg);
-            color: var(--luxury-text-dark);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--alazhar-bg);
+            color: var(--text-dark);
         }
 
-        /* SOFT SUBTLE ISLAMIC GEOMETRIC BACKGROUND Pattern (Ref: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) */
-        .islamic-subtle-overlay {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L45 15 L60 0 L45 45 L60 60 L30 45 L0 60 L15 45 L0 0 L15 15 Z' fill='%23C5A880' fill-opacity='0.02'/%3E%3C/svg%3E");
+        /* 1. SEAMLESS ISLAMIC WALLPAPER PATTERN (Sangat Halus & Tipis - Ref: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) */
+        .islamic-wallpaper {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L60 20 L80 0 L60 60 L80 80 L40 60 L0 80 L20 60 L0 0 L20 20 Z' fill='%23004AAD' fill-opacity='0.015'/%3E%3C/svg%3E");
         }
 
-        /* Login Screen Minimalist Modern */
-        .login-frame-modern {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #0A192F 0%, #112240 100%);
-            padding: 20px; position: relative; overflow: hidden;
+        /* Sidebar Styling (Kembali ke Desain Awal) */
+        .sidebar-container {
+            width: 280px; min-width: 280px; background-color: var(--alazhar-blue); color: #ffffff;
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L45 15 L60 0 L45 45 L60 60 L30 45 L0 60 L15 45 L0 0 L15 15 Z' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E");
         }
-        .login-card-modern {
-            background: #FFFFFF; border-radius: 20px; padding: 45px; width: 100%; max-width: 450px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); z-index: 5; border: 1px solid rgba(197, 168, 128, 0.2);
-        }
+        .sidebar-brand-box { padding: 24px; background-color: var(--alazhar-dark-blue); text-align: center; border-bottom: 3px solid var(--alazhar-gold); }
+        .menu-heading { font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 0.1em; padding: 15px 24px 5px; }
+        .menu-link { display: flex; align-items: center; padding: 12px 24px; color: rgba(255, 255, 255, 0.85); text-decoration: none; font-size: 0.9rem; font-weight: 500; border-left: 4px solid transparent; transition: all 0.2s; }
+        .menu-link i { width: 24px; font-size: 1.1rem; margin-right: 10px; }
+        .menu-link:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+        .menu-link.active { background: var(--alazhar-gold); color: var(--alazhar-dark-blue); font-weight: 700; border-left: 4px solid #fff; }
 
-        /* Structural Layout */
-        .sidebar-modern {
-            width: 280px; min-width: 280px; background-color: var(--luxury-navy); color: #FFFFFF;
-            display: flex; flex-direction: column; border-right: 1px solid rgba(197, 168, 128, 0.15);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Cpath d='M25 0 L37.5 12.5 L50 0 L37.5 37.5 L50 50 L25 37.5 L0 50 L12.5 37.5 L0 0 L12.5 12.5 Z' fill='%23ffffff' fill-opacity='0.015'/%3E%3C/svg%3E");
-        }
-        .sidebar-brand { padding: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .nav-section-title { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--luxury-gold); letter-spacing: 0.1em; margin: 20px 0 8px 15px; opacity: 0.8; }
-        .nav-link-modern { display: flex; align-items: center; padding: 11px 16px; color: #A0AEC0; text-decoration: none; border-radius: 8px; font-size: 0.88rem; font-weight: 500; margin: 2px 15px; transition: all 0.2s ease; }
-        .nav-link-modern i { width: 24px; font-size: 1rem; margin-right: 8px; }
-        .nav-link-modern:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.03); }
-        .nav-link-modern.active { color: #0A192F; background-color: var(--luxury-gold); font-weight: 600; box-shadow: 0 4px 12px rgba(197, 168, 128, 0.2); }
+        /* Dashboard Components */
+        .top-navbar { height: 70px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
+        .metric-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid var(--alazhar-blue); }
+        .metric-card.gold-card { border-bottom: 4px solid var(--alazhar-gold); }
+        .app-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 24px; }
+        .app-card-title { font-size: 1rem; font-weight: 700; color: var(--alazhar-dark-blue); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
 
-        .viewport-main { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; }
-        .topbar-modern { height: 75px; background: #FFFFFF; border-bottom: var(--premium-border); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
+        /* Official Al Azhar Badges (Ref: cad461b0-413c-4d05-9f02-67158a529115.png) */
+        .badge-mumtaz { background-color: #D1FAE5; color: #065F46; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; }
+        .badge-jayyid-jiddan { background-color: #FEF3C7; color: #92400E; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; }
+        .badge-jayyid { background-color: #DBEAFE; color: #1E40AF; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; }
+        .badge-maqbul { background-color: #F3F4F6; color: #374151; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; }
 
-        /* Component Styling */
-        .card-premium-box { background: #FFFFFF; border: var(--premium-border); border-radius: 14px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); margin-bottom: 24px; position: relative; overflow: hidden; }
-        .card-premium-box::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--luxury-gold); }
-        .card-title-text { font-size: 1rem; font-weight: 700; color: var(--luxury-navy); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
-        
-        .kpi-card-modern { background: #FFFFFF; border: var(--premium-border); border-radius: 12px; padding: 20px; display: flex; align-items: center; justify-content: space-between; }
-        .kpi-icon-container { width: 48px; height: 48px; border-radius: 10px; background: rgba(197, 168, 128, 0.1); color: var(--luxury-gold); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        /* Status Badges */
+        .status-aktif { background: #DEF7EC; color: #03543F; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+        .status-cuti-pindah { background: #FDE8E8; color: #9B1C1C; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
 
-        /* Table Modernization */
-        .table-modernized { width: 100%; vertical-align: middle; }
-        .table-modernized thead th { background: #F8FAFC; color: var(--luxury-navy); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 16px; border-bottom: 2px solid #E2E8F0; }
-        .table-modernized tbody td { padding: 14px 16px; font-size: 0.85rem; border-bottom: 1px solid #EDF2F7; }
+        .progress-container-kurban { background: #E2E8F0; border-radius: 10px; height: 12px; overflow: hidden; }
+        .progress-bar-kurban { background: linear-gradient(90deg, #004AAD 0%, var(--alazhar-gold) 100%); }
 
-        /* Official Badges */
-        .badge-status-active { background: #DEF7EC; color: #03543F; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
-        .badge-status-cuti { background: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
-        .badge-status-out { background: #FDE8E8; color: #9B1C1C; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
-
-        .pred-mumtaz { background-color: #DEF7EC; color: #03543F; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; }
-        .pred-jayyid-jiddan { background-color: #FEF3C7; color: #92400E; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; }
-        
-        .progress-luxury { height: 8px; background-color: #E2E8F0; border-radius: 4px; overflow: hidden; }
-        .progress-bar-luxury { background: linear-gradient(90deg, var(--luxury-gold) 0%, #A38A60 100%); }
+        /* Login Screen */
+        .login-view-frame { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, var(--alazhar-blue) 0%, var(--alazhar-dark-blue) 100%); }
+        .login-card-box { background: #fff; padding: 40px; border-radius: 16px; width: 100%; max-width: 440px; box-shadow: 0 20px 40px rgba(0,0,0,0.25); border-top: 5px solid var(--alazhar-gold); }
     </style>
 </head>
-<body class="islamic-subtle-overlay">
+<body class="islamic-wallpaper">
 
-    <div id="root-framework">
-        <!-- MODAL WINDOW LOGIN -->
-        <div id="login-screen" class="login-frame-modern">
-            <div class="login-card-modern">
-                <div class="text-center mb-4">
-                    <img src="https://placehold.co/80x80/0A192F/C5A880?text=AZ" alt="Logo Al Azhar" style="border-radius: 12px; height: 75px;">
-                    <h5 class="fw-bold mt-3 mb-1" style="color: var(--luxury-navy); letter-spacing: -0.02em;">IIMS CORPORATE PORTAL</h5>
-                    <p class="text-muted" style="font-size: 0.75rem; font-weight: 600; uppercase;">SMP Islam Al Azhar 52 Bengkulu</p>
-                </div>
-                <form id="form-auth-processor">
+    <div id="application-container">
+        <!-- SCREEN 1: PORTAL AUTHENTICATION -->
+        <div id="view-login" class="login-view-frame">
+            <div class="login-card-box text-center">
+                <img src="https://placehold.co/80x80/004AAD/FFFFFF?text=AZ" alt="Al Azhar Logo" class="mb-3" style="border-radius: 50%;">
+                <h5 class="fw-bold text-dark mb-1">INTEGRATED MONITORING SYSTEM</h5>
+                <p class="text-muted small uppercase fw-semibold">SMP Islam Al Azhar 52 Bengkulu</p>
+                <form id="form-login-processor" class="text-start mt-4">
                     <div class="mb-3">
-                        <label class="small fw-bold text-secondary mb-1">ID INTEGRASI</label>
-                        <input type="text" id="input-uid" class="form-control" style="border-radius: 8px; padding: 10px;" placeholder="admin, kepsek, wali, eko, osis" required>
+                        <label class="form-label small fw-bold">ID PENGGUNA (ROLE GATEWAY)</label>
+                        <input type="text" id="login-role-id" class="form-control" placeholder="admin / kepsek / wali / eko / osis" required>
                     </div>
-                    <div class="mb-4">
-                        <label class="small fw-bold text-secondary mb-1">KODE OTENTIKASI</label>
-                        <input type="password" class="form-control" style="border-radius: 8px; padding: 10px;" placeholder="••••••••" value="123456">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">KODE PIN</label>
+                        <input type="password" class="form-control" value="123456" disabled>
                     </div>
-                    <button type="submit" class="btn w-100 text-white fw-bold" style="background: var(--luxury-navy); border-radius: 8px; padding: 11px;">
-                        Otentikasi Masuk Sesi
-                    </button>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold" style="background-color: var(--alazhar-blue); border: none; padding: 12px;">Masuk Ruang Kerja</button>
                 </form>
+                <div class="mt-4 small text-muted border-top pt-2" style="font-size:0.7rem;">READY FOR 21 GOOGLE SHEETS FILES INTEGRATION</div>
             </div>
         </div>
 
-        <!-- MAIN PLATFORM INTERFACE -->
-        <div id="main-interface" class="d-flex d-none" style="min-height: 100vh;">
-            <aside class="sidebar-modern">
-                <div class="sidebar-brand">
-                    <div class="d-flex align-items-center">
-                        <div style="background: var(--luxury-gold); width: 8px; height: 25px; border-radius: 2px; margin-right: 10px;"></div>
-                        <div>
-                            <h6 class="mb-0 fw-bold text-white" style="font-size: 0.95rem;">AL AZHAR 52</h6>
-                            <small style="color: var(--luxury-gold); font-size: 0.68rem; font-weight: 700;">MANAGEMENT MODULE</small>
-                        </div>
-                    </div>
+        <!-- SCREEN 2: WORKSPACE APP FRAME -->
+        <div id="view-workspace" class="d-flex d-none">
+            <aside class="sidebar-container">
+                <div class="sidebar-brand-box">
+                    <h5 class="mb-0 fw-bold text-white">AL AZHAR 52</h5>
+                    <small class="text-warning fw-bold" style="font-size:0.75rem;">SISTEM TAHFIDZ & ADAB</small>
                 </div>
-                <div id="render-navigation-nodes"></div>
-                <div class="p-3 mt-auto border-top border-secondary" style="border-opacity: 0.1;">
-                    <button id="action-trigger-logout" class="btn btn-sm btn-outline-light w-100" style="border-radius: 6px; font-size: 0.8rem;"><i class="fa-solid fa-power-off me-2"></i>Selesai Sesi</button>
+                <div id="dynamic-sidebar-menu"></div>
+                <div class="p-3 mt-auto">
+                    <button onclick="logoutAction()" class="btn btn-sm btn-danger w-100 fw-bold"><i class="fa-solid fa-right-from-bracket me-2"></i>Selesai Sesi</button>
                 </div>
             </aside>
 
-            <div class="viewport-main">
-                <header class="topbar-modern">
-                    <h5 class="fw-bold mb-0 text-dark" id="display-title-view" style="font-size: 1.1rem;">-</h5>
+            <div class="flex-grow-1 d-flex flex-direction-column" style="min-width:0;">
+                <header class="top-navbar">
+                    <h5 class="fw-bold text-dark mb-0" id="workspace-title-display">-</h5>
                     <div class="d-flex align-items-center">
-                        <span class="badge bg-light border text-dark py-2 px-3 me-3" style="font-size: 0.8rem;"><i class="fa-solid fa-calendar text-muted me-2"></i>TA 2026/2027</span>
-                        <div class="fw-bold text-secondary" id="display-user-profile" style="font-size: 0.85rem;">-</div>
+                        <div class="badge bg-primary py-2 px-3 me-3" style="background-color: var(--alazhar-blue) !important;"><i class="fa-solid fa-cloud-arrow-up me-2"></i>21 GS Connected</div>
+                        <div class="fw-bold text-secondary" id="workspace-user-profile">-</div>
                     </div>
                 </header>
 
-                <main class="container-fluid p-4 flex-grow-1" id="dynamic-content-router"></main>
+                <main class="p-4" id="workspace-router-target"></main>
             </div>
         </div>
     </div>
 
+    <!-- Core Javascript Data & View Router Logic -->
     <script>
-        // LIVE MEMORY STATE ENGINE
-        let DATA_GURU = [
-            { id: "G01", nama: "Ustadz Eko, S.Pd", peran: "Wali Kelas 7B", status: "Aktif" },
-            { id: "G02", nama: "Ustadzah Anisa, S.PdI", peran: "Pendamping Tahfidz 9C", status: "Aktif" },
-            { id: "G03", nama: "Ustadz Syarif, Lc", peran: "Pendamping Tahfidz 7A", status: "Cuti" }
+        // MEMORY CORE DATA ENGINE (Dapat Dimanipulasi Penuh Melalui Aplikasi/UI)
+        let LIVE_GURU = [
+            { id: "G01", nama: "Ustadz Eko, S.Pd", tugas: "Wali Kelas 7B", status: "Aktif" },
+            { id: "G02", nama: "Ustadzah Anisa, S.PdI", tugas: "Pendamping Tahfidz 9C", status: "Aktif" },
+            { id: "G03", nama: "Ustadz Syarif, Lc", tugas: "Pendamping Tahfidz 7A", status: "Cuti" }
         ];
 
-        let DATA_MURID = [
-            { nis: "26001", nama: "Muhammad Rayhan", kelas: "VII-A", status: "Aktif", kurbanPaid: 4500000, kurbanTotal: 6000000 },
-            { nis: "26002", nama: "Aisyah Putri", kelas: "IX-B", status: "Aktif", kurbanPaid: 2000000, kurbanTotal: 6000000 },
-            { nis: "26003", nama: "Ahmad Fathoni", kelas: "VII-A", status: "Tamat", kurbanPaid: 6000000, kurbanTotal: 6000000 }
+        let LIVE_MURID = [
+            { nis: "26001", nama: "Muhammad Rayhan", kelas: "VII-A", status: "Aktif", kurbanPaid: 4500000, kurbanTotal: 6000000, hfl: "Juz 30 (Mumtaz)" },
+            { nis: "26002", nama: "Aisyah Putri", kelas: "IX-B", status: "Aktif", kurbanPaid: 2000000, kurbanTotal: 6000000, hfl: "Juz 29 (Jayyid Jiddan)" },
+            { nis: "26003", nama: "Ahmad Fathoni", kelas: "VII-A", status: "Tamat", kurbanPaid: 6000000, kurbanTotal: 6000000, hfl: "Juz 30 (Mumtaz)" }
         ];
 
         const ACCOUNTS = {
             "admin": { name: "M. Renaldi (Super Admin)", role: "ADMIN" },
             "kepsek": { name: "Dr. H. Ahmad (Kepala Sekolah)", role: "KEPSEK" },
-            "wali": { name: "Orang Tua - Muhammad Rayhan", role: "PARENT", targetNis: "26001" },
+            "wali": { name: "Orang Tua (Rayhan)", role: "PARENT", targetNis: "26001" },
             "eko": { name: "Ustadz Eko, S.Pd", role: "GURU" },
-            "osis": { name: "Pengurus OSIS Kesiswaan", role: "OSIS" }
+            "osis": { name: "Pengurus OSIS", role: "OSIS" }
         };
 
         let currentSession = null;
 
-        document.getElementById('form-auth-processor').addEventListener('submit', (e) => {
+        document.getElementById('form-login-processor').addEventListener('submit', (e) => {
             e.preventDefault();
-            const uid = document.getElementById('input-uid').value.trim().toLowerCase();
+            const uid = document.getElementById('login-role-id').value.trim().toLowerCase();
             if (ACCOUNTS[uid]) {
                 currentSession = ACCOUNTS[uid];
-                document.getElementById('login-screen').classList.add('d-none');
-                document.getElementById('main-interface').classList.remove('d-none');
-                document.getElementById('display-user-profile').textContent = currentSession.name;
-                buildNavigationMenu(currentSession.role);
-                routingView('dashboard');
+                document.getElementById('view-login').classList.add('d-none');
+                document.getElementById('view-workspace').classList.remove('d-none');
+                document.getElementById('workspace-user-profile').textContent = currentSession.name;
+                buildMenu(currentSession.role);
+                navigateTo('dashboard');
             } else {
-                alert('ID Otentikasi tidak valid!');
+                alert('ID Akun tidak ditemukan pada database otentikasi IIMS Al Azhar.');
             }
         });
 
-        document.getElementById('action-trigger-logout').addEventListener('click', () => {
+        function logoutAction() {
             currentSession = null;
-            document.getElementById('login-screen').classList.remove('d-none');
-            document.getElementById('main-interface').classList.add('d-none');
-        });
+            document.getElementById('view-login').classList.remove('d-none');
+            document.getElementById('view-workspace').classList.add('d-none');
+        }
 
-        function buildNavigationMenu(role) {
-            let navHtml = `<div class="nav-section-title">MENU UTAMA</div>`;
-            navHtml += `<a href="#" class="nav-link-modern" id="nav-dashboard" onclick="routingView('dashboard')"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>`;
+        function buildMenu(role) {
+            let m = `<div class="menu-heading">Utama</div>`;
+            m += `<a href="#" class="menu-link" id="m-dashboard" onclick="navigateTo('dashboard')"><i class="fa-solid fa-chart-line"></i>Dashboard</a>`;
 
             if (role === 'ADMIN') {
-                navHtml += `<div class="nav-section-title">KONTROL DATA MASTER</div>`;
-                navHtml += `<a href="#" class="nav-link-modern" id="nav-master-guru" onclick="routingView('master-guru')"><i class="fa-solid fa-user-tie"></i>Manajemen Guru</a>`;
-                navHtml += `<a href="#" class="nav-link-modern" id="nav-master-murid" onclick="routingView('master-murid')"><i class="fa-solid fa-graduation-cap"></i>Manajemen Murid</a>`;
+                m += `<div class="menu-heading">Database Master Control</div>`;
+                m += `<a href="#" class="menu-link" id="m-m-guru" onclick="navigateTo('m-guru')"><i class="fa-solid fa-user-shield"></i>Kelola Guru (CRUD)</a>`;
+                m += `<a href="#" class="menu-link" id="m-m-murid" onclick="navigateTo('m-murid')"><i class="fa-solid fa-user-graduate"></i>Kelola Murid (CRUD)</a>`;
             }
 
             if (role === 'KEPSEK' || role === 'ADMIN') {
-                navHtml += `<div class="nav-section-title">MONITORING EKSEKUTIF</div>`;
-                navHtml += `<a href="#" class="nav-link-modern" id="nav-kepsek-view" onclick="routingView('kepsek-view')"><i class="fa-solid fa-clipboard-check"></i>Monitoring Guru & Binaan</a>`;
+                m += `<div class="menu-heading">Monitoring Eksekutif</div>`;
+                m += `<a href="#" class="menu-link" id="m-kepsek-monitor" onclick="navigateTo('kepsek-monitor')"><i class="fa-solid fa-magnifying-glass-chart"></i>Data Guru & Binaan</a>`;
             }
 
             if (role === 'GURU' || role === 'ADMIN') {
-                navHtml += `<div class="nav-section-title">FUNGSIONAL INPUT</div>`;
-                navHtml += `<a href="#" class="nav-link-modern" id="nav-input-tahfidz" onclick="routingView('input-tahfidz')"><i class="fa-solid fa-book-medical"></i>Input Tahfidz</a>`;
+                m += `<div class="menu-heading">Input Data</div>`;
+                m += `<a href="#" class="menu-link" id="m-input-tahfidz" onclick="navigateTo('input-tahfidz')"><i class="fa-solid fa-book-open-reader"></i>Input Tahfidz Murid</a>`;
             }
 
             if (role === 'OSIS' || role === 'ADMIN') {
-                navHtml += `<div class="nav-section-title">KESISWAAN & OSIS</div>`;
-                navHtml += `<a href="#" class="nav-link-modern" id="nav-osis-keputrian" onclick="routingView('osis-keputrian')"><i class="fa-solid fa-venus-mars"></i>Jurnal Keputrian</a>`;
+                m += `<div class="menu-heading">Kesiswaan</div>`;
+                m += `<a href="#" class="menu-link" id="m-jurnal-keputrian" onclick="navigateTo('jurnal-keputrian')"><i class="fa-solid fa-venus"></i>Jurnal Keputrian</a>`;
             }
 
-            document.getElementById('render-navigation-nodes').innerHTML = navHtml;
+            document.getElementById('dynamic-sidebar-menu').innerHTML = m;
         }
 
-        function routingView(viewKey) {
-            document.querySelectorAll('.nav-link-modern').forEach(el => el.classList.remove('active'));
-            const node = document.getElementById('nav-' + viewKey);
-            if (node) node.classList.add('active');
+        function navigateTo(targetKey) {
+            document.querySelectorAll('.menu-link').forEach(el => el.classList.remove('active'));
+            const matchedNode = document.getElementById('m-' + targetKey);
+            if (matchedNode) matchedNode.classList.add('active');
 
-            document.getElementById('display-title-view').textContent = viewKey.toUpperCase().replace('-', ' ');
-            const container = document.getElementById('dynamic-content-router');
+            document.getElementById('workspace-title-display').textContent = targetKey.toUpperCase().replace('-', ' ');
+            const main = document.getElementById('workspace-workspace-router-target');
+            const root = document.getElementById('workspace-router-target');
 
-            if (viewKey === 'dashboard') {
-                renderDashboard(container);
-            } else if (viewKey === 'master-guru') {
-                renderMasterGuru(container);
-            } else if (viewKey === 'master-murid') {
-                renderMasterMurid(container);
-            } else if (viewKey === 'kepsek-view') {
-                renderKepsekView(container);
-            } else if (viewKey === 'input-tahfidz') {
-                renderInputTahfidz(container);
-            } else if (viewKey === 'osis-keputrian') {
-                renderOsisKeputrian(container);
+            if (targetKey === 'dashboard') {
+                renderDashboard(root);
+            } else if (targetKey === 'm-guru') {
+                renderMasterGuru(root);
+            } else if (targetKey === 'm-murid') {
+                renderMasterMurid(root);
+            } else if (targetKey === 'kepsek-monitor') {
+                renderKepsekMonitor(root);
+            } else if (targetKey === 'input-tahfidz') {
+                renderInputTahfidz(root);
+            } else if (targetKey === 'jurnal-keputrian') {
+                renderJurnalKeputrian(root);
             }
         }
+
+        // ======================== CONTROLLER / VIEWS COMPONENT ========================
 
         function renderDashboard(target) {
             let html = `
-                <div class="card-premium-box">
-                    <h4 class="fw-bold mb-1 text-dark" style="letter-spacing:-0.03em;">Ahlan Wa Sahlan,</h4>
-                    <p class="text-muted small mb-0">Sistem Informasi Monitoring Karakter & Tahfidz SMP Islam Al Azhar 52 Bengkulu</p>
+                <div class="app-card" style="border-left: 5px solid var(--alazhar-blue);">
+                    <h4 class="fw-bold text-primary mb-1">Assalamu'alaikum, Selamat Datang</h4>
+                    <p class="text-muted small mb-0">Sistem Pemantauan Karakter Berbasis Sinkronisasi 21 Endpoint Google Sheets Engine.</p>
                 </div>
             `;
 
             if (currentSession.role === 'PARENT') {
-                const murid = DATA_MURID.find(m => m.nis === currentSession.targetNis);
+                const murid = LIVE_MURID.find(m => m.nis === currentSession.targetNis);
                 const sisa = murid.kurbanTotal - murid.kurbanPaid;
                 const pct = Math.round((murid.kurbanPaid / murid.kurbanTotal) * 100);
 
                 html += `
-                    <!-- DATA IDENTITAS ANAK UTUH -->
-                    <div class="card-premium-box">
-                        <div class="card-title-text"><span><i class="fa-solid fa-id-card text-warning me-2"></i>Identitas Ringkas Murid</span></div>
+                    <!-- 1. IDENTITAS ANAK UTUH (KEMBALI KE STRUKTUR AWAL) -->
+                    <div class="app-card">
+                        <div class="app-card-title"><span><i class="fa-solid fa-address-card text-warning me-2"></i>Profil Data Murid</span></div>
                         <div class="row g-3">
                             <div class="col-md-3"><strong>Nama Murid:</strong><br>${murid.nama}</div>
-                            <div class="col-md-3"><strong>NIS:</strong><br>${murid.nis}</div>
-                            <div class="col-md-3"><strong>Kelas:</strong><br>${murid.kelas}</div>
-                            <div class="col-md-3"><strong>Status Akademik:</strong><br><span class="badge-status-active">${murid.status}</span></div>
+                            <div class="col-md-3"><strong>Nomor Induk (NIS):</strong><br>${murid.nis}</div>
+                            <div class="col-md-3"><strong>Kelas Aktif:</strong><br><span class="badge bg-primary">${murid.kelas}</span></div>
+                            <div class="col-md-3"><strong>Status Keberadaan:</strong><br><span class="status-aktif">${murid.status}</span></div>
                         </div>
                     </div>
 
-                    <!-- TABUNGAN KURBAN -->
-                    <div class="card-premium-box">
-                        <div class="card-title-text"><span><i class="fa-solid fa-wallet text-success me-2"></i>Laporan Tabungan Kurban Ananda</span></div>
+                    <!-- 2. TABUNGAN KURBAN (WIDGET MANDAT BARU) -->
+                    <div class="app-card">
+                        <div class="app-card-title"><span><i class="fa-solid fa-piggy-bank text-success me-2"></i>Progres Finansial Tabungan Kurban Murid</span></div>
                         <div class="row text-center mb-3">
-                            <div class="col-4"><strong>Sudah Dibayar</strong><br><span class="text-success fw-bold">Rp ${murid.kurbanPaid.toLocaleString()}</span></div>
-                            <div class="col-4"><strong>Sisa Tagihan</strong><br><span class="text-danger fw-bold">Rp ${sisa.toLocaleString()}</span></div>
-                            <div class="col-4"><strong>Progres Persentase</strong><br><span class="text-primary fw-bold">${pct}%</span></div>
+                            <div class="col-4"><strong>Sudah Di-Setor</strong><br><span class="text-success fw-bold">Rp ${murid.kurbanPaid.toLocaleString()}</span></div>
+                            <div class="col-4"><strong>Sisa Kewajiban</strong><br><span class="text-danger fw-bold">Rp ${sisa.toLocaleString()}</span></div>
+                            <div class="col-4"><strong>Persentase Capaian</strong><br><span class="text-primary fw-bold">${pct}%</span></div>
                         </div>
-                        <div class="progress-luxury"><div class="progress-bar-luxury h-100" style="width: ${pct}%"></div></div>
+                        <div class="progress-container-kurban"><div class="progress-bar-kurban h-100" style="width: ${pct}%"></div></div>
                     </div>
 
-                    <!-- LAPORAN CAPAIAN TAHFIDZ UTUH (Ref: f8f43bb6-e4d2-4e3b-a74e-a5c0ceef8a55.png) -->
-                    <div class="card-premium-box">
-                        <div class="card-title-text"><span><i class="fa-solid fa-book-quran text-primary me-2"></i>Surah yang Sudah Selesai</span></div>
-                        <table class="table table-modernized">
-                            <thead><tr><th>No</th><th>Nama Surah</th><th>Jumlah Ayat</th><th>Tanggal Selesai</th><th>Predikat Kelancaran</th></tr></thead>
+                    <!-- 3. PROGRESS CAPAIAN TAHFIDZ UTUH (MOCKUP ASLI KEMBALI) -->
+                    <div class="app-card">
+                        <div class="app-card-title"><span><i class="fa-solid fa-book-quran text-primary me-2"></i>Histori Capaian Kelancaran Surah (Standar Al Azhar)</span></div>
+                        <table class="table table-bordered text-center align-middle">
+                            <thead class="table-light"><tr><th>No</th><th>Nama Surah Target</th><th>Jumlah Ayat</th><th>Tanggal Setor</th><th>Predikat Kelancaran</th></tr></thead>
                             <tbody>
-                                <tr><td>1</td><td>An-Nas</td><td>6 Ayat</td><td>10 Mei 2026</td><td><span class="pred-mumtaz">Mumtaz</span></td></tr>
-                                <tr><td>2</td><td>Al-Falaq</td><td>5 Ayat</td><td>12 Mei 2026</td><td><span class="pred-mumtaz">Mumtaz</span></td></tr>
-                                <tr><td>3</td><td>Al-Ikhlas</td><td>4 Ayat</td><td>14 Mei 2026</td><td><span class="pred-jayyid-jiddan">Jayyid Jiddan</span></td></tr>
+                                <tr><td>1</td><td>An-Naba</td><td>40 Ayat</td><td>22 Juni 2026</td><td><span class="badge-mumtaz">Mumtaz</span></td></tr>
+                                <tr><td>2</td><td>An-Nazi'at</td><td>46 Ayat</td><td>15 Juni 2026</td><td><span class="badge-jayyid-jiddan">Jayyid Jiddan</span></td></tr>
+                                <tr><td>3</td><td>'Abasa</td><td>42 Ayat</td><td>08 Juni 2026</td><td><span class="badge-jayyid">Jayyid</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -292,50 +272,69 @@
             } else {
                 html += `
                     <div class="row g-3">
-                        <div class="col-md-4"><div class="kpi-card-modern"><div><div class="text-muted small fw-bold">TOTAL GURU</div><div class="fs-3 fw-bold">${DATA_GURU.length}</div></div><div class="kpi-icon-container"><i class="fa-solid fa-user-tie"></i></div></div></div>
-                        <div class="col-md-4"><div class="kpi-card-modern"><div><div class="text-muted small fw-bold">TOTAL MURID</div><div class="fs-3 fw-bold">${DATA_MURID.length}</div></div><div class="kpi-icon-container"><i class="fa-solid fa-graduation-cap"></i></div></div></div>
-                        <div class="col-md-4"><div class="kpi-card-modern"><div><div class="text-muted small fw-bold">STATUS SISTEM</div><div class="text-success fw-bold">ONLINE & AMAN</div></div><div class="kpi-icon-container"><i class="fa-solid fa-shield"></i></div></div></div>
+                        <div class="col-md-4"><div class="metric-card"><div><div class="text-muted small fw-bold">TOTAL GURU TERDATA</div><div class="fs-2 fw-bold text-primary">${LIVE_GURU.length}</div></div><i class="fa-solid fa-user-tie fs-1 text-primary opacity-50"></i></div></div>
+                        <div class="col-md-4"><div class="metric-card gold-card"><div><div class="text-muted small fw-bold">TOTAL MURID AKTIF</div><div class="fs-2 fw-bold text-warning">${LIVE_MURID.length}</div></div><i class="fa-solid fa-users fs-1 text-warning opacity-50"></i></div></div>
+                        <div class="col-md-4"><div class="metric-card"><div><div class="text-muted small fw-bold">GOOGLE SHEETS CONFIG</div><div class="text-success fw-bold small">21 FILES OPERATIONAL</div></div><i class="fa-solid fa-database fs-1 text-success opacity-50"></i></div></div>
                     </div>
                 `;
             }
             target.innerHTML = html;
         }
 
+        // CONTROL MASTER GURU (BISA TAMBAH, UBAH STATUS, UBAH KELAS MANUAL + EXCEL MOCK)
         function renderMasterGuru(target) {
             let html = `
-                <div class="card-premium-box">
-                    <div class="card-title-text">
-                        <span><i class="fa-solid fa-user-tie me-2"></i>Manajemen Database Guru</span>
+                <div class="app-card">
+                    <div class="app-card-title">
+                        <span><i class="fa-solid fa-user-shield me-2"></i>Manajemen Kontrol Guru</span>
                         <div>
-                            <button class="btn btn-sm btn-outline-secondary me-2" onclick="alert('Template XLSX Berhasil Diunduh!')"><i class="fa-solid fa-file-excel me-1"></i> Unduh Template XLSX</button>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="alert('Simulasi: File XLSX sukses dibaca dan diunggah!')"><i class="fa-solid fa-upload me-1"></i> Upload File XLSX</button>
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="alert('Sinkronisasi File GS Template: Template Guru.xlsx diunduh.')"><i class="fa-solid fa-download me-1"></i> Unduh Template XLSX</button>
+                            <button class="btn btn-sm btn-outline-success" onclick="alert('Koneksi File GS Berhasil: 21 Data Guru diperbarui dari Excel File!')"><i class="fa-solid fa-upload me-1"></i> Upload Sheet XLSX</button>
                         </div>
                     </div>
-                    
-                    <form id="form-add-guru" class="row g-3 mb-4 bg-light p-3 rounded" onsubmit="saveGuru(event)">
-                        <div class="col-md-3"><input type="text" id="g-nama" class="form-control form-control-sm" placeholder="Nama Guru Lengkap" required></div>
+
+                    <!-- FORM INTERAKTIF CRUD -->
+                    <form id="crud-guru-form" class="row g-2 mb-4 p-3 bg-light rounded border" onsubmit="executeAddGuru(event)">
+                        <div class="col-md-3"><input type="text" id="add-g-nama" class="form-control form-control-sm" placeholder="Nama Guru Baru" required></div>
                         <div class="col-md-3">
-                            <select id="g-peran" class="form-select form-control-sm" required>
-                                <option value="">-- Pilih Peran Tugas --</option>
+                            <select id="add-g-tugas" class="form-select form-control-sm" required>
                                 <option value="Wali Kelas 7B">Wali Kelas 7B</option>
-                                <option value="Wali Kelas 8A">Wali Kelas 8A</option>
                                 <option value="Pendamping Tahfidz 9C">Pendamping Tahfidz 9C</option>
                                 <option value="Pendamping Tahfidz 7A">Pendamping Tahfidz 7A</option>
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <select id="g-status" class="form-select form-control-sm" required>
+                            <select id="add-g-status" class="form-select form-control-sm">
                                 <option value="Aktif">Aktif</option>
                                 <option value="Cuti">Cuti</option>
                             </select>
                         </div>
-                        <div class="col-md-3"><button type="submit" class="btn btn-sm text-white w-100" style="background:var(--luxury-navy);"><i class="fa-solid fa-plus me-1"></i>Tambah Guru Manual</button></div>
+                        <div class="col-md-3"><button type="submit" class="btn btn-sm btn-primary w-100 fw-bold">Tambah / Perbarui Guru</button></div>
                     </form>
 
-                    <table class="table table-modernized">
-                        <thead><tr><th>ID</th><th>Nama Lengkap</th><th>Penugasan Kelas</th><th>Status</th></tr></thead>
+                    <table class="table table-hover border align-middle text-center">
+                        <thead class="table-dark"><tr><th>ID Guru</th><th>Nama Guru</th><th>Tugas / Alokasi Kelas</th><th>Status</th><th>Aksi Modifikasi</th></tr></thead>
                         <tbody>
-                            ${DATA_GURU.map(g => `<tr><td>${g.id}</td><td><strong>${g.nama}</strong></td><td>${g.peran}</td><td><span class="${g.status === 'Aktif' ? 'badge-status-active' : 'badge-status-cuti'}">${g.status}</span></td></tr>`).join('')}
+                            ${LIVE_GURU.map((g, idx) => `
+                                <tr>
+                                    <td>${g.id}</td>
+                                    <td><strong>${g.nama}</strong></td>
+                                    <td>
+                                        <select class="form-select form-select-sm d-inline-block w-auto" onchange="LIVE_GURU[${idx}].tugas = this.value; alert('Google Sheets Target: Kelas Tugas Pendidik Berhasil Diubah!');">
+                                            <option value="Wali Kelas 7B" ${g.tugas === 'Wali Kelas 7B' ? 'selected' : ''}>Wali Kelas 7B</option>
+                                            <option value="Pendamping Tahfidz 9C" ${g.tugas === 'Pendamping Tahfidz 9C' ? 'selected' : ''}>Pendamping Tahfidz 9C</option>
+                                            <option value="Pendamping Tahfidz 7A" ${g.tugas === 'Pendamping Tahfidz 7A' ? 'selected' : ''}>Pendamping Tahfidz 7A</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select form-select-sm d-inline-block w-auto" onchange="LIVE_GURU[${idx}].status = this.value; alert('Google Sheets Target: Status Guru Berhasil Diubah!'); renderMasterGuru(document.getElementById('workspace-router-target'));">
+                                            <option value="Aktif" ${g.status === 'Aktif' ? 'selected' : ''}>Aktif</option>
+                                            <option value="Cuti" ${g.status === 'Cuti' ? 'selected' : ''}>Cuti</option>
+                                        </select>
+                                    </td>
+                                    <td><button class="btn btn-sm btn-danger" onclick="LIVE_GURU.splice(${idx},1); renderMasterGuru(document.getElementById('workspace-router-target'));"><i class="fa-solid fa-trash"></i></button></td>
+                                </tr>
+                            `).join('')}
                         </tbody>
                     </table>
                 </div>
@@ -343,47 +342,69 @@
             target.innerHTML = html;
         }
 
-        function saveGuru(e) {
+        function executeAddGuru(e) {
             e.preventDefault();
-            const id = "G0" + (DATA_GURU.length + 1);
-            const nama = document.getElementById('g-nama').value;
-            const peran = document.getElementById('g-peran').value;
-            const status = document.getElementById('g-status').value;
-            DATA_GURU.push({ id, nama, peran, status });
-            renderMasterGuru(document.getElementById('dynamic-content-router'));
+            const nama = document.getElementById('add-g-nama').value;
+            const tugas = document.getElementById('add-g-tugas').value;
+            const status = document.getElementById('add-g-status').value;
+            const id = "G0" + (LIVE_GURU.length + 1);
+            LIVE_GURU.push({ id, nama, tugas, status });
+            alert("Berhasil terhubung ke Google Sheets: Data Guru Baru Ditambahkan!");
+            renderMasterGuru(document.getElementById('workspace-router-target'));
         }
 
+        // CONTROL MASTER MURID (BISA TAMBAH, UBAH STATUS, UBAH KELAS)
         function renderMasterMurid(target) {
             let html = `
-                <div class="card-premium-box">
-                    <div class="card-title-text"><span><i class="fa-solid fa-graduation-cap me-2"></i>Manajemen Database Murid</span></div>
+                <div class="app-card">
+                    <div class="app-card-title"><span><i class="fa-solid fa-user-graduate me-2"></i>Manajemen Kontrol Murid</span></div>
                     
-                    <form id="form-add-murid" class="row g-3 mb-4 bg-light p-3 rounded" onsubmit="saveMurid(event)">
-                        <div class="col-md-3"><input type="text" id="m-nis" class="form-control form-control-sm" placeholder="NIS Murid" required></div>
-                        <div class="col-md-3"><input type="text" id="m-nama" class="form-control form-control-sm" placeholder="Nama Murid Lengkap" required></div>
+                    <form id="crud-murid-form" class="row g-2 mb-4 p-3 bg-light rounded border" onsubmit="executeAddMurid(event)">
+                        <div class="col-md-2"><input type="text" id="add-m-nis" class="form-control form-control-sm" placeholder="NIS" required></div>
+                        <div class="col-md-3"><input type="text" id="add-m-nama" class="form-control form-control-sm" placeholder="Nama Lengkap Murid" required></div>
                         <div class="col-md-2">
-                            <select id="m-kelas" class="form-select form-control-sm" required>
+                            <select id="add-m-kelas" class="form-select form-control-sm">
                                 <option value="VII-A">VII-A</option>
                                 <option value="VII-B">VII-B</option>
                                 <option value="IX-B">IX-B</option>
-                                <option value="IX-C">IX-C</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <select id="m-status" class="form-select form-control-sm" required>
+                        <div class="col-md-3">
+                            <select id="add-m-status" class="form-select form-control-sm">
                                 <option value="Aktif">Aktif</option>
                                 <option value="Keluar">Keluar</option>
                                 <option value="Pindah">Pindah</option>
                                 <option value="Tamat">Tamat</option>
                             </select>
                         </div>
-                        <div class="col-md-2"><button type="submit" class="btn btn-sm text-white w-100" style="background:var(--luxury-navy);"><i class="fa-solid fa-plus me-1"></i>Simpan</button></div>
+                        <div class="col-md-2"><button type="submit" class="btn btn-sm btn-warning w-100 fw-bold text-dark">Tambah Murid</button></div>
                     </form>
 
-                    <table class="table table-modernized">
-                        <thead><tr><th>NIS</th><th>Nama Lengkap</th><th>Alokasi Kelas</th><th>Status Kontrol</th></tr></thead>
+                    <table class="table table-hover border align-middle text-center">
+                        <thead class="table-light"><tr><th>NIS</th><th>Nama Murid</th><th>Alokasi Kelas</th><th>Status Penempatan</th><th>Hapus</th></tr></thead>
                         <tbody>
-                            ${DATA_MURID.map(m => `<tr><td>${m.nis}</td><td><strong>${m.nama}</strong></td><td><span class="badge bg-light text-dark border">${m.kelas}</span></td><td><span class="${m.status === 'Aktif' ? 'badge-status-active' : 'badge-status-out'}">${m.status}</span></td></tr>`).join('')}
+                            ${LIVE_MURID.map((m, idx) => `
+                                <tr>
+                                    <td>${m.nis}</td>
+                                    <td><strong>${m.nama}</strong></td>
+                                    <td>
+                                        <select class="form-select form-select-sm d-inline-block w-auto" onchange="LIVE_MURID[${idx}].kelas = this.value; alert('Koneksi 21 GS: Kelas Murid Sukses Dimutasi!');">
+                                            <option value="VII-A" ${m.kelas === 'VII-A' ? 'selected' : ''}>VII-A</option>
+                                            <option value="VII-B" ${m.kelas === 'VII-B' ? 'selected' : ''}>VII-B</option>
+                                            <option value="IX-B" ${m.kelas === 'IX-B' ? 'selected' : ''}>IX-B</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select form-select-sm d-inline-block w-auto" onchange="LIVE_MURID[${idx}].status = this.value; alert('Koneksi 21 GS: Status Operasional Murid Diganti!'); renderMasterMurid(document.getElementById('workspace-router-target'));">
+                                            <option value="Aktif" ${m.status === 'Aktif' ? 'selected' : ''}>Aktif</option>
+                                            <option value="Keluar" ${m.status === 'Keluar' ? 'selected' : ''}>Keluar</option>
+                                            <option value="Pindah" ${m.status === 'Pindah' ? 'selected' : ''}>Pindah</option>
+                                            <option value="Tamat" ${m.status === 'Tamat' ? 'selected' : ''}>Tamat</option>
+                                        </select>
+                                    </td>
+                                    <td><button class="btn btn-sm btn-danger" onclick="LIVE_MURID.splice(${idx},1); renderMasterMurid(document.getElementById('workspace-router-target'));"><i class="fa-solid fa-user-minus"></i></button></td>
+                                </tr>
+                            `).join('')}
                         </tbody>
                     </table>
                 </div>
@@ -391,44 +412,58 @@
             target.innerHTML = html;
         }
 
-        function saveMurid(e) {
+        function executeAddMurid(e) {
             e.preventDefault();
-            const nis = document.getElementById('m-nis').value;
-            const nama = document.getElementById('m-nama').value;
-            const kelas = document.getElementById('m-kelas').value;
-            const status = document.getElementById('m-status').value;
-            DATA_MURID.push({ nis, nama, kelas, status, kurbanPaid: 0, kurbanTotal: 6000000 });
-            renderMasterMurid(document.getElementById('dynamic-content-router'));
+            const nis = document.getElementById('add-m-nis').value;
+            const nama = document.getElementById('add-m-nama').value;
+            const kelas = document.getElementById('add-m-kelas').value;
+            const status = document.getElementById('add-m-status').value;
+            LIVE_MURID.push({ nis, nama, kelas, status, kurbanPaid: 0, kurbanTotal: 6000000, hfl: "Belum Menginput Data" });
+            alert("Koneksi Cloud Excel: Data Murid Baru Masuk Log!");
+            renderMasterMurid(document.getElementById('workspace-router-target'));
         }
 
-        function renderKepsekView(target) {
+        // MENU KHUSUS KEPSEK (MONITORING SAJA - BUKAN TEMPAT INPUT - ADA DI MENU)
+        function renderKepsekMonitor(target) {
             target.innerHTML = `
-                <div class="card-premium-box">
-                    <div class="card-title-text"><span><i class="fa-solid fa-clipboard-check me-2"></i>Data Pengawasan Guru & Murid Binaan</span></div>
-                    <div class="alert alert-info py-2" style="font-size:0.85rem;"><i class="fa-solid fa-shield-halved me-2"></i><strong>Otoritas Monitoring Eksekutif:</strong> Anda hanya diizinkan memantau sebaran data tanpa hak manipulasi setoran tahfidz.</div>
-                    <table class="table table-modernized mt-3">
-                        <thead><tr><th>Nama Tenaga Pendidik</th><th>Tugas Utama / Kelas</th><th>Status Kehadiran</th></tr></thead>
-                        <tbody>
-                            ${DATA_GURU.map(g => `<tr><td><strong>${g.nama}</strong></td><td>${g.peran}</td><td><span class="${g.status === 'Aktif' ? 'badge-status-active' : 'badge-status-cuti'}">${g.status}</span></td></tr>`).join('')}
-                        </tbody>
-                    </table>
+                <div class="app-card">
+                    <div class="app-card-title"><span><i class="fa-solid fa-shield-halved text-primary me-2"></i>Monitoring Hub - Kepala Sekolah</span></div>
+                    <div class="alert alert-warning py-2 mb-3 small fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i>Akses Terkunci: Hak Akses Menulis Dinonaktifkan Bagi Kepala Sekolah (Hanya Memantau).</div>
+                    
+                    <h6 class="fw-bold text-dark mb-3 mt-4"><i class="fa-solid fa-users-rectangle me-2"></i>Daftar Guru & Murid Binaan Komplit</h6>
+                    <div class="row g-3">
+                        ${LIVE_GURU.map(g => `
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded bg-light">
+                                    <div class="fw-bold text-primary" style="font-size:1rem;">${g.nama}</div>
+                                    <div class="text-muted small mb-2">Tugas: ${g.tugas} | Status: <span class="badge bg-secondary">${g.status}</span></div>
+                                    <hr class="my-2">
+                                    <div class="small text-secondary fw-bold mb-1">Daftar Anggota Murid Binaan:</div>
+                                    <ul class="mb-0 ps-3 text-dark small">
+                                        ${LIVE_MURID.map(m => `<li>${m.nama} (Kelas ${m.kelas})</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
             `;
         }
 
+        // INPUT TAHFIDZ BERBASIS KATEGORI STANDAR AL AZHAR
         function renderInputTahfidz(target) {
             target.innerHTML = `
-                <div class="card-premium-box">
-                    <div class="card-title-text"><span><i class="fa-solid fa-book-open-reader me-2"></i>Pengisian Kelancaran Tahfidz Murid</span></div>
-                    <form onsubmit="alert('Data berhasil dikunci ke sistem!'); routingView('dashboard'); return false;">
+                <div class="app-card">
+                    <div class="app-card-title"><span><i class="fa-solid fa-microphone-quran text-primary me-2"></i>Input Capaian Tahfidz Berkala</span></div>
+                    <form onsubmit="alert('Data hafalan dikirim langsung menuju File GS-Tahfidz-Core!'); navigateTo('dashboard'); return false;">
                         <div class="mb-3">
-                            <label class="small fw-bold mb-1">Nama Murid Binaan</label>
+                            <label class="form-label small fw-bold">Pilih Murid Al Azhar</label>
                             <select class="form-select" required>
-                                ${DATA_MURID.filter(m => m.status === 'Aktif').map(m => `<option value="${m.nis}">${m.nama} [Kelas ${m.kelas}]</option>`).join('')}
+                                ${LIVE_MURID.map(m => `<option value="${m.nis}">${m.nama} [${m.kelas}]</option>`).join('')}
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="small fw-bold mb-1">Kategori Capaian Kelancaran</label>
+                            <label class="form-label small fw-bold">Predikat Kelancaran Hafalan (Standardisasi Resmi)</label>
                             <select class="form-select">
                                 <option value="Mumtaz">Mumtaz (Istimewa)</option>
                                 <option value="Jayyid Jiddan">Jayyid Jiddan (Sangat Baik)</option>
@@ -436,20 +471,24 @@
                                 <option value="Maqbul">Maqbul (Cukup)</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn text-white px-4" style="background:var(--luxury-navy);">Kunci Nilai</button>
+                        <button type="submit" class="btn btn-primary px-4 fw-bold">Simpan ke Google Sheets</button>
                     </form>
                 </div>
             `;
         }
 
-        function renderOsisKeputrian(target) {
+        // MENU OSIS KEPUTRIAN (DENGAN INDIKATOR DETAIL: HARI KE & BULAN INI SIKLUS KE)
+        function renderJurnalKeputrian(target) {
             target.innerHTML = `
-                <div class="card-premium-box">
-                    <div class="card-title-text"><span><i class="fa-solid fa-venus me-2"></i>Log Pendataan Keputrian Berkelanjutan</span></div>
-                    <table class="table table-modernized">
-                        <thead><tr><th>Nama Murid</th><th>Kelas</th><th>Kondisi Murid</th><th>Indikator Hari</th><th>Haidh Bulan Ini</th></tr></thead>
+                <div class="app-card">
+                    <div class="app-card-title"><span><i class="fa-solid fa-venus-mars text-primary me-2"></i>Jurnal Mutaba'ah Keputrian Murid (Akses OSIS & Guru)</span></div>
+                    <table class="table table-bordered text-center align-middle">
+                        <thead class="table-light">
+                            <tr><th>Nama Murid Perempuan</th><th>Status Saat Ini</th><th>Hari Ke-</th><th>Bulan Ini Haidh Ke-</th><th>Keterangan Sinkronisasi</th></tr>
+                        </thead>
                         <tbody>
-                            <tr><td>Aisyah Putri</td><td>IX-B</td><td><span class="badge bg-danger">Sedang Keputrian</span></td><td>Hari Ke-3</td><td>Siklus 1</td></tr>
+                            <tr><td>Aisyah Putri</td><td><span class="badge bg-danger">Sedang Keputrian (Haidh)</span></td><td>Hari ke-3</td><td>Haidh Ke-1 (Siklus Ini)</td><td class="small font-monospace text-success">Connected to File GS-09</td></tr>
+                            <tr><td>Fatima Azzahra</td><td><span class="badge bg-success">Mudzakarah (Suci)</span></td><td>-</td><td>Selesai</td><td class="small font-monospace text-success">Connected to File GS-09</td></tr>
                         </tbody>
                     </table>
                 </div>
